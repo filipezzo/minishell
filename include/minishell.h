@@ -7,6 +7,7 @@
 #include <stdlib.h>
 #include <sys/wait.h>
 #include <sys/types.h>
+#include "libft.h"
 
 typedef enum e_type
 {
