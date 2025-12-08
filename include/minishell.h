@@ -1,6 +1,9 @@
 #ifndef MINISHELL_H
 #define MINISHELL_H
 
+#define BUFSIZE 1024
+#define PATH_MAX 4096
+
 #include <stdio.h>
 #include <unistd.h>
 #include <fcntl.h>
@@ -32,6 +35,12 @@ typedef struct s_cmd
     struct s_cmd *next;    // prox comando do pipe
 } t_cmd;
 
+typedef struct s_shell
+{
+    int exit_status;
+    char **env; // incremente se precisar.
+} t_shell;
+
 // exemplo cat < in.txt | grep oi > out.txt
 
 // no 1
@@ -46,4 +55,11 @@ typedef struct s_cmd
 //  pid = PID DPS DO FORK
 //  next = NULL
 
+// execute
+int is_command_builtin(const char *command_name);
+int redirect_input(const char *filename);
+int redirect_output(const char *filename);
+int redirect_append(const char *filename);
+void apply_redirect(t_cmd *cmd);
+int builtin_echo(t_cmd *cmd);
 #endif

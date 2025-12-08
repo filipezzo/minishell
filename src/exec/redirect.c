@@ -60,7 +60,7 @@ int redirect_append(const char *filename)
 
 void apply_redirect(t_cmd *cmd)
 {
-    t_redir *r = cmd->redirection;
+    t_redir *r = cmd->redirections;
 
     if (!r)
         return;
