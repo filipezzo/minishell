@@ -62,4 +62,5 @@ int redirect_output(const char *filename);
 int redirect_append(const char *filename);
 void apply_redirect(t_cmd *cmd);
 int builtin_echo(t_cmd *cmd);
+int builtin_pwd(t_cmd *cmd);
 #endif

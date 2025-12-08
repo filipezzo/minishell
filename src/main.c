@@ -11,5 +11,5 @@ int main(void)
     cmd.redirections = NULL;
     cmd.pid = 0;
 
-    builtin_echo(&cmd);
+    builtin_pwd(&cmd);
 }
