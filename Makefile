@@ -11,7 +11,7 @@ UTILS_DIR = utils
 EXEC = $(BIN_DIR)/$(NAME)
 
 SRC_FILES = main.c
-EXEC_FILES = builtin.c builtin_echo.c  redirect.c
+EXEC_FILES = builtin.c builtin_echo.c builtin_pwd.c redirect.c
 LIBFT_FILES = ft_atoi.c ft_atol.c ft_bzero.c ft_calloc.c ft_isalnum.c \
 			ft_isalpha.c ft_isascii.c ft_isdigit.c ft_isprint.c ft_isspace.c \
 			ft_itoa.c ft_lstadd_back_bonus.c ft_lstadd_front_bonus.c \
