@@ -6,7 +6,7 @@
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 20:37:22 by mhidani           #+#    #+#             */
-/*   Updated: 2025/12/08 17:37:17 by mhidani          ###   ########.fr       */
+/*   Updated: 2025/12/08 18:09:26 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,10 @@
 
 # define TRUE 0x01
 # define FALSE 0x00
+
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 128
+# endif
 
 # include <unistd.h>
 # include <stdlib.h>
@@ -68,11 +72,12 @@ int		ft_atoi(const char *src);
 long	ft_atol(char *src);
 char	*ft_itoa(int n);
 
-/* Write to a File Descriptor ---------------------------------------------- */
+/* Write And Read to a File Descriptor -------------------------------------- */
 void	ft_putchar_fd(char c, int fd);
 void	ft_putstr_fd(char *s, int fd);
 void	ft_putendl_fd(char *s, int fd);
 void	ft_putnbr_fd(int n, int fd);
+char	*ft_get_next_line(int fd);
 
 /* bonus ------------------------------------------------------------------- */
 t_list	*ft_lstnew(void *content);
