@@ -1,18 +1,24 @@
 NAME = minishell
-EXEC = $(BIN_DIR)/$(NAME)
 
 SRC_DIR = src
 OBJ_DIR = obj
 BIN_DIR = bin
+EXEC_DIR = exec
 INCLUDE_DIR = include
 UTILS_DIR = utils
 
-SRC_FILES =	main.c	\
-			
+EXEC = $(BIN_DIR)/$(NAME)
 
-SRCS = $(addprefix $(SRC_DIR)/,$(SRC_FILES))
-OBJS = $(addprefix $(OBJ_DIR)/, $(SRC_FILES:.c=.o))
-HEADER = $(addprefix $(INCLUDE_DIR)/, minishell.h )
+SRC_FILES = main.c
+EXEC_FILES = builtin.c builtin_imp.c  redirect.c
+
+
+SRCS = $(addprefix $(SRC_DIR)/, $(SRC_FILES)) \
+       $(addprefix $(SRC_DIR)/$(EXEC_DIR)/, $(EXEC_FILES)) \
+	   
+
+OBJS = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
+HEADER = $(INCLUDE_DIR)/minishell.h
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -pthread
@@ -27,7 +33,7 @@ $(EXEC): $(OBJS)
 	@echo "[\033[0;32mOK\033[0m] $(NAME) compilado em $(BIN_DIR) 👌👌😍"
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(HEADER)
-	@mkdir -p $(OBJ_DIR)
+	@mkdir -p $(dir $@)
 	@$(CC) $(CFLAGS) $(IFLAGS) -c $< -o $@
 	@echo "[\033[0;32mOK\033[0m] Compilado: $< ✅"
 
