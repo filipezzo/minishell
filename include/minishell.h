@@ -70,6 +70,11 @@ int redirect_append(const char *filename);
 void apply_redirect(t_cmd *cmd);
 int builtin_echo(t_cmd *cmd);
 int builtin_env(t_env *list);
+int builtin_unset(t_env **env_list, char **args);
+
+// UTILS
+
+void free_env_node(t_env *node);
 
 // MOCKS --- REMOVER AO FINAL DO PROJETO
 

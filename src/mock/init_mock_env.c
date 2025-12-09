@@ -15,6 +15,7 @@ static t_env *create_mock_node(char *key, char *value)
     node->next = NULL;
     return node;
 }
+
 void init_mock_env(t_shell *shell)
 {
     t_env *n1;
