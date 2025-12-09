@@ -13,7 +13,7 @@ EXEC = $(BIN_DIR)/$(NAME)
 
 SRC_FILES = main.c
 
-EXEC_FILES = builtin.c builtin_echo.c builtin_pwd.c builtin_env.c redirect.c 
+EXEC_FILES = builtin.c builtin_echo.c builtin_pwd.c builtin_env.c builtin_unset.c redirect.c 
 
 LIBFT_FILES = ft_atoi.c ft_atol.c ft_bzero.c ft_calloc.c ft_isalnum.c \
 			ft_isalpha.c ft_isascii.c ft_isdigit.c ft_isprint.c ft_isspace.c \
@@ -29,11 +29,13 @@ LIBFT_FILES = ft_atoi.c ft_atol.c ft_bzero.c ft_calloc.c ft_isalnum.c \
 			ft_get_next_line.c
 
 MOCK_FILES = init_mock_env.c
+UTIL_FILES = free_env.c
 
 SRCS = $(addprefix $(SRC_DIR)/, $(SRC_FILES)) \
        $(addprefix $(SRC_DIR)/$(EXEC_DIR)/, $(EXEC_FILES)) \
 	   $(addprefix $(SRC_DIR)/$(LIBFT_DIR)/, $(LIBFT_FILES)) \
-	   $(addprefix $(SRC_DIR)/$(MOCK_DIR)/, $(MOCK_FILES))
+	   $(addprefix $(SRC_DIR)/$(MOCK_DIR)/, $(MOCK_FILES)) \
+	   $(addprefix $(SRC_DIR)/$(UTILS_DIR)/, $(UTIL_FILES))
 
 OBJS = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 HEADER = $(INCLUDE_DIR)/minishell.h
