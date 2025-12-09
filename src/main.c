@@ -3,13 +3,12 @@
 
 int main(void)
 {
-    t_cmd cmd;
+    t_shell shell;
 
-    char *args[] = {"echo", "-n", "b", "c", NULL};
-    cmd.args = args;
-    cmd.next = NULL;
-    cmd.redirections = NULL;
-    cmd.pid = 0;
+    ft_memset(&shell, 0, sizeof(t_shell));
+    init_mock_env(&shell);
 
-    builtin_pwd(&cmd);
+    printf("Testando builtin env:\n");
+    builtin_env(shell.env_list);
+    return 0;
 }
