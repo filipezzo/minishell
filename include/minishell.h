@@ -39,7 +39,7 @@ typedef struct s_env
 {
     char *key;
     char *value;
-    char *next;
+    struct s_env *next;
 } t_env;
 
 typedef struct s_shell
@@ -69,7 +69,7 @@ int redirect_output(const char *filename);
 int redirect_append(const char *filename);
 void apply_redirect(t_cmd *cmd);
 int builtin_echo(t_cmd *cmd);
-int builtin_pwd(t_cmd *cmd);
+int builtin_env(t_env *list);
 
 // MOCKS --- REMOVER AO FINAL DO PROJETO
 
