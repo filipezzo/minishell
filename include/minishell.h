@@ -35,10 +35,17 @@ typedef struct s_cmd
     struct s_cmd *next;    // prox comando do pipe
 } t_cmd;
 
+typedef struct s_env
+{
+    char *key;
+    char *value;
+    struct s_env *next;
+} t_env;
+
 typedef struct s_shell
 {
     int exit_status;
-    char **env; // incremente se precisar.
+    t_env *env_list; // incremente se precisar.
 } t_shell;
 
 // exemplo cat < in.txt | grep oi > out.txt
@@ -62,5 +69,10 @@ int redirect_output(const char *filename);
 int redirect_append(const char *filename);
 void apply_redirect(t_cmd *cmd);
 int builtin_echo(t_cmd *cmd);
-int builtin_pwd(t_cmd *cmd);
+int builtin_env(t_env *list);
+
+// MOCKS --- REMOVER AO FINAL DO PROJETO
+
+void init_mock_env(t_shell *shell);
+
 #endif
