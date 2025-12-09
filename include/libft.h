@@ -6,7 +6,7 @@
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 20:37:22 by mhidani           #+#    #+#             */
-/*   Updated: 2025/12/08 18:09:26 by mhidani          ###   ########.fr       */
+/*   Updated: 2025/12/09 16:07:06 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,33 @@
 
 typedef char	t_bool;
 
-typedef struct s_list
+// Data Structures =============================================================
+// Doubly Linked List ----------------------------------------------------------
+typedef struct s_dlist
 {
-	void			*content;
-	struct s_list	*next;
-}		t_list;
+	struct s_bnode	*head;
+	struct s_bnode	*tail;
+	size_t			size;
+	t_bool			(*destroy_node)();
+}					t_dlist;
+// ---------------------------------------------------------- Doubly Linked List 
+
+// Bidirectional Node ----------------------------------------------------------
+typedef struct	s_bnode
+{
+	void			*data;
+	struct s_bnode	*next;
+	struct s_bnode	*prev;
+	struct s_dlist	*structure;
+	t_bool			(*destroy_data)(void *);
+}					t_bnode;
+// ---------------------------------------------------------- Bidirectional Node
+// ============================================================= Data Structures
+
+// Special Generic Functions ===================================================
+typedef t_bool	(*destroy)(void *data);
+typedef t_bool	(*foreach_callback)(void *crr, void *tgt);
+// =================================================== Special Generic Functions
 
 /* Check and Manipulate character ------------------------------------------ */
 t_bool	ft_isalpha(int c);
@@ -49,7 +71,7 @@ char	*ft_strchr(const char *s, int c);
 char	*ft_strrchr(const char *s, int c);
 int		ft_strcmp(const char *s1, const char *s2);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
-char	*ft_strmapi(char const *s, char (*f)(unsigned int, char));
+char	*ft_strmapi(char const *s, char (*ds)(unsigned int, char));
 char	*ft_strnstr(const char *big, const char *little, size_t len);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	*ft_strjoin(char const *s1, char const *s2);
@@ -72,22 +94,32 @@ int		ft_atoi(const char *src);
 long	ft_atol(char *src);
 char	*ft_itoa(int n);
 
-/* Write And Read to a File Descriptor -------------------------------------- */
+/* Write And Read to a File Descriptor ------------------------------------- */
 void	ft_putchar_fd(char c, int fd);
 void	ft_putstr_fd(char *s, int fd);
 void	ft_putendl_fd(char *s, int fd);
 void	ft_putnbr_fd(int n, int fd);
 char	*ft_get_next_line(int fd);
 
-/* bonus ------------------------------------------------------------------- */
-t_list	*ft_lstnew(void *content);
-void	ft_lstadd_front(t_list **lst, t_list *new);
-int		ft_lstsize(t_list *lst);
-t_list	*ft_lstlast(t_list *lst);
-void	ft_lstadd_back(t_list **lst, t_list *new);
-void	ft_lstdelone(t_list *lst, void (*del)(void*));
-void	ft_lstclear(t_list **lst, void (*del)(void*));
-void	ft_lstiter(t_list *lst, void (*f)(void *));
-t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
+// Data Structures Functions ===================================================
+// Doubly Linked List ----------------------------------------------------------
+
+t_dlist	*ft_new_dlist(t_bool (*destroy_nd)());
+t_bool	ft_destroy_dlist(void *ptr);
+t_dlist	*ft_add_nd_dlist(t_dlist *list, void *data, destroy dst_dt);
+t_dlist	*ft_remove_nd_dlist(t_dlist *list, t_bnode *tgt);
+t_bnode	*ft_findin_dlist(t_dlist *list, void *data, t_bool (*eq)());
+t_bool	ft_foreach_dlist(t_dlist *list, void *data, foreach_callback callback);
+
+// ---------------------------------------------------------- Doubly Linked List
+
+// Birectional Node ------------------------------------------------------------
+
+t_bnode	*ft_new_bnode(void *data, void *structure, destroy dst_dt);
+t_bool	ft_setdir_bnode(t_bnode *node, t_bnode *next, t_bnode *prev);
+t_bool	ft_destroy_bnode(void *ptr);
+
+// ---------------------------------------------------------- Bidirectional Node
+// =================================================== Data Structures Functions
 
 #endif
