@@ -71,10 +71,13 @@ void apply_redirect(t_cmd *cmd);
 int builtin_echo(t_cmd *cmd);
 int builtin_env(t_env *list);
 int builtin_unset(t_env **env_list, char **args);
-
+int builtin_export(t_shell *shell, char **args);
 // UTILS
 
 void free_env_node(t_env *node);
+int is_valid_env_key(char *str);
+void update_or_create_node(t_env **head, char *key, char *value);
+int count_list_elements(t_env *list);
 
 // MOCKS --- REMOVER AO FINAL DO PROJETO
 
