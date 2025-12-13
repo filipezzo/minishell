@@ -14,13 +14,6 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 #include "libft.h"
-# include <stdio.h>
-# include <unistd.h>
-# include <fcntl.h>
-# include <stdlib.h>
-# include <sys/wait.h>
-# include <sys/types.h>
-# include "libft.h"
 
 typedef enum e_type
 {

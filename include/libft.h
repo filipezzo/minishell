@@ -6,7 +6,7 @@
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 20:37:22 by mhidani           #+#    #+#             */
-/*   Updated: 2025/12/13 17:29:21 by mhidani          ###   ########.fr       */
+/*   Updated: 2025/12/13 18:48:07 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,24 +32,12 @@ typedef struct s_dlist
 	struct s_bnode *head;
 	struct s_bnode *tail;
 	size_t size;
-	t_bool (*destroy_node)();
 } t_dlist;
 // ---------------------------------------------------------- Doubly Linked List
-	struct s_bnode	*head;
-	struct s_bnode	*tail;
-	size_t			size;
-}					t_dlist;
-// ---------------------------------------------------------- Doubly Linked List 
 
 // Bidirectional Node ----------------------------------------------------------
 typedef struct s_bnode
 {
-	void *data;
-	struct s_bnode *next;
-	struct s_bnode *prev;
-	struct s_dlist *structure;
-	t_bool (*destroy_data)(void *);
-} t_bnode;
 	void			*data;
 	struct s_bnode	*left;
 	struct s_bnode	*right;
@@ -119,12 +107,6 @@ char *ft_get_next_line(int fd);
 // Data Structures Functions ===================================================
 // Doubly Linked List ----------------------------------------------------------
 
-t_dlist *ft_new_dlist(t_bool (*destroy_nd)());
-t_bool ft_destroy_dlist(void *ptr);
-t_dlist *ft_add_nd_dlist(t_dlist *list, void *data, destroy dst_dt);
-t_dlist *ft_remove_nd_dlist(t_dlist *list, t_bnode *tgt);
-t_bnode *ft_findin_dlist(t_dlist *list, void *data, t_bool (*eq)());
-t_bool ft_foreach_dlist(t_dlist *list, void *data, foreach_callback callback);
 t_dlist	*ft_new_dlist(void);
 t_bool	ft_destroy_dlist(void *ptr);
 t_dlist	*ft_add_nd_dlist(t_dlist *list, void *data, destructor dst);
