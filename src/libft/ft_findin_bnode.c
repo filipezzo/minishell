@@ -6,7 +6,7 @@
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/09 14:12:51 by mhidani           #+#    #+#             */
-/*   Updated: 2025/12/09 14:25:19 by mhidani          ###   ########.fr       */
+/*   Updated: 2025/12/13 17:28:54 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,6 @@ t_bnode	*ft_findin_dlist(t_dlist *list, void *data, t_bool (*eq)())
 		return (NULL);
 	pivot = list->head;
 	while (pivot && !eq(pivot->data, data))
-		pivot = pivot->next;
+		pivot = pivot->right;
 	return (pivot);
 }

@@ -6,7 +6,7 @@
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/09 09:55:06 by mhidani           #+#    #+#             */
-/*   Updated: 2025/12/13 16:39:24 by mhidani          ###   ########.fr       */
+/*   Updated: 2025/12/13 17:53:09 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ t_bnode	*ft_new_bnode(void *data, void *structure, destructor dst)
 	if (!node)
 		return (NULL);
 	node->data = data;
-	node->next = NULL;
-	node->prev = NULL;
+	node->left = NULL;
+	node->right = NULL;
 	node->structure = structure;
 	node->destroy_data = dst;
 	return (node);

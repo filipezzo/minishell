@@ -39,8 +39,8 @@ t_dlist	*ft_add_nd_dlist(t_dlist *list, void *data, destructor dst)
 	}
 	else
 	{
-		ft_setdir_bnode(node, NULL, list->tail);
-		ft_setdir_bnode(list->tail, node, list->tail->prev);
+		ft_setdir_bnode(node, list->tail, NULL);
+		ft_setdir_bnode(list->tail, list->tail->left, node);
 		list->tail = node;
 	}
 	list->size += 1;

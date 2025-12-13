@@ -6,7 +6,7 @@
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/09 11:41:50 by mhidani           #+#    #+#             */
-/*   Updated: 2025/12/13 16:42:05 by mhidani          ###   ########.fr       */
+/*   Updated: 2025/12/13 17:28:54 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ t_bool	ft_destroy_dlist(void *ptr)
 	i = 0;
 	while (pivot && i < list->size)
 	{
-		next = pivot->next;
+		next = pivot->right;
 		if (ft_destroy_bnode(pivot) == FALSE)
 			break;
 		i++;
