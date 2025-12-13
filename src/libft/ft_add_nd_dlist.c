@@ -32,11 +32,17 @@ t_dlist	*ft_add_nd_dlist(t_dlist *list, void *data, destroy dst_dt)
 	node = ft_new_bnode(data, list, dst_dt);
 	if (!node)
 		return (NULL);
-	ft_setdir_bnode(node, NULL, list->tail);
-	ft_setdir_bnode(list->tail, node, list->tail->prev);
-	if (!list->head)
+	if (!list->head || !list->tail)
+	{
 		list->head = node;
-	list->tail = node;
+		list->tail = node;
+	}
+	else
+	{
+		ft_setdir_bnode(node, NULL, list->tail);
+		ft_setdir_bnode(list->tail, node, list->tail->prev);
+		list->tail = node;
+	}
 	list->size += 1;
 	return (list);
 }
