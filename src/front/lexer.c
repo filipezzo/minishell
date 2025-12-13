@@ -1,104 +1,17 @@
 
 #include "minishell.h"
 
-static void	skip_spaces(char **str)
-{
-	while (**str && (**str == ' ' || **str == '\t'))
-		(*str)++;
-}
+static t_bool	lex_single_quote(char **str, t_lexunit *unit);
+static t_bool	lex_double_quote(char **str, t_lexunit *unit);
+static t_bool	lex_signs(char **str, t_siglexer **siglexer, t_lexunit *unit);
+static t_bool	lex_word(char **str, t_lexunit *unit);
 
-static t_bool	cut_single_quote(char **str, t_lexunit *token)
-{
-	const char	*start;
-
-	if (**str != '\'' || !*str || !token)
-		return (FALSE);
-	start = ++(*str);
-	while (**str && **str != '\'')
-		(*str)++;
-	if (**str != '\'')
-		return (FALSE);
-	token->type = WORD;
-	token->content = ft_strndup(start, *str - start);
-	(*str)++;
-	return (TRUE);
-}
-
-static t_bool	cut_double_quote(char **str, t_lexunit *token)
-{
-	const char	*start;
-
-	if (**str != '\"' || !*str || !token)
-		return (FALSE);
-	start = ++(*str);
-	while (**str && **str != '\"')
-		(*str)++;
-	if (**str != '\"')
-		return (FALSE);
-	token->type = WORD;
-	token->content = ft_strndup(start, *str - start);
-	(*str)++;
-	return (TRUE);
-}
-
-static t_bool	cut_signs(char **str, t_siglexer **siglexer, t_lexunit *token)
-{
-	size_t	i;
-
-	if (!*str || !siglexer || !token)
-		return (FALSE);
-	i = 0;
-	while (siglexer[i] != NULL)
-	{
-		if (ft_strncmp(*str, siglexer[i]->sign, siglexer[i]->size) == 0)
-		{
-			token->type = siglexer[i]->type;
-			token->content = ft_strndup(siglexer[i]->sign, siglexer[i]->size);
-			(*str) += siglexer[i]->size;
-			return (TRUE);
-		}
-		i++;
-	}
-	return (FALSE);
-}
-
-static t_bool	is_jump_word(char c)
-{
-	char	*signs;
-	size_t	i;
-
-	if (ft_isspace(c))
-		return (TRUE);
-	if (c == '\'' || c == '\"')
-		return (TRUE);
-	signs = "|&;()<>";
-	i = 0;
-	while (signs[i] && c != signs[i])
-		i++;
-	if (c == signs[i])
-		return (TRUE);
-	return (FALSE);
-}
-
-static t_bool	cut_word(char **str, t_lexunit *token)
-{
-	const char	*start;
-
-	if (!*str || !token)
-		return (FALSE);
-	start = *str;
-	while (**str && !is_jump_word(**str))
-		(*str)++;
-	if ((*str - start) == 0)
-		return (FALSE);
-	token->content = ft_strndup(start, *str - start);
-	if (!token->content)
-		return (FALSE);
-	token->type = WORD;
-	return (TRUE);
-}
-
-t_dlist	*lexer(char *in, t_siglexer **siglexer)
+/**
+ * @param in
+ * @param siglex Lexer Signals
+ * @return 
+ */
+t_dlist	*lexer(char *in, t_siglexer **siglex)
 {
 	t_dlist		*list;
 	t_lexunit	*unit;
@@ -108,18 +21,112 @@ t_dlist	*lexer(char *in, t_siglexer **siglexer)
 	pivot = in;
 	while (*pivot)
 	{
-		unit = malloc(sizeof(t_lexunit));
-		if (!unit)
+		if (!new_lexunit(&unit, WORD, NULL))
 			return (NULL);
-		skip_spaces(&pivot);
-		if (cut_single_quote(&pivot, unit))
+		while (pivot && (pivot == ' ' || pivot == '\t'))
+			pivot++;
+		if (lex_single_quote(&pivot, unit))
 			ft_add_nd_dlist(list, unit, destroy_lexunit);
-		else if (cut_double_quote(&pivot, unit))
+		else if (lex_double_quote(&pivot, unit))
 			ft_add_nd_dlist(list, unit, destroy_lexunit);
-		else if (cut_signs(&pivot, siglexer, unit))
+		else if (lex_signs(&pivot, siglex, unit))
 			ft_add_nd_dlist(list, unit, destroy_lexunit);
-		else if (cut_word(&pivot, unit))
+		else if (lex_word(&pivot, unit))
 			ft_add_nd_dlist(list, unit, destroy_lexunit);
 	}
 	return (list);
+}
+
+/**
+ * @param str
+ * @param unit
+ * @return 
+ */
+static t_bool	lex_single_quote(char **str, t_lexunit *unit)
+{
+	const char	*start;
+
+	if (**str != '\'' || !*str || !unit)
+		return (FALSE);
+	start = ++(*str);
+	while (**str && **str != '\'')
+		(*str)++;
+	if (**str != '\'')
+		return (FALSE);
+	unit->type = WORD;
+	unit->content = ft_strndup(start, *str - start);
+	(*str)++;
+	return (TRUE);
+}
+
+/**
+ * @param str
+ * @param unit
+ * @return 
+ */
+static t_bool	lex_double_quote(char **str, t_lexunit *unit)
+{
+	const char	*start;
+
+	if (**str != '\"' || !*str || !unit)
+		return (FALSE);
+	start = ++(*str);
+	while (**str && **str != '\"')
+		(*str)++;
+	if (**str != '\"')
+		return (FALSE);
+	unit->type = WORD;
+	unit->content = ft_strndup(start, *str - start);
+	(*str)++;
+	return (TRUE);
+}
+
+/**
+ * @param str
+ * @param siglex
+ * @param unit
+ * @return 
+ */
+static t_bool	lex_signs(char **str, t_siglexer **siglex, t_lexunit *unit)
+{
+	size_t	i;
+
+	if (!*str || !siglex || !unit)
+		return (FALSE);
+	i = 0;
+	while (siglex[i] != NULL)
+	{
+		if (ft_strncmp(*str, siglex[i]->sign, siglex[i]->size) == 0)
+		{
+			unit->type = siglex[i]->type;
+			unit->content = ft_strndup(siglex[i]->sign, siglex[i]->size);
+			(*str) += siglex[i]->size;
+			return (TRUE);
+		}
+		i++;
+	}
+	return (FALSE);
+}
+
+/**
+ * @param str
+ * @param unit
+ * @return 
+ */
+static t_bool	lex_word(char **str, t_lexunit *unit)
+{
+	const char	*start;
+
+	if (!*str || !unit)
+		return (FALSE);
+	start = *str;
+	while (**str && !lex_isjump(**str))
+		(*str)++;
+	if ((*str - start) == 0)
+		return (FALSE);
+	unit->content = ft_strndup(start, *str - start);
+	if (!unit->content)
+		return (FALSE);
+	unit->type = WORD;
+	return (TRUE);
 }
