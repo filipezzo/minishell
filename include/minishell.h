@@ -10,6 +10,8 @@
 #include <stdlib.h>
 #include <sys/wait.h>
 #include <sys/types.h>
+#include <readline/readline.h>
+#include <readline/history.h>
 #include "libft.h"
 
 typedef enum e_type
@@ -75,6 +77,7 @@ int builtin_export(t_shell *shell, char **args);
 // UTILS
 
 void free_env_node(t_env *node);
+void free_shell(t_shell *shell);
 int is_valid_env_key(char *str);
 void update_or_create_node(t_env **head, char *key, char *value);
 int count_list_elements(t_env *list);
