@@ -19,17 +19,17 @@
  * and tail.
  * @param list Data structure doubly linked list where the node will be placed.
  * @param data Node information.
- * @param dst_dt Function used to destroy the information of the created 
- * node from the allocated memory.
+ * @param dst Function used to destroy the information of the created node from 
+ * the allocated memory.
  * @return Returns the same list to which the created node was added.
  */
-t_dlist	*ft_add_nd_dlist(t_dlist *list, void *data, destroy dst_dt)
+t_dlist	*ft_add_nd_dlist(t_dlist *list, void *data, destructor dst)
 {
 	t_bnode	*node;
 
-	if (!list || !data || !dst_dt)
+	if (!list || !data || !dst)
 		return (NULL);
-	node = ft_new_bnode(data, list, dst_dt);
+	node = ft_new_bnode(data, list, dst);
 	if (!node)
 		return (NULL);
 	if (!list->head || !list->tail)

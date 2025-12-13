@@ -6,7 +6,7 @@
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 20:37:22 by mhidani           #+#    #+#             */
-/*   Updated: 2025/12/13 10:06:19 by mhidani          ###   ########.fr       */
+/*   Updated: 2025/12/13 16:37:40 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ typedef struct	s_bnode
 // ============================================================= Data Structures
 
 // Special Generic Functions ===================================================
-typedef t_bool	(*destroy)(void *data);
+typedef t_bool	(*destructor)(void *data);
 typedef t_bool	(*foreach_callback)(void *crr, void *tgt);
 // =================================================== Special Generic Functions
 
@@ -107,7 +107,7 @@ char	*ft_get_next_line(int fd);
 
 t_dlist	*ft_new_dlist(t_bool (*destroy_nd)());
 t_bool	ft_destroy_dlist(void *ptr);
-t_dlist	*ft_add_nd_dlist(t_dlist *list, void *data, destroy dst_dt);
+t_dlist	*ft_add_nd_dlist(t_dlist *list, void *data, destructor dst);
 t_dlist	*ft_remove_nd_dlist(t_dlist *list, t_bnode *tgt);
 t_bnode	*ft_findin_dlist(t_dlist *list, void *data, t_bool (*eq)());
 t_bool	ft_foreach_dlist(t_dlist *list, void *data, foreach_callback callback);
@@ -116,7 +116,7 @@ t_bool	ft_foreach_dlist(t_dlist *list, void *data, foreach_callback callback);
 
 // Birectional Node ------------------------------------------------------------
 
-t_bnode	*ft_new_bnode(void *data, void *structure, destroy dst_dt);
+t_bnode	*ft_new_bnode(void *data, void *structure, destructor dst);
 t_bool	ft_setdir_bnode(t_bnode *node, t_bnode *next, t_bnode *prev);
 t_bool	ft_destroy_bnode(void *ptr);
 
