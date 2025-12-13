@@ -6,18 +6,13 @@ static t_bool	lex_double_quote(char **str, t_lexunit *unit);
 static t_bool	lex_signs(char **str, t_siglexer **siglexer, t_lexunit *unit);
 static t_bool	lex_word(char **str, t_lexunit *unit);
 
-/**
- * @param in
- * @param siglex Lexer Signals
- * @return 
- */
 t_dlist	*lexer(char *in, t_siglexer **siglex)
 {
 	t_dlist		*list;
 	t_lexunit	*unit;
 	char		*pivot;
 
-	list = ft_new_dlist(ft_destroy_bnode);
+	list = ft_new_dlist();
 	pivot = in;
 	while (*pivot)
 	{
@@ -37,11 +32,6 @@ t_dlist	*lexer(char *in, t_siglexer **siglex)
 	return (list);
 }
 
-/**
- * @param str
- * @param unit
- * @return 
- */
 static t_bool	lex_single_quote(char **str, t_lexunit *unit)
 {
 	const char	*start;
@@ -59,11 +49,6 @@ static t_bool	lex_single_quote(char **str, t_lexunit *unit)
 	return (TRUE);
 }
 
-/**
- * @param str
- * @param unit
- * @return 
- */
 static t_bool	lex_double_quote(char **str, t_lexunit *unit)
 {
 	const char	*start;
@@ -81,12 +66,6 @@ static t_bool	lex_double_quote(char **str, t_lexunit *unit)
 	return (TRUE);
 }
 
-/**
- * @param str
- * @param siglex
- * @param unit
- * @return 
- */
 static t_bool	lex_signs(char **str, t_siglexer **siglex, t_lexunit *unit)
 {
 	size_t	i;
@@ -108,11 +87,6 @@ static t_bool	lex_signs(char **str, t_siglexer **siglex, t_lexunit *unit)
 	return (FALSE);
 }
 
-/**
- * @param str
- * @param unit
- * @return 
- */
 static t_bool	lex_word(char **str, t_lexunit *unit)
 {
 	const char	*start;
