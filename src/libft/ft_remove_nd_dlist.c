@@ -6,7 +6,7 @@
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/09 17:35:38 by mhidani           #+#    #+#             */
-/*   Updated: 2025/12/09 17:52:57 by mhidani          ###   ########.fr       */
+/*   Updated: 2025/12/13 17:37:03 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,16 @@ t_dlist	*ft_remove_nd_dlist(t_dlist *list, t_bnode *tgt)
 {
 	if (!list || !tgt)
 		return (NULL);
-	if (tgt->prev)
-		tgt->prev->next = tgt->next;
+	if (tgt->left)
+		tgt->left->right = tgt->right;
 	else
-		list->head = tgt->next;
-	if (tgt->next)
-		tgt->next->prev = tgt->prev;
+		list->head = tgt->right;
+	if (tgt->right)
+		tgt->right->left = tgt->left;
 	else
-		list->tail = tgt->prev;
+		list->tail = tgt->left;
 	ft_destroy_bnode(tgt);
-	list->size -= 1;
+	if (list->size > 0)
+		list->size -= 1;
 	return (list);
 }
