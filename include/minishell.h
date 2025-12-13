@@ -5,6 +5,15 @@
 # define BUFSIZE 1024
 # define PATH_MAX 4096
 
+#include <stdio.h>
+#include <unistd.h>
+#include <fcntl.h>
+#include <stdlib.h>
+#include <sys/wait.h>
+#include <sys/types.h>
+#include <readline/readline.h>
+#include <readline/history.h>
+#include "libft.h"
 # include <stdio.h>
 # include <unistd.h>
 # include <fcntl.h>
@@ -90,6 +99,27 @@ typedef struct s_shared_work
 //  pid = PID DPS DO FORK
 //  next = NULL
 
+// execute
+int is_command_builtin(const char *command_name);
+int redirect_input(const char *filename);
+int redirect_output(const char *filename);
+int redirect_append(const char *filename);
+void apply_redirect(t_cmd *cmd);
+int builtin_echo(t_cmd *cmd);
+int builtin_env(t_env *list);
+int builtin_unset(t_env **env_list, char **args);
+int builtin_export(t_shell *shell, char **args);
+// UTILS
+
+void free_env_node(t_env *node);
+void free_shell(t_shell *shell);
+int is_valid_env_key(char *str);
+void update_or_create_node(t_env **head, char *key, char *value);
+int count_list_elements(t_env *list);
+
+// MOCKS --- REMOVER AO FINAL DO PROJETO
+
+void init_mock_env(t_shell *shell);
 
 // Execute =====================================================================
 // Redirections ----------------------------------------------------------------
