@@ -6,7 +6,7 @@
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/09 11:41:50 by mhidani           #+#    #+#             */
-/*   Updated: 2025/12/09 13:27:06 by mhidani          ###   ########.fr       */
+/*   Updated: 2025/12/13 16:42:05 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_bool	ft_destroy_dlist(void *ptr)
 	t_bnode	*next;
 	size_t	i;
 
-	if (!ptr || !((t_dlist *)ptr)->destroy_node)
+	if (!ptr)
 		return (FALSE);
 	list = (t_dlist *)ptr;
 	pivot = list->head;
@@ -34,7 +34,7 @@ t_bool	ft_destroy_dlist(void *ptr)
 	while (pivot && i < list->size)
 	{
 		next = pivot->next;
-		if (list->destroy_node(pivot) == FALSE)
+		if (ft_destroy_bnode(pivot) == FALSE)
 			break;
 		i++;
 		pivot = next;
