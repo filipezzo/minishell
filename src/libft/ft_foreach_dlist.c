@@ -6,7 +6,7 @@
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/09 15:47:04 by mhidani           #+#    #+#             */
-/*   Updated: 2025/12/09 17:29:05 by mhidani          ###   ########.fr       */
+/*   Updated: 2025/12/13 17:28:54 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ t_bool	ft_foreach_dlist(t_dlist *list, void *data, foreach_callback callback)
 	{
 		if (callback(pivot->data, data) == FALSE)
 			return (FALSE);
-		pivot = pivot->next;
+		pivot = pivot->right;
 	}
 	return (TRUE);
 }
