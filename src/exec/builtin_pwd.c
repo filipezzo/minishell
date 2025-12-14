@@ -1,10 +1,9 @@
 #include "minishell.h"
 
-int builtin_pwd(t_cmd *cmd)
+int builtin_pwd()
 {
     char buffer[PATH_MAX];
 
-    (void)cmd;
     if (getcwd(buffer, PATH_MAX) != NULL)
     {
         ft_putstr_fd(buffer, STDOUT_FILENO);

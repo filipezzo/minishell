@@ -14,10 +14,11 @@ EXEC = $(BIN_DIR)/$(NAME)
 
 SRC_FILES = main.c
 
-EXEC_FILES = builtin.c builtin_echo.c builtin_pwd.c builtin_env.c builtin_export.c builtin_unset.c redirect.c 
+EXEC_FILES = builtin.c builtin_echo.c builtin_pwd.c builtin_env.c builtin_export.c builtin_unset.c redirect.c	\
+			 builtin_exit.c builtin_cd.c
 
 MOCK_FILES = init_mock_env.c 
-UTIL_FILES = linked_list.c utils_env.c
+UTIL_FILES = linked_list.c utils_env.c clean.c
 
 LIBFT = $(SLIB_DIR)/libft.a
 

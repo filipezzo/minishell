@@ -9,13 +9,26 @@ int is_command_builtin(const char *cmd)
     return 0;
 }
 
-int run_builtin(t_cmd *cmd)
+void run_builtin(t_shell *shell, t_cmd *cmd)
 {
-    char **argv; // {"echo", "testando", "duvida", NULL}
-    (void)argv;
-    if (!cmd || !cmd->args || !cmd->args[0])
-        return (0);
-    argv = cmd->args;
+    int status;
 
-    return (0);
+    status = 0;
+    if (!shell || !cmd)
+        return;
+    if (ft_strcmp(cmd->args[0], "cd") == 0)
+        status = builtin_cd(shell, cmd->args);
+    else if (ft_strcmp(cmd->args[0], "echo") == 0)
+        status = builtin_echo(cmd);
+    else if (ft_strcmp(cmd->args[0], "env") == 0)
+        status = builtin_env(shell->env_list);
+    else if (ft_strcmp(cmd->args[0], "exit") == 0)
+        status = builtin_exit(shell, cmd->args);
+    else if (ft_strcmp(cmd->args[0], "export") == 0)
+        status = builtin_export(shell, cmd->args);
+    else if (ft_strcmp(cmd->args[0], "pwd") == 0)
+        status = builtin_pwd();
+    else if (ft_strcmp(cmd->args[0], "unset") == 0)
+        status = builtin_unset(&shell->env_list, cmd->args);
+    shell->exit_status = status;
 }
