@@ -58,29 +58,28 @@ int redirect_append(const char *filename)
     return (1);
 }
 
-void apply_redirect(t_cmd *cmd)
+int apply_redirect(t_cmd *cmd)
 {
     t_redir *r = cmd->redirections;
 
-    if (!r)
-        return;
     while (r)
     {
         if (r->type == REDIR_IN)
         {
             if (!redirect_input(r->file))
-                exit(1);
+                return (0);
         }
         else if (r->type == REDIR_OUT)
         {
             if (!redirect_output(r->file))
-                exit(1);
+                return (0);
         }
         else if (r->type == REDIR_APPEND)
         {
             if (!redirect_append(r->file))
-                exit(1);
+                return (0);
         }
         r = r->next;
     }
+    return (1);
 }

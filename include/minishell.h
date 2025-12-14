@@ -56,8 +56,11 @@ typedef struct s_env
 
 typedef struct s_shell
 {
-	int exit_status;
-	t_env *env_list; // incremente se precisar.
+	int exit_status; // valor do $?
+	t_env *env_list; // lista de variaveis de ambiente
+	t_cmd *cmd_list; // lista dos argumentos
+	int saved_stdin;
+	int saved_stdout;
 } t_shell;
 
 typedef struct s_lex_unit
@@ -97,7 +100,6 @@ int is_command_builtin(const char *command_name);
 int redirect_input(const char *filename);
 int redirect_output(const char *filename);
 int redirect_append(const char *filename);
-void apply_redirect(t_cmd *cmd);
 
 // builtin
 int builtin_cd(t_shell *shell, char **args);
@@ -128,7 +130,7 @@ void init_mock_env(t_shell *shell);
 int redirect_input(const char *filename);
 int redirect_output(const char *filename);
 int redirect_append(const char *filename);
-void apply_redirect(t_cmd *cmd);
+int apply_redirect(t_cmd *cmd);
 
 // Builtins --------------------------------------------------------------------
 
