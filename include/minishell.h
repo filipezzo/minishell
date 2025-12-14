@@ -56,8 +56,9 @@ typedef struct s_env
 
 typedef struct s_shell
 {
-	int exit_status;
-	t_env *env_list; // incremente se precisar.
+	int exit_status; // valor do $?
+	t_env *env_list; // lista de variaveis de ambiente
+	t_cmd *cmd_list; // lista dos argumentos
 } t_shell;
 
 typedef struct s_lex_unit
