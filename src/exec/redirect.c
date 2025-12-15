@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   redirect.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fsousa <fsousa@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/12/15 18:07:07 by fsousa            #+#    #+#             */
+/*   Updated: 2025/12/15 18:07:08 by fsousa           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 int redirect_input(const char *filename)
@@ -58,29 +70,28 @@ int redirect_append(const char *filename)
     return (1);
 }
 
-void apply_redirect(t_cmd *cmd)
+int apply_redirect(t_cmd *cmd)
 {
     t_redir *r = cmd->redirections;
 
-    if (!r)
-        return;
     while (r)
     {
         if (r->type == REDIR_IN)
         {
             if (!redirect_input(r->file))
-                exit(1);
+                return (0);
         }
         else if (r->type == REDIR_OUT)
         {
             if (!redirect_output(r->file))
-                exit(1);
+                return (0);
         }
         else if (r->type == REDIR_APPEND)
         {
             if (!redirect_append(r->file))
-                exit(1);
+                return (0);
         }
         r = r->next;
     }
+    return (1);
 }
