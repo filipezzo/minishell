@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   executor.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fsousa <fsousa@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/12/15 18:07:04 by fsousa            #+#    #+#             */
+/*   Updated: 2025/12/15 18:07:05 by fsousa           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-void executor(t_shell *shell) // ls -la > saida.txt | grep "minishell"
+void executor(t_shell *shell)
 {
     t_cmd *head_cmd;
 
