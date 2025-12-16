@@ -6,7 +6,7 @@
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 20:37:22 by mhidani           #+#    #+#             */
-/*   Updated: 2025/12/13 17:29:21 by mhidani          ###   ########.fr       */
+/*   Updated: 2025/12/16 11:53:06 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,15 @@ typedef struct s_dlist
 	struct s_bnode	*tail;
 	size_t			size;
 }					t_dlist;
-// ---------------------------------------------------------- Doubly Linked List 
+// ---------------------------------------------------------- Doubly Linked List
+
+// Abstract Syntax Tree --------------------------------------------------------
+typedef struct s_astree
+{
+	struct s_bnode	*root;
+	size_t			leaves;
+}	t_astree;
+// -------------------------------------------------------- Abstract Syntax Tree
 
 // Bidirectional Node ----------------------------------------------------------
 typedef struct	s_bnode
@@ -112,6 +120,18 @@ t_bnode	*ft_findin_dlist(t_dlist *list, void *data, t_bool (*eq)());
 t_bool	ft_foreach_dlist(t_dlist *list, void *data, foreach_callback callback);
 
 // ---------------------------------------------------------- Doubly Linked List
+
+// Abstract Syntax Tree --------------------------------------------------------
+
+t_astree	*ft_new_astree(void);
+t_bool		ft_destroy_astree(void *ptr);
+t_astree	*ft_add_lef_astree(t_astree *tree, void *data, destructor dst);
+t_astree	*ft_add_rig_astree(t_astree *tree, void *data, destructor dst);
+t_astree	*ft_add_lev_astree(t_astree *tree, void *data, destructor dst);
+t_bool		ft_remove_leave_astree(t_astree *tree, t_bnode *node);
+void		ft_print_astree(t_astree *tree);
+
+// -------------------------------------------------------- Abstract Syntax Tree
 
 // Birectional Node ------------------------------------------------------------
 
