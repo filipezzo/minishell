@@ -3,15 +3,16 @@
 
 int main(void)
 {
-    char buffer[1024];
+    t_shell shell;
+	t_cmd cmd_node;
 
-    if (!getcwd(buffer, 1024))
-        return 1;
-    printf("%s\n", buffer);
-    char *new_path = "/mnt/c/Users/fastn/OneDrive/42";
-    if (chdir(new_path) == -1)
-        return 1;
-    if (!getcwd(buffer, 1024))
-        return 1;
-    printf("%s\n", buffer);
+	ft_memset(&shell, 0, sizeof(t_shell));
+	ft_memset(&cmd_node, 0, sizeof(t_cmd));
+
+	char *args[] = {"pwd", "oi", NULL };
+	cmd_node.args = args;
+	cmd_node.next = NULL;
+	shell.cmd_list = &cmd_node;
+	executor(&shell);
+	return 0;
 }

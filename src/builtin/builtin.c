@@ -6,7 +6,7 @@
 /*   By: fsousa <fsousa@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/15 17:49:52 by fsousa            #+#    #+#             */
-/*   Updated: 2025/12/15 18:32:59 by fsousa           ###   ########.fr       */
+/*   Updated: 2025/12/16 15:15:56 by fsousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	run_builtin(t_shell *shell, t_cmd *cmd)
 	else if (ft_strcmp(cmd->args[0], "export") == 0)
 		status = builtin_export(shell, cmd->args);
 	else if (ft_strcmp(cmd->args[0], "pwd") == 0)
-		status = builtin_pwd();
+		status = builtin_pwd(cmd->args);
 	else if (ft_strcmp(cmd->args[0], "unset") == 0)
 		status = builtin_unset(&shell->env_list, cmd->args);
 	shell->exit_status = status;

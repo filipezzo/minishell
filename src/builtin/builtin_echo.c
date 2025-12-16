@@ -6,7 +6,7 @@
 /*   By: fsousa <fsousa@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/15 17:49:31 by fsousa            #+#    #+#             */
-/*   Updated: 2025/12/15 18:25:22 by fsousa           ###   ########.fr       */
+/*   Updated: 2025/12/16 14:35:04 by fsousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,15 @@ static int	builtin_echo_has_flag(const char *str)
 	int	i;
 
 	if (!str || str[0] != '-' || str[1] != 'n')
-		return (0);
+		return (FALSE);
 	i = 2;
 	while (str[i])
 	{
 		if (str[i] != 'n')
-			return (0);
+			return (FALSE);
 		i++;
 	}
-	return (1);
+	return (TRUE);
 }
 
 int	builtin_echo(t_cmd *cmd)
