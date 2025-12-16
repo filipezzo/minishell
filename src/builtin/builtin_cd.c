@@ -6,7 +6,7 @@
 /*   By: fsousa <fsousa@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/15 17:49:09 by fsousa            #+#    #+#             */
-/*   Updated: 2025/12/15 18:47:10 by fsousa           ###   ########.fr       */
+/*   Updated: 2025/12/16 12:14:13 by fsousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,28 @@ static char	*get_target_path(t_env *env, char **args)
 	return (args[1]);
 }
 
+static int	execute_cwd(char *target, char *old_pwd_copy)
+{
+	if (chdir(target) == -1)
+	{
+		ft_putstr_fd("minishell: cd: ", STDERR_FILENO);
+		perror(target);
+		free(old_pwd_copy);
+		return (FALSE);
+	}
+	return (TRUE);
+}
+
+static int	verify_target(char *target, char *old_pwd_copy)
+{
+	if (!target)
+	{
+		free(old_pwd_copy);
+		return (FALSE);
+	}
+	return (TRUE);
+}
+
 int	builtin_cd(t_shell *shell, char **args)
 {
 	char	*target;
@@ -70,18 +92,10 @@ int	builtin_cd(t_shell *shell, char **args)
 	else
 		old_pwd_copy = ft_strdup("");
 	target = get_target_path(shell->env_list, args);
-	if (!target)
-	{
-		free(old_pwd_copy);
+	if (!verify_target(target, old_pwd_copy))
 		return (1);
-	}
-	if (chdir(target) == -1)
-	{
-		ft_putstr_fd("minishell: cd: ", STDERR_FILENO);
-		perror(args[1]);
-		free(old_pwd_copy);
+	if (!execute_cwd(target, old_pwd_copy))
 		return (1);
-	}
 	update_or_create_node(&shell->env_list, "OLDPWD", old_pwd_copy);
 	free(old_pwd_copy);
 	if (getcwd(cwd_buffer, PATH_MAX))
