@@ -35,16 +35,16 @@ typedef enum e_type
 typedef struct s_redir
 {
 	t_type			type;
-	char			*file; // nome do arquivo
+	char *file; // nome do arquivo
 	struct s_redir	*next;
 }					t_redir;
 
 typedef struct s_cmd
 {
-	char			**args;           // {"ls", "-la", NULL};
-	t_redir 		*redirections; // lista de redireções
-	pid_t			pid;             // id do processo
-	struct s_cmd 	*next;    // prox comando do pipe
+	char **args;           // {"ls", "-la", NULL};
+	t_redir *redirections; // lista de redireções
+	pid_t pid;             // id do processo
+	struct s_cmd *next;    // prox comando do pipe
 }					t_cmd;
 
 typedef struct s_env
@@ -56,8 +56,8 @@ typedef struct s_env
 
 typedef struct s_shell
 {
-	int				exit_status; // valor do $?
-	t_env			*env_list; // lista de variaveis de ambiente
+	int exit_status; // valor do $?
+	t_env *env_list; // lista de variaveis de ambiente
 	t_cmd *cmd_list; // lista dos argumentos
 	int				saved_stdin;
 	int				saved_stdout;
@@ -71,9 +71,9 @@ typedef struct s_lex_unit
 
 typedef struct s_siglexer
 {
-	t_type	type; // Tipo de token
-	char	*sign;  // Sinal
-	size_t	size; // Tamanho
+	t_type type; // Tipo de token
+	char *sign;  // Sinal
+	size_t size; // Tamanho
 }					t_siglexer;
 
 typedef struct s_shared_work
@@ -119,13 +119,15 @@ int					is_valid_env_key(char *str);
 void				update_or_create_node(t_env **head, char *key, char *value);
 int					count_list_elements(t_env *list);
 void				free_shell(t_shell *shell);
+int					handling_builtin_error_args(t_shell *shell, char **args,
+						char *builtin);
 
 // MOCKS --- REMOVER AO FINAL DO PROJETO
 
 void				init_mock_env(t_shell *shell);
 
 // Execute =====================================================================
-void	executor(t_shell *shell);
+void				executor(t_shell *shell);
 // Redirections ----------------------------------------------------------------
 
 int					redirect_input(const char *filename);

@@ -1,31 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin_env.c                                      :+:      :+:    :+:   */
+/*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fsousa <fsousa@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/15 17:49:34 by fsousa            #+#    #+#             */
-/*   Updated: 2025/12/16 15:47:19 by fsousa           ###   ########.fr       */
+/*   Created: 2025/12/16 15:45:54 by fsousa            #+#    #+#             */
+/*   Updated: 2025/12/16 15:45:57 by fsousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	builtin_env(t_shell *shell, t_env *list, char **args)
+int	handling_builtin_error_args(t_shell *shell, char **args, char *builtin)
 {
-	if(!handling_builtin_error_args(shell, args, "env"))
-		return (1);
-	while (list)
+	if (args[1])
 	{
-		if (list->value)
-		{
-			ft_putstr_fd(list->key, STDOUT_FILENO);
-			write(STDOUT_FILENO, "=", 1);
-			ft_putstr_fd(list->value, STDOUT_FILENO);
-			write(STDOUT_FILENO, "\n", 1);
-		}
-		list = list->next;
+		ft_putstr_fd("minishell: ", STDERR_FILENO);
+		ft_putstr_fd(builtin, STDERR_FILENO);
+		ft_putstr_fd(": too many arguments", STDERR_FILENO);
+		return (0);
 	}
-	return (0);
+	return (1);
 }

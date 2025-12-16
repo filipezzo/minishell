@@ -19,7 +19,7 @@ BUILTIN_FILES = builtin.c builtin_echo.c builtin_pwd.c builtin_env.c builtin_exp
 			 builtin_exit.c builtin_cd.c
 EXEC_FILES = executor.c redirect.c
 MOCK_FILES = init_mock_env.c 
-UTIL_FILES = linked_list.c utils_env.c clean.c
+UTIL_FILES = linked_list.c utils_env.c clean.c error.c
 
 LIBFT = $(SLIB_DIR)/libft.a
 
