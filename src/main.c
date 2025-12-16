@@ -3,14 +3,15 @@
 
 int main(void)
 {
-    t_shell shell;
-    char *args[] = {"USER=FILIPE", NULL};
-    ft_memset(&shell, 0, sizeof(t_shell));
-    init_mock_env(&shell);
+    char buffer[1024];
 
-    printf("\n=== 1. AMBIENTE ANTES DO UNSET ===\n");
-    builtin_env(shell.env_list);
-    builtin_export(&shell, args);
-
-    return 0;
+    if (!getcwd(buffer, 1024))
+        return 1;
+    printf("%s\n", buffer);
+    char *new_path = "/mnt/c/Users/fastn/OneDrive/42";
+    if (chdir(new_path) == -1)
+        return 1;
+    if (!getcwd(buffer, 1024))
+        return 1;
+    printf("%s\n", buffer);
 }
