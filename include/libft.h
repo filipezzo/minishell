@@ -6,22 +6,23 @@
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 20:37:22 by mhidani           #+#    #+#             */
-/*   Updated: 2025/12/16 13:36:16 by mhidani          ###   ########.fr       */
+/*   Updated: 2025/12/17 14:29:43 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
-#define LIBFT_H
+# define LIBFT_H
 
-#define TRUE 0x01
-#define FALSE 0x00
+# define TRUE 0x01
+# define FALSE 0x00
 
-#ifndef BUFFER_SIZE
-#define BUFFER_SIZE 128
-#endif
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 128
+# endif
 
-#include <unistd.h>
-#include <stdlib.h>
+# include <unistd.h>
+# include <stdlib.h>
+# include <stdarg.h>
 
 typedef char t_bool;
 
