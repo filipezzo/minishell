@@ -21,13 +21,13 @@ int is_command_builtin(const char *cmd)
 	return (0);
 }
 
-void run_builtin(t_shell *shell, t_cmd *cmd)
+int run_builtin(t_shell *shell, t_cmd *cmd)
 {
 	int status;
 
 	status = 0;
 	if (!shell || !cmd)
-		return;
+		return (1);
 	if (ft_strcmp(cmd->args[0], "cd") == 0)
 		status = builtin_cd(shell, cmd->args);
 	else if (ft_strcmp(cmd->args[0], "echo") == 0)
@@ -42,5 +42,5 @@ void run_builtin(t_shell *shell, t_cmd *cmd)
 		status = builtin_pwd();
 	else if (ft_strcmp(cmd->args[0], "unset") == 0)
 		status = builtin_unset(&shell->env_list, cmd->args);
-	shell->exit_status = status;
+	return (status);
 }

@@ -109,7 +109,7 @@ int builtin_exit(t_shell *shell, char **args);
 int builtin_export(t_shell *shell, char **args);
 int builtin_pwd(void);
 int builtin_unset(t_env **env_list, char **args);
-void run_builtin(t_shell *shell, t_cmd *cmd);
+int run_builtin(t_shell *shell, t_cmd *cmd);
 int is_command_builtin(const char *cmd);
 // UTILS
 

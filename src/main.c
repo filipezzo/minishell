@@ -12,7 +12,7 @@ int main(void)
 	ft_memset(&cmd_node, 0, sizeof(t_cmd));
 	ft_memset(&env_list, 0, sizeof(t_env));
 
-	char *args[] = {"export", "1TESTE=10", NULL};
+	char *args[] = {"cd", "teste", NULL};
 	cmd_node.args = args;
 	cmd_node.next = NULL;
 	shell.cmd_list = &cmd_node;
@@ -31,7 +31,7 @@ int main(void)
 	shell.env_list = &env_list;
 	executor(&shell);
 
-	printf("\n\n\nstatus code -> %d\n", shell.exit_status);
+	// printf("\n\n\nstatus code -> %d\n", shell.exit_status);
 
 	return 0;
 }
