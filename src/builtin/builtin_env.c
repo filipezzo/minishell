@@ -12,18 +12,17 @@
 
 #include "minishell.h"
 
-int	builtin_env(t_shell *shell, t_env *list, char **args)
+int builtin_env(t_env *list, char **args)
 {
-	if(!handling_builtin_error_args(shell, args, "env"))
-		return (1);
+	if (!handling_builtin_error_args(args, "env", 2))
+		return (127);
 	while (list)
 	{
 		if (list->value)
 		{
 			ft_putstr_fd(list->key, STDOUT_FILENO);
 			write(STDOUT_FILENO, "=", 1);
-			ft_putstr_fd(list->value, STDOUT_FILENO);
-			write(STDOUT_FILENO, "\n", 1);
+			ft_putendl_fd(list->value, STDOUT_FILENO);
 		}
 		list = list->next;
 	}

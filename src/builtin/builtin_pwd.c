@@ -12,21 +12,16 @@
 
 #include "minishell.h"
 
-int	builtin_pwd(char **args)
+int builtin_pwd(void)
 {
-	char	buffer[PATH_MAX];
+	char cwd[PATH_MAX];
 
-	if (args[1])
+	if (getcwd(cwd, PATH_MAX) != NULL)
 	{
-		ft_putendl_fd("minishell: pwd: too many arguments", STDERR_FILENO);
-		return (1);
-	}
-	if (getcwd(buffer, PATH_MAX) != NULL)
-	{
-		ft_putstr_fd(buffer, STDOUT_FILENO);
+		ft_putstr_fd(cwd, STDOUT_FILENO);
 		write(STDOUT_FILENO, "\n", 1);
-		return (1);
+		return (0);
 	}
 	perror("minishell: pwd");
-	return (0);
+	return (1);
 }
