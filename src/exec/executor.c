@@ -19,7 +19,7 @@ void executor(t_shell *shell)
 	head_cmd = shell->cmd_list;
 	if (!head_cmd)
 		return;
-	if (!head_cmd->next && is_command_builtin(head_cmd->args[0]))
+	if (!head_cmd->next && is_command_builtin(head_cmd->args[0])) // se tem so 1 comando e se eh builtin [0]
 	{
 		shell->saved_stdin = dup(STDIN_FILENO);
 		shell->saved_stdout = dup(STDOUT_FILENO);
