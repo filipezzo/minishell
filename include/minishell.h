@@ -41,7 +41,7 @@ typedef struct s_redir
 
 typedef struct s_cmd
 {
-	char **args;		   // {"ls", "-la", NULL};
+	char **args;		   // {"ls", "-la", NULL} | {"cat", "hello.txt", NULL}
 	t_redir *redirections; // lista de redireções
 	pid_t pid;			   // id do processo
 	struct s_cmd *next;	   // prox comando do pipe
@@ -58,7 +58,7 @@ typedef struct s_shell
 {
 	int exit_status; // valor do $?
 	t_env *env_list; // lista de variaveis de ambiente
-	t_cmd *cmd_list; // lista dos argumentos
+	t_cmd *cmd_list; // lista dos argumentos / - >
 	int saved_stdin;
 	int saved_stdout;
 } t_shell;
@@ -94,6 +94,11 @@ typedef struct s_shared_work
 //  redirects =  [type: REDIR_OUT, file: "out.txt", next: NULL]
 //  pid = PID DPS DO FORK
 //  next = NULL
+
+// init
+
+char **env_list_to_array(t_env *env_list);
+void init_env(t_shell *shell, char **envp);
 
 // execute
 int is_command_builtin(const char *command_name);

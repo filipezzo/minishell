@@ -3,6 +3,7 @@ NAME = minishell
 SRC_DIR = src
 OBJ_DIR = obj
 BIN_DIR = bin
+INIT_DIR = init
 SLIB_DIR = lib
 EXEC_DIR = exec
 BUILTIN_DIR = builtin
@@ -20,6 +21,7 @@ BUILTIN_FILES = builtin.c builtin_echo.c builtin_pwd.c builtin_env.c builtin_exp
 EXEC_FILES = executor.c redirect.c
 MOCK_FILES = init_mock_env.c 
 UTIL_FILES = linked_list.c utils_env.c clean.c error.c
+INIT_FILES = init_env_list.c init_env.c
 
 LIBFT = $(SLIB_DIR)/libft.a
 
@@ -27,7 +29,8 @@ SRCS = $(addprefix $(SRC_DIR)/, $(SRC_FILES)) \
        $(addprefix $(SRC_DIR)/$(BUILTIN_DIR)/, $(BUILTIN_FILES)) \
 	   $(addprefix $(SRC_DIR)/$(EXEC_DIR)/, $(EXEC_FILES)) \
 	   $(addprefix $(SRC_DIR)/$(MOCK_DIR)/, $(MOCK_FILES)) \
-	   $(addprefix $(SRC_DIR)/$(UTILS_DIR)/, $(UTIL_FILES))
+	   $(addprefix $(SRC_DIR)/$(UTILS_DIR)/, $(UTIL_FILES))	\
+	   $(addprefix $(SRC_DIR)/$(INIT_DIR)/, $(INIT_FILES)) 
 
 OBJS = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 HEADER = $(INCLUDE_DIR)/minishell.h
