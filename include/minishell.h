@@ -47,6 +47,13 @@ typedef struct s_cmd
 	struct s_cmd *next;	   // prox comando do pipe
 } t_cmd;
 
+typedef struct s_job
+{
+	struct s_cmd	*pipeline;
+	t_type			oper;
+	struct s_job	*next;
+}	t_job;
+
 typedef struct s_env
 {
 	char *key;
