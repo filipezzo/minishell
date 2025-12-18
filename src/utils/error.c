@@ -6,13 +6,13 @@
 /*   By: fsousa <fsousa@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 15:45:54 by fsousa            #+#    #+#             */
-/*   Updated: 2025/12/16 15:45:57 by fsousa           ###   ########.fr       */
+/*   Updated: 2025/12/18 17:47:51 by fsousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int handling_builtin_error_args(char **args, char *builtin, int option)
+int	handling_builtin_error_args(char **args, char *builtin, int option)
 {
 	if (args[1] && option == 1)
 	{
