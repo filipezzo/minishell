@@ -10,14 +10,14 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "minishell.h"
 
 int main(int argc, char **argv, char **envp)
 {
 
 	t_shell shell;
-	t_cmd cmd_node;
+	t_cmd cmd;
+	t_redir redir_node;
 
 	(void)argc;
 	(void)argv;
@@ -25,12 +25,21 @@ int main(int argc, char **argv, char **envp)
 	ft_memset(&shell, 0, sizeof(t_shell));
 	init_env(&shell, envp);
 
-	char *args[] = {"env", NULL};
-	ft_memset(&cmd_node, 0, sizeof(t_cmd));
-	cmd_node.args = args;
-	cmd_node.next = NULL;
-	shell.cmd_list = &cmd_node;
+	ft_memset(&redir_node, 0, sizeof(t_redir));
+	redir_node.file = "teste.txt";
+	redir_node.type = REDIR_OUT;
+	redir_node.next = NULL;
 
+	char *args[] = {"ls", "-la", NULL};
+	ft_memset(&cmd, 0, sizeof(t_cmd));
+	cmd.args = args;
+	cmd.next = NULL;
+	cmd.redirections = &redir_node;
+
+	shell.cmd_list = &cmd;
+
+	printf("--- INICIANDO EXECUÇÃO: ls -la ---\n");
 	executor(&shell);
+	printf("--- FIM DA EXECUÇÃO (Exit Status: %d) ---\n", shell.exit_status);
 	return 0;
 }

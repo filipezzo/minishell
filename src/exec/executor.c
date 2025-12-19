@@ -12,20 +12,87 @@
 
 #include "minishell.h"
 
-void	executor(t_shell *shell)
+static void handle_child_process(t_shell *shell, t_cmd *cmd, int fd_in, int end[2])
 {
-	t_cmd	*head_cmd;
+	if (fd_in != STDIN_FILENO)
+	{
+		dup2(fd_in, STDIN_FILENO);
+		close(fd_in);
+	}
+	if (cmd->next)
+	{
+		dup2(end[1], STDOUT_FILENO);
+		close(end[1]);
+		close(end[0]);
+	}
+	if (apply_redirect(cmd) == 0)
+		exit(1);
+	if (is_command_builtin(cmd->args[0]))
+		exit(run_builtin(shell, cmd));
+	else
+		execute_external(shell, cmd);
+}
 
-	head_cmd = shell->cmd_list;
-	if (!head_cmd)
-		return ;
-	if (!head_cmd->next && is_command_builtin(head_cmd->args[0]))
-		// se tem so 1 comando e se eh builtin [0]
+static void wait_all_children(t_shell *shell)
+{
+	pid_t pid;
+	int status;
+
+	pid = 0;
+	while (pid != -1 || errno != ECHILD)
+	{
+		pid = waitpid(-1, &status, 0);
+		if (pid == shell->last_pid)
+		{
+			if (WIFEXITED(status))
+				shell->exit_status = WEXITSTATUS(status);
+		}
+	}
+}
+
+static void execute_pipeline(t_shell *shell, t_cmd *cmd)
+{
+	int fd_in;
+	int end[2];
+	pid_t pid;
+
+	fd_in = STDIN_FILENO;
+	while (cmd)
+	{
+		if (cmd->next)
+			pipe(end);
+		pid = fork();
+		if (pid == -1)
+			perror("fork");
+		if (pid == 0)
+			handle_child_process(shell, cmd, fd_in, end);
+		if (!cmd->next)
+			shell->last_pid = pid;
+		if (fd_in != STDIN_FILENO)
+			close(fd_in);
+		if (cmd->next)
+		{
+			fd_in = end[0];
+			close(end[1]);
+		}
+		cmd = cmd->next;
+	}
+	wait_all_children(shell);
+}
+
+void executor(t_shell *shell)
+{
+	t_cmd *head;
+
+	head = shell->cmd_list;
+	if (!head)
+		return;
+	if (!head->next && is_command_builtin(head->args[0]))
 	{
 		shell->saved_stdin = dup(STDIN_FILENO);
 		shell->saved_stdout = dup(STDOUT_FILENO);
-		if (apply_redirect(head_cmd))
-			shell->exit_status = run_builtin(shell, head_cmd);
+		if (apply_redirect(head))
+			shell->exit_status = run_builtin(shell, head);
 		else
 			shell->exit_status = 1;
 		dup2(shell->saved_stdin, STDIN_FILENO);
@@ -34,7 +101,5 @@ void	executor(t_shell *shell)
 		close(shell->saved_stdout);
 	}
 	else
-	{
-		// EXECUTE_PIPELINE(SHELL);
-	}
+		execute_pipeline(shell, head);
 }
