@@ -12,22 +12,9 @@
 
 #include "minishell.h"
 
-static void	free_full_matrix(char **arr)
+static int is_path_with_slash(const char *str)
 {
-	int	i;
-
-	i = 0;
-	while (arr[i])
-	{
-		free(arr[i]);
-		i++;
-	}
-	free(arr);
-}
-
-static int	is_path_with_slash(const char *str)
-{
-	int	i;
+	int i;
 
 	i = 0;
 	while (str[i])
@@ -39,12 +26,12 @@ static int	is_path_with_slash(const char *str)
 	return (0);
 }
 
-static char	*search_in_path(char *path_env, char *cmd)
+static char *search_in_path(char *path_env, char *cmd)
 {
-	int		i;
-	char	*temp;
-	char	*full_path;
-	char	**arr;
+	int i;
+	char *temp;
+	char *full_path;
+	char **arr;
 
 	i = 0;
 	arr = ft_split(path_env, ':');
@@ -67,10 +54,10 @@ static char	*search_in_path(char *path_env, char *cmd)
 	return (NULL);
 }
 
-char	*find_command_path(t_shell *shell, char *cmd)
+char *find_command_path(t_shell *shell, char *cmd)
 {
-	char	*path_env;
-	char	*found_path;
+	char *path_env;
+	char *found_path;
 
 	if (!cmd)
 		return (NULL);

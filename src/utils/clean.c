@@ -12,13 +12,13 @@
 
 #include "minishell.h"
 
-void	free_shell(t_shell *shell)
+void free_shell(t_shell *shell)
 {
 	t_env *temp;
 	t_cmd *tmp;
 
 	if (!shell)
-		return ;
+		return;
 
 	while (shell->env_list)
 	{
@@ -33,4 +33,17 @@ void	free_shell(t_shell *shell)
 		shell->cmd_list = tmp;
 	}
 	// rl_clear_history();
+}
+
+void free_full_matrix(char **arr)
+{
+	int i;
+
+	i = 0;
+	while (arr[i])
+	{
+		free(arr[i]);
+		i++;
+	}
+	free(arr);
 }
