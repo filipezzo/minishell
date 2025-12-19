@@ -49,10 +49,10 @@ typedef struct s_cmd
 
 typedef struct s_job
 {
-	struct s_cmd	*pipeline;
-	t_type			oper;
-	struct s_job	*next;
-}	t_job;
+	struct s_cmd *pipeline;
+	t_type oper;
+	struct s_job *next;
+} t_job;
 
 typedef struct s_env
 {
@@ -68,6 +68,7 @@ typedef struct s_shell
 	t_cmd *cmd_list; // lista dos argumentos / - >
 	int saved_stdin;
 	int saved_stdout;
+	pid_t last_pid;
 } t_shell;
 
 typedef struct s_lex_unit
@@ -126,13 +127,14 @@ int is_command_builtin(const char *cmd);
 // UTILS
 
 void free_env_node(t_env *node);
-char*get_env_value(t_env *env, char *key);
+char *get_env_value(t_env *env, char *key);
 void free_shell(t_shell *shell);
 int is_valid_env_key(char *str);
 void update_or_create_node(t_env **head, char *key, char *value);
 int count_list_elements(t_env *list);
 void free_shell(t_shell *shell);
 int handling_builtin_error_args(char **args, char *builtin, int option);
+void free_full_matrix(char **arr);
 
 // MOCKS --- REMOVER AO FINAL DO PROJETO
 
@@ -140,6 +142,7 @@ void init_mock_env(t_shell *shell);
 
 // Execute =====================================================================
 void executor(t_shell *shell);
+void execute_external(t_shell *shell, t_cmd *cmd);
 // Redirections ----------------------------------------------------------------
 
 int redirect_input(const char *filename);
@@ -162,7 +165,7 @@ t_dlist *lexer(char *in, t_siglexer **siglexer);
 // ======================================================================= Lexer
 
 // UTILS =======================================================================
-char	*find_command_path(t_shell *shell, char *cmd);
+char *find_command_path(t_shell *shell, char *cmd);
 void free_env_node(t_env *node);
 int is_valid_env_key(char *str);
 void update_or_create_node(t_env **head, char *key, char *value);
