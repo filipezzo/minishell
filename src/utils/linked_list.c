@@ -6,7 +6,7 @@
 /*   By: fsousa <fsousa@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 17:47:58 by fsousa            #+#    #+#             */
-/*   Updated: 2025/12/18 17:48:03 by fsousa           ###   ########.fr       */
+/*   Updated: 2025/12/20 15:42:32 by fsousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	count_list_elements(t_env *list)
 {
-	int count;
+	int	count;
 
 	count = 0;
 	while (list)
@@ -22,6 +22,5 @@ int	count_list_elements(t_env *list)
 		count++;
 		list = list->next;
 	}
-
 	return (count);
 }

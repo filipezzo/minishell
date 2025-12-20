@@ -6,20 +6,19 @@
 /*   By: fsousa <fsousa@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 17:47:44 by fsousa            #+#    #+#             */
-/*   Updated: 2025/12/18 17:47:48 by fsousa           ###   ########.fr       */
+/*   Updated: 2025/12/20 15:43:36 by fsousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void free_shell(t_shell *shell)
+void	free_shell(t_shell *shell)
 {
-	t_env *temp;
-	t_cmd *tmp;
+	t_env	*temp;
+	t_cmd	*tmp;
 
 	if (!shell)
-		return;
-
+		return ;
 	while (shell->env_list)
 	{
 		temp = shell->env_list->next;
@@ -32,12 +31,12 @@ void free_shell(t_shell *shell)
 		free(shell->cmd_list);
 		shell->cmd_list = tmp;
 	}
-	// rl_clear_history();
+	rl_clear_history();
 }
 
-void free_full_matrix(char **arr)
+void	free_full_matrix(char **arr)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (arr[i])

@@ -6,15 +6,15 @@
 /*   By: fsousa <fsousa@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 15:02:46 by fsousa            #+#    #+#             */
-/*   Updated: 2025/12/18 17:45:17 by fsousa           ###   ########.fr       */
+/*   Updated: 2025/12/20 15:42:44 by fsousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int is_path_with_slash(const char *str)
+static int	is_path_with_slash(const char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i])
@@ -26,12 +26,12 @@ static int is_path_with_slash(const char *str)
 	return (0);
 }
 
-static char *search_in_path(char *path_env, char *cmd)
+static char	*search_in_path(char *path_env, char *cmd)
 {
-	int i;
-	char *temp;
-	char *full_path;
-	char **arr;
+	int		i;
+	char	*temp;
+	char	*full_path;
+	char	**arr;
 
 	i = 0;
 	arr = ft_split(path_env, ':');
@@ -54,10 +54,10 @@ static char *search_in_path(char *path_env, char *cmd)
 	return (NULL);
 }
 
-char *find_command_path(t_shell *shell, char *cmd)
+char	*find_command_path(t_shell *shell, char *cmd)
 {
-	char *path_env;
-	char *found_path;
+	char	*path_env;
+	char	*found_path;
 
 	if (!cmd)
 		return (NULL);
