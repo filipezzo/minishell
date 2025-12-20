@@ -6,7 +6,7 @@
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 20:37:22 by mhidani           #+#    #+#             */
-/*   Updated: 2025/12/17 14:37:35 by mhidani          ###   ########.fr       */
+/*   Updated: 2025/12/20 11:53:43 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ t_bool		ft_isnumeric(char *str);
 // Manipulate Strings ----------------------------------------------------------
 size_t		ft_strlen(const char *s);
 size_t		ft_strlcpy(char *dst, const char *src, size_t dst_size);
+char		*ft_strcat(size_t elements, char *s1, ...);
 size_t		ft_strlcat(char *dst, const char *src, size_t dsize);
 char		*ft_strchr(const char *s, int c);
 char		*ft_strrchr(const char *s, int c);
