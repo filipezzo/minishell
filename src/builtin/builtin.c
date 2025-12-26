@@ -6,24 +6,26 @@
 /*   By: fsousa <fsousa@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/15 17:49:52 by fsousa            #+#    #+#             */
-/*   Updated: 2025/12/16 15:15:56 by fsousa           ###   ########.fr       */
+/*   Updated: 2025/12/20 15:09:29 by fsousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int is_command_builtin(const char *cmd)
+int	is_command_builtin(const char *cmd)
 {
 	if (!cmd)
 		return (0);
-	if (!ft_strcmp(cmd, "cd") || !ft_strcmp(cmd, "export") || !ft_strcmp(cmd, "unset") || !ft_strcmp(cmd, "exit") || !ft_strcmp(cmd, "echo") || !ft_strcmp(cmd, "pwd") || !ft_strcmp(cmd, "env"))
+	if (!ft_strcmp(cmd, "cd") || !ft_strcmp(cmd, "export") || !ft_strcmp(cmd,
+			"unset") || !ft_strcmp(cmd, "exit") || !ft_strcmp(cmd, "echo")
+		|| !ft_strcmp(cmd, "pwd") || !ft_strcmp(cmd, "env"))
 		return (1);
 	return (0);
 }
 
-int run_builtin(t_shell *shell, t_cmd *cmd)
+int	run_builtin(t_shell *shell, t_cmd *cmd)
 {
-	int status;
+	int	status;
 
 	status = 0;
 	if (!shell || !cmd)
