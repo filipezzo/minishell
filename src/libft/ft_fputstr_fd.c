@@ -6,7 +6,7 @@
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/17 14:01:03 by mhidani           #+#    #+#             */
-/*   Updated: 2025/12/18 17:34:49 by mhidani          ###   ########.fr       */
+/*   Updated: 2025/12/22 16:30:22 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ ssize_t	ft_fputstr_fd(int fd, char *src, ...)
 	va_start(args, src);
 	while (*src)
 	{
-		if (ft_strncmp(src, "%s", 2))
+		if (ft_strncmp(src, "%s", 2) == 0)
 		{
 			if (!handle_pstring(fd, args, &count))
 				return (va_end(args), -1);
