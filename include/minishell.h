@@ -33,6 +33,13 @@ typedef enum e_type
 	AND_OR,		   // ||	Or conditional
 } t_type;
 
+typedef enum e_sig
+{
+	STATE_PROMPT,
+    STATE_EXEC,
+    STATE_HEREDOC
+}	t_sig;
+
 typedef struct s_redir
 {
 	t_type type;
@@ -61,6 +68,15 @@ typedef struct s_env
 	char *value;
 	struct s_env *next;
 } t_env;
+
+typedef struct s_prompt
+{
+	char	*user;
+	char	*host;
+	char	*home;
+	char	*dir;
+	char	*type;
+}			t_prompt;
 
 typedef struct s_shell
 {
@@ -159,6 +175,24 @@ int builtin_unset(t_env **env_list, char **args);
 int builtin_export(t_shell *shell, char **args);
 // ===================================================================== Execute
 
+// Frontend ====================================================================
+void		start_prompt(t_shell *shell);
+char		*build_prompt(t_prompt *prompt);
+void		signal_handler_prompt(int sig);
+void		setup_signals_prompt(void);
+// Readline | Display Prompt ---------------------------------------------------
+char		*build_user_pmt(char **crr);
+char		*build_host_pmt(char **crr);
+char		*build_home_pmt(char **crr);
+char		*build_dir_pmt(char *home, char **crr);
+char		*build_type_pmt(char *user, char **crr);
+
+// Display Prompt | Instance ---------------------------------------------------
+t_prompt	*new_prompt(void);
+void	destroy_prompt(void *ptr);
+
+// ==================================================================== Frontend
+
 // Lexer =======================================================================
 // Principal Functions ---------------------------------------------------------
 
@@ -175,13 +209,14 @@ t_bool lex_isjump(char c);
 // ======================================================================= UTILS
 
 // Instances ===================================================================
-// Lexer Unit ------------------------------------------------------------------
+t_bool	safe_destroy(void *ptr, t_bool (*destroyer)(void *));
+t_bool	safe_sdestroy(void *ptr, void (*destroyer)(void *));
 
+// Lexer Unit ------------------------------------------------------------------
 t_bool new_lexunit(t_lexunit **new, t_type type, char *content);
 t_bool destroy_lexunit(void *ptr);
 
 // Signal Lexer ----------------------------------------------------------------
-
 t_siglexer *new_siglexer(t_type type, char *sign, size_t size);
 t_siglexer **new_lst_siglexer(void);
 t_bool destroy_siglexer(void *ptr);
