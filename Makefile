@@ -11,6 +11,7 @@ LIBFT_DIR = libft
 INCLUDE_DIR = include
 UTILS_DIR = utils
 MOCK_DIR = mock
+SIGNAL_DIR = signals
 
 EXEC = $(BIN_DIR)/$(NAME)
 
@@ -22,6 +23,7 @@ EXEC_FILES = executor.c redirect.c execute_external.c
 MOCK_FILES = init_mock_env.c 
 UTIL_FILES = linked_list.c utils_env.c clean.c error.c utils_exec.c
 INIT_FILES = init_env_list.c init_env.c
+SIGNAL_FILES = signals.c
 
 LIBFT = $(SLIB_DIR)/libft.a
 
@@ -30,7 +32,8 @@ SRCS = $(addprefix $(SRC_DIR)/, $(SRC_FILES)) \
 	   $(addprefix $(SRC_DIR)/$(EXEC_DIR)/, $(EXEC_FILES)) \
 	   $(addprefix $(SRC_DIR)/$(MOCK_DIR)/, $(MOCK_FILES)) \
 	   $(addprefix $(SRC_DIR)/$(UTILS_DIR)/, $(UTIL_FILES))	\
-	   $(addprefix $(SRC_DIR)/$(INIT_DIR)/, $(INIT_FILES)) 
+	   $(addprefix $(SRC_DIR)/$(INIT_DIR)/, $(INIT_FILES))	\
+	   $(addprefix $(SRC_DIR)/$(SIGNAL_DIR)/, $(SIGNAL_FILES))
 
 OBJS = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 HEADER = $(INCLUDE_DIR)/minishell.h
