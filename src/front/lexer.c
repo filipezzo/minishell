@@ -18,7 +18,7 @@ t_dlist	*lexer(char *in, t_siglexer **siglex)
 	{
 		if (!new_lexunit(&unit, WORD, NULL))
 			return (NULL);
-		while (pivot && (pivot == ' ' || pivot == '\t'))
+		while (*pivot && (*pivot == ' ' || *pivot == '\t'))
 			pivot++;
 		if (lex_single_quote(&pivot, unit))
 			ft_add_nd_dlist(list, unit, destroy_lexunit);
@@ -45,7 +45,7 @@ static t_bool	lex_single_quote(char **str, t_lexunit *unit)
 		(*str)++;
 	if (**str != '\'')
 	{
-		ft_putstr_fd("unexpected EOF while looking for matching \'\n", 
+		ft_putstr_fd("unexpected EOF while looking for matching \'\n",
 			STDERR_FILENO);
 		return (FALSE);
 	}
@@ -66,7 +66,7 @@ static t_bool	lex_double_quote(char **str, t_lexunit *unit)
 		(*str)++;
 	if (**str != '\"')
 	{
-		ft_putstr_fd("unexpected EOF while looking for matching \"\n", 
+		ft_putstr_fd("unexpected EOF while looking for matching \"\n",
 			STDERR_FILENO);
 		return (FALSE);
 	}
