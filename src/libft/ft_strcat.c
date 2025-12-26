@@ -6,7 +6,7 @@
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/20 10:36:42 by mhidani           #+#    #+#             */
-/*   Updated: 2025/12/20 11:52:56 by mhidani          ###   ########.fr       */
+/*   Updated: 2025/12/22 13:14:19 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char	*ft_strcat(size_t elements, char *s1, ...)
 	i = 0;
 	str = ft_strdup(s1);
 	pvtstr = va_arg(args, char *);
-	while (i < elements)
+	while (i < elements - 1 && pvtstr)
 	{
 		aux = ft_calloc(ft_strlen(str) + ft_strlen(pvtstr) + 1, sizeof(char));
 		if (!aux)
@@ -46,8 +46,7 @@ char	*ft_strcat(size_t elements, char *s1, ...)
 		pvtstr = va_arg(args, char *);
 		i++;
 	}
-	va_end(args);
-	return (str);
+	return (va_end(args), str);
 }
 
 static char	*return_err(char *str, va_list args)

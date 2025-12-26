@@ -6,7 +6,7 @@
 /*   By: fsousa <fsousa@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/15 18:07:07 by fsousa            #+#    #+#             */
-/*   Updated: 2025/12/15 18:34:44 by fsousa           ###   ########.fr       */
+/*   Updated: 2025/12/20 15:25:43 by fsousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ int	apply_redirect(t_cmd *cmd)
 	t_redir	*r;
 
 	r = cmd->redirections;
-
 	while (r)
 	{
 		if (r->type == REDIR_IN)

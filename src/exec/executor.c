@@ -6,14 +6,16 @@
 /*   By: fsousa <fsousa@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/15 18:07:04 by fsousa            #+#    #+#             */
-/*   Updated: 2025/12/18 17:46:51 by fsousa           ###   ########.fr       */
+/*   Updated: 2025/12/20 15:22:15 by fsousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void handle_child_process(t_shell *shell, t_cmd *cmd, int fd_in, int end[2])
+static void handle_child_process(t_shell *shell, t_cmd *cmd, int fd_in,
+								 int end[2])
 {
+	set_signals_child();
 	if (fd_in != STDIN_FILENO)
 	{
 		dup2(fd_in, STDIN_FILENO);
@@ -46,8 +48,32 @@ static void wait_all_children(t_shell *shell)
 		{
 			if (WIFEXITED(status))
 				shell->exit_status = WEXITSTATUS(status);
+			else if (WIFSIGNALED(status))
+			{
+				int sig;
+
+				sig = WTERMSIG(status);
+				shell->exit_status = 128 + sig;
+				if (sig == SIGINT)
+					write(1, "\n", 1);
+				else if (sig == SIGQUIT)
+					write(1, "Quit (core dumped)\n", 19);
+				g_signal_status = shell->exit_status;
+			}
 		}
 	}
+}
+
+static pid_t handle_fork(t_shell *shell, t_cmd *cmd, int fd_in, int end[2])
+{
+	pid_t pid;
+
+	pid = fork();
+	if (pid == -1)
+		perror("fork");
+	if (pid == 0)
+		handle_child_process(shell, cmd, fd_in, end);
+	return (pid);
 }
 
 static void execute_pipeline(t_shell *shell, t_cmd *cmd)
@@ -56,16 +82,13 @@ static void execute_pipeline(t_shell *shell, t_cmd *cmd)
 	int end[2];
 	pid_t pid;
 
+	set_signals_exec();
 	fd_in = STDIN_FILENO;
 	while (cmd)
 	{
 		if (cmd->next)
 			pipe(end);
-		pid = fork();
-		if (pid == -1)
-			perror("fork");
-		if (pid == 0)
-			handle_child_process(shell, cmd, fd_in, end);
+		pid = handle_fork(shell, cmd, fd_in, end);
 		if (!cmd->next)
 			shell->last_pid = pid;
 		if (fd_in != STDIN_FILENO)
