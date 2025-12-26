@@ -12,9 +12,10 @@
 
 #include "minishell.h"
 
-static void	handle_child_process(t_shell *shell, t_cmd *cmd, int fd_in,
-		int end[2])
+static void handle_child_process(t_shell *shell, t_cmd *cmd, int fd_in,
+								 int end[2])
 {
+	set_signals_child();
 	if (fd_in != STDIN_FILENO)
 	{
 		dup2(fd_in, STDIN_FILENO);
@@ -34,10 +35,10 @@ static void	handle_child_process(t_shell *shell, t_cmd *cmd, int fd_in,
 		execute_external(shell, cmd);
 }
 
-static void	wait_all_children(t_shell *shell)
+static void wait_all_children(t_shell *shell)
 {
-	pid_t	pid;
-	int		status;
+	pid_t pid;
+	int status;
 
 	pid = 0;
 	while (pid != -1 || errno != ECHILD)
@@ -47,13 +48,25 @@ static void	wait_all_children(t_shell *shell)
 		{
 			if (WIFEXITED(status))
 				shell->exit_status = WEXITSTATUS(status);
+			else if (WIFSIGNALED(status))
+			{
+				int sig;
+
+				sig = WTERMSIG(status);
+				shell->exit_status = 128 + sig;
+				if (sig == SIGINT)
+					write(1, "\n", 1);
+				else if (sig == SIGQUIT)
+					write(1, "Quit (core dumped)\n", 19);
+				g_signal_status = shell->exit_status;
+			}
 		}
 	}
 }
 
-static pid_t	handle_fork(t_shell *shell, t_cmd *cmd, int fd_in, int end[2])
+static pid_t handle_fork(t_shell *shell, t_cmd *cmd, int fd_in, int end[2])
 {
-	pid_t	pid;
+	pid_t pid;
 
 	pid = fork();
 	if (pid == -1)
@@ -63,12 +76,13 @@ static pid_t	handle_fork(t_shell *shell, t_cmd *cmd, int fd_in, int end[2])
 	return (pid);
 }
 
-static void	execute_pipeline(t_shell *shell, t_cmd *cmd)
+static void execute_pipeline(t_shell *shell, t_cmd *cmd)
 {
-	int		fd_in;
-	int		end[2];
-	pid_t	pid;
+	int fd_in;
+	int end[2];
+	pid_t pid;
 
+	set_signals_exec();
 	fd_in = STDIN_FILENO;
 	while (cmd)
 	{
@@ -89,13 +103,13 @@ static void	execute_pipeline(t_shell *shell, t_cmd *cmd)
 	wait_all_children(shell);
 }
 
-void	executor(t_shell *shell)
+void executor(t_shell *shell)
 {
-	t_cmd	*head;
+	t_cmd *head;
 
 	head = shell->cmd_list;
 	if (!head)
-		return ;
+		return;
 	if (!head->next && is_command_builtin(head->args[0]))
 	{
 		shell->saved_stdin = dup(STDIN_FILENO);
