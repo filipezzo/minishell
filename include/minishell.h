@@ -133,6 +133,7 @@ int is_command_builtin(const char *cmd);
 void init_signals(void);
 void set_signals_exec(void);
 void set_signals_child(void);
+void set_signals_heredoc(void);
 
 // UTILS
 

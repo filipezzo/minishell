@@ -23,7 +23,7 @@ EXEC_FILES = executor.c redirect.c execute_external.c
 MOCK_FILES = init_mock_env.c 
 UTIL_FILES = linked_list.c utils_env.c clean.c error.c utils_exec.c
 INIT_FILES = init_env_list.c init_env.c
-SIGNAL_FILES = signals.c
+SIGNAL_FILES = signals.c signals_heredoc.c
 
 LIBFT = $(SLIB_DIR)/libft.a
 
@@ -47,7 +47,7 @@ all: $(EXEC)
 
 $(EXEC): $(LIBFT) $(OBJS)
 	@mkdir -p $(BIN_DIR)
-	@$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -o $(EXEC)
+	@$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -lreadline -o $(EXEC)
 	@echo "[\033[0;32mOK\033[0m] $(NAME) compilado em $(BIN_DIR) 👌👌😍"
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(HEADER)
