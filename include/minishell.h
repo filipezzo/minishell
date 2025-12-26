@@ -15,6 +15,9 @@
 #include <sys/wait.h>
 #include <unistd.h>
 #include <errno.h>
+#include <signal.h>
+
+extern int g_signal_status;
 
 typedef enum e_type
 {
@@ -141,6 +144,13 @@ int builtin_pwd(void);
 int builtin_unset(t_env **env_list, char **args);
 int run_builtin(t_shell *shell, t_cmd *cmd);
 int is_command_builtin(const char *cmd);
+
+// SIGNALS
+void init_signals(void);
+void set_signals_exec(void);
+void set_signals_child(void);
+void set_signals_heredoc(void);
+
 // UTILS
 
 void free_env_node(t_env *node);
