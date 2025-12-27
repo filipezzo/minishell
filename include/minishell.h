@@ -190,12 +190,16 @@ void		start_prompt(t_shell *shell);
 char		*build_prompt(t_prompt *prompt);
 void		signal_handler_prompt(int sig);
 void		setup_signals_prompt(void);
+
 // Readline | Display Prompt ---------------------------------------------------
 char		*build_user_pmt(char **crr);
 char		*build_host_pmt(char **crr);
 char		*build_home_pmt(char **crr);
 char		*build_dir_pmt(char *home, char **crr);
 char		*build_type_pmt(char *user, char **crr);
+
+// Syntax ----------------------------------------------------------------------
+t_bool	check_parentheses_rule(t_dlist *tokens);
 
 // Display Prompt | Instance ---------------------------------------------------
 t_prompt	*new_prompt(void);
