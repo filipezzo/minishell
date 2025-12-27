@@ -200,6 +200,7 @@ char		*build_type_pmt(char *user, char **crr);
 
 // Syntax ----------------------------------------------------------------------
 t_bool	check_parentheses_rule(t_dlist *tokens);
+t_bool	check_pipe_rule(t_dlist *tokens);
 t_bool	syntax_error_message(char *msg);
 
 // Display Prompt | Instance ---------------------------------------------------

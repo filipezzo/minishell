@@ -20,7 +20,7 @@ EXEC = $(BIN_DIR)/$(NAME)
 SRC_FILES = main.c
 
 INST_FILES = lexunit.c prompt.c siglexer.c
-FRONT_FILES = build_dir_pmt.c build_home_pmt.c build_host_pmt.c build_prompt.c build_type_pmt.c build_user_pmt.c lexer.c start_prompt.c check_parentheses_rule.c syntax_error_msg.c
+FRONT_FILES = build_dir_pmt.c build_home_pmt.c build_host_pmt.c build_prompt.c build_type_pmt.c build_user_pmt.c lexer.c start_prompt.c check_parentheses_rule.c check_pipe_rule.c syntax_error_msg.c
 BUILTIN_FILES = builtin.c builtin_echo.c builtin_pwd.c builtin_env.c builtin_export.c builtin_unset.c \
 			 builtin_exit.c builtin_cd.c
 EXEC_FILES = executor.c redirect.c execute_external.c
