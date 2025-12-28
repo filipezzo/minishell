@@ -190,12 +190,22 @@ void		start_prompt(t_shell *shell);
 char		*build_prompt(t_prompt *prompt);
 void		signal_handler_prompt(int sig);
 void		setup_signals_prompt(void);
+
 // Readline | Display Prompt ---------------------------------------------------
 char		*build_user_pmt(char **crr);
 char		*build_host_pmt(char **crr);
 char		*build_home_pmt(char **crr);
 char		*build_dir_pmt(char *home, char **crr);
 char		*build_type_pmt(char *user, char **crr);
+
+// Syntax ----------------------------------------------------------------------
+t_bool	syntax_analyze(t_dlist *tokens);
+t_bool	syntax_check_lside(t_dlist *tokens, t_type type);
+t_bool	syntax_check_adjacency(t_dlist *tokens, t_type type);
+t_bool	syntax_check_balance(t_dlist *tokens, t_type left, t_type right);
+t_bool	syntax_check_redir(t_dlist *tokens);
+t_bool	syntax_err_msg(char *msg, char *oper);
+t_bool	syntax_err_smsg(char *msg);
 
 // Display Prompt | Instance ---------------------------------------------------
 t_prompt	*new_prompt(void);
