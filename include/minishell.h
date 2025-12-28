@@ -199,10 +199,10 @@ char		*build_dir_pmt(char *home, char **crr);
 char		*build_type_pmt(char *user, char **crr);
 
 // Syntax ----------------------------------------------------------------------
-t_bool	check_parentheses_rule(t_dlist *tokens);
-t_bool	check_pipe_rule(t_dlist *tokens);
-t_bool	check_redirection_rule(t_dlist *tokens);
-t_bool	syntax_error_message(char *msg);
+t_bool	syntax_check_lside(t_dlist *tokens, t_type type);
+t_bool	syntax_check_adjacency(t_dlist *tokens, t_type type);
+t_bool	syntax_check_balance(t_dlist *tokens, t_type left, t_type right);
+t_bool	syntax_check_redir(t_dlist *tokens);
 
 // Display Prompt | Instance ---------------------------------------------------
 t_prompt	*new_prompt(void);
