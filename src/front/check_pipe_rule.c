@@ -6,7 +6,7 @@
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/26 19:51:37 by mhidani           #+#    #+#             */
-/*   Updated: 2025/12/27 18:25:20 by mhidani          ###   ########.fr       */
+/*   Updated: 2025/12/28 09:43:54 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ t_bool	check_pipe_rule(t_dlist *tokens)
 				return (syntax_error_message("unexpected '|'"));
 			if (!end_expected(((t_lexunit *)pivot->left->data)->type))
 				return (syntax_error_message("unexpected '|'"));
-			if (!end_expected(((t_lexunit *)pivot->right->data)->type))
+			if (!start_expected(((t_lexunit *)pivot->right->data)->type))
 				return (syntax_error_message("unexpected '|'"));
 		}
 		pivot = pivot->right;
