@@ -6,7 +6,7 @@
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/26 19:54:24 by mhidani           #+#    #+#             */
-/*   Updated: 2025/12/27 18:03:55 by mhidani          ###   ########.fr       */
+/*   Updated: 2025/12/28 10:21:24 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_bool	check_parentheses_rule(t_dlist *tokens)
 	pivot = tokens->head;
 	while (pivot)
 	{
-		type = ((t_lexunit *)pivot)->type;
+		type = ((t_lexunit *)pivot->data)->type;
 		if (type == LPAREN)
 			balance++;
 		else if (type == RPAREN)
@@ -31,7 +31,7 @@ t_bool	check_parentheses_rule(t_dlist *tokens)
 			return (FALSE);
 		pivot = pivot->right;
 	}
-	if (balance == 0)
-		return (TRUE);
-	return (FALSE);
+	if (balance > 0)
+		return (FALSE);
+	return (TRUE);
 }
