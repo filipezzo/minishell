@@ -203,6 +203,8 @@ t_bool	syntax_check_lside(t_dlist *tokens, t_type type);
 t_bool	syntax_check_adjacency(t_dlist *tokens, t_type type);
 t_bool	syntax_check_balance(t_dlist *tokens, t_type left, t_type right);
 t_bool	syntax_check_redir(t_dlist *tokens);
+t_bool	syntax_err_msg(char *msg, char *oper);
+t_bool	syntax_err_smsg(char *msg);
 
 // Display Prompt | Instance ---------------------------------------------------
 t_prompt	*new_prompt(void);
