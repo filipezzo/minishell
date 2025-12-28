@@ -6,7 +6,7 @@
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/26 19:54:24 by mhidani           #+#    #+#             */
-/*   Updated: 2025/12/28 10:21:24 by mhidani          ###   ########.fr       */
+/*   Updated: 2025/12/28 12:14:54 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,14 @@ t_bool	check_parentheses_rule(t_dlist *tokens)
 		else if (type == RPAREN)
 			balance--;
 		if (balance < 0)
-			return (FALSE);
+			return (
+				syntax_error_message("syntax error near unexpected token `)`")
+			);
 		pivot = pivot->right;
 	}
 	if (balance > 0)
-		return (FALSE);
+		return (
+			syntax_error_message("syntax error near unexpected token `(`")
+		);
 	return (TRUE);
 }
