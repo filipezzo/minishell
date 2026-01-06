@@ -27,14 +27,35 @@ typedef enum e_type
 	REDIR_OUT,	   // >	Redirect out
 	REDIR_APPEND,  // >>	Redirect Append
 	REDIR_HEREDOC, // <<	Redirect Heredoc
+	SUBSHELL,	   // Command Into Parentheses
+	LEFT_PAREN,	   // (	Left open parentheses
+	RIGHT_PAREN,   // )	Right close parentheses
 	PIPE,		   // |	Pipe
-	LPAREN,		   // (	Left open parentheses
-	RPAREN,		   // )	Right close parentheses
-	RUN_BKG,	   // &	Run in background
-	CMD_SEP,	   // ;	Commands separators
-	AND_IF,		   // &&	And conditional
-	AND_OR,		   // ||	Or conditional
+	BACKGROUND,	   // &	Run in background
+	SEPARATOR,	   // ;	Commands separators
+	AND,		   // &&	And conditional
+	OR,			   // ||	Or conditional
 } t_type;
+
+typedef enum e_mstype
+{
+	INT_T,
+	LONG_T,
+	UINT_T,
+	ULONG_T,
+	FLOAT_T,
+	DOUBLE_T,
+	CHAR_T,
+	STRING_T,
+	LEXTOKEN_T,
+	LEXSIG_T,
+	ASTREE_T,
+	DLIST_T,
+	BNODE_T,
+	TNODE_T,
+	REDIRECTION_T,
+	COMMAND_T,
+}	t_mstype;
 
 typedef enum e_sig
 {
@@ -45,6 +66,7 @@ typedef enum e_sig
 
 typedef struct s_redir
 {
+	t_mstype	mstype;
 	t_type type;
 	char *file; // nome do arquivo
 	struct s_redir *next;
@@ -52,18 +74,12 @@ typedef struct s_redir
 
 typedef struct s_cmd
 {
+	t_mstype	mstype;
 	char **args;		   // {"ls", "-la", NULL} | {"cat", "hello.txt", NULL}
 	t_redir *redirections; // lista de redireções
 	pid_t pid;			   // id do processo
 	struct s_cmd *next;	   // prox comando do pipe
 } t_cmd;
-
-typedef struct s_job
-{
-	struct s_cmd *pipeline;
-	t_type oper;
-	struct s_job *next;
-} t_job;
 
 typedef struct s_env
 {
@@ -91,23 +107,45 @@ typedef struct s_shell
 	pid_t last_pid;
 } t_shell;
 
-typedef struct s_lex_unit
-{
-	enum e_type type;
-	char *content;
-} t_lexunit;
-
-typedef struct s_siglexer
-{
-	t_type type; // Tipo de token
-	char *sign;	 // Sinal
-	size_t size; // Tamanho
-} t_siglexer;
-
 typedef struct s_shared_work
 {
-	t_siglexer **signs_lexer;
+	struct s_lexsig **signs_lexer;
 } t_shared_work;
+
+typedef struct s_astree
+{
+	t_mstype		mstype;
+	struct s_tnode	*root;
+	struct s_tnode	*entry;
+}					t_astree;
+
+typedef struct s_lextoken
+{
+	enum e_mstype	mstype;
+	enum e_type		type;
+	char			*content;
+} 					t_lextoken;
+
+typedef struct s_lexsig
+{
+	t_mstype		mstype;
+	t_type			type;
+	char			*sign;
+	size_t			size;
+} 					t_lexsig;
+
+typedef struct s_tnode
+{
+	t_mstype		mstype;
+	t_type			type;
+	void			*data;
+	void			*origin;
+	struct s_tnode	*branch;
+	struct s_tnode	*left;
+	struct s_tnode	*right;
+	void			(*destroy)(void *data);
+	void			(*print)(void *data, int fd);
+}					t_tnode;
 
 // exemplo cat < in.txt | grep oi > out.txt
 
@@ -123,18 +161,17 @@ typedef struct s_shared_work
 //  pid = PID DPS DO FORK
 //  next = NULL
 
-// init
-
+// Init
 char **env_list_to_array(t_env *env_list);
 void init_env(t_shell *shell, char **envp);
 
-// execute
+// Execute
 int is_command_builtin(const char *command_name);
 int redirect_input(const char *filename);
 int redirect_output(const char *filename);
 int redirect_append(const char *filename);
 
-// builtin
+// Builtin
 int builtin_cd(t_shell *shell, char **args);
 int builtin_echo(t_cmd *cmd);
 int builtin_env(t_env *list, char **args);
@@ -152,7 +189,6 @@ void set_signals_child(void);
 void set_signals_heredoc(void);
 
 // UTILS
-
 void free_env_node(t_env *node);
 char *get_env_value(t_env *env, char *key);
 void free_shell(t_shell *shell);
@@ -163,61 +199,22 @@ void free_shell(t_shell *shell);
 int handling_builtin_error_args(char **args, char *builtin, int option);
 void free_full_matrix(char **arr);
 
-// MOCKS --- REMOVER AO FINAL DO PROJETO
-
-void init_mock_env(t_shell *shell);
-
 // Execute =====================================================================
 void executor(t_shell *shell);
 void execute_external(t_shell *shell, t_cmd *cmd);
-// Redirections ----------------------------------------------------------------
 
+// Redirections ----------------------------------------------------------------
 int redirect_input(const char *filename);
 int redirect_output(const char *filename);
 int redirect_append(const char *filename);
 int apply_redirect(t_cmd *cmd);
 
 // Builtins --------------------------------------------------------------------
-
 int is_command_builtin(const char *command_name);
 int builtin_echo(t_cmd *cmd);
 int builtin_unset(t_env **env_list, char **args);
 int builtin_export(t_shell *shell, char **args);
 // ===================================================================== Execute
-
-// Frontend ====================================================================
-void		start_prompt(t_shell *shell);
-char		*build_prompt(t_prompt *prompt);
-void		signal_handler_prompt(int sig);
-void		setup_signals_prompt(void);
-
-// Readline | Display Prompt ---------------------------------------------------
-char		*build_user_pmt(char **crr);
-char		*build_host_pmt(char **crr);
-char		*build_home_pmt(char **crr);
-char		*build_dir_pmt(char *home, char **crr);
-char		*build_type_pmt(char *user, char **crr);
-
-// Syntax ----------------------------------------------------------------------
-t_bool	syntax_analyze(t_dlist *tokens);
-t_bool	syntax_check_lside(t_dlist *tokens, t_type type);
-t_bool	syntax_check_adjacency(t_dlist *tokens, t_type type);
-t_bool	syntax_check_balance(t_dlist *tokens, t_type left, t_type right);
-t_bool	syntax_check_redir(t_dlist *tokens);
-t_bool	syntax_err_msg(char *msg, char *oper);
-t_bool	syntax_err_smsg(char *msg);
-
-// Display Prompt | Instance ---------------------------------------------------
-t_prompt	*new_prompt(void);
-void	destroy_prompt(void *ptr);
-
-// ==================================================================== Frontend
-
-// Lexer =======================================================================
-// Principal Functions ---------------------------------------------------------
-
-t_dlist *lexer(char *in, t_siglexer **siglexer);
-// ======================================================================= Lexer
 
 // UTILS =======================================================================
 char *find_command_path(t_shell *shell, char *cmd);
@@ -228,24 +225,83 @@ int count_list_elements(t_env *list);
 t_bool lex_isjump(char c);
 // ======================================================================= UTILS
 
-// Instances ===================================================================
-t_bool	safe_destroy(void *ptr, t_bool (*destroyer)(void *));
-t_bool	safe_sdestroy(void *ptr, void (*destroyer)(void *));
-
-// Lexer Unit ------------------------------------------------------------------
-t_bool new_lexunit(t_lexunit **new, t_type type, char *content);
-t_bool destroy_lexunit(void *ptr);
-
-// Signal Lexer ----------------------------------------------------------------
-t_siglexer *new_siglexer(t_type type, char *sign, size_t size);
-t_siglexer **new_lst_siglexer(void);
-t_bool destroy_siglexer(void *ptr);
-t_bool destroy_lst_siglexer(void *ptr);
-// =================================================================== Instances
-
 // MOCKS --- REMOVER AO FINAL DO PROJETO =======================================
-
 void init_mock_env(t_shell *shell);
 // ======================================= MOCKS --- REMOVER AO FINAL DO PROJETO
+
+// Front =======================================================================
+// Readline --------------------------------------------------------------------
+void		start_prompt(t_shell *shell);
+char		*build_prompt(t_prompt *prompt);
+char		*build_user_pmt(char **crr);
+char		*build_host_pmt(char **crr);
+char		*build_home_pmt(char **crr);
+char		*build_dir_pmt(char *home, char **crr);
+char		*build_type_pmt(char *user, char **crr);
+
+// Lexer -----------------------------------------------------------------------
+t_dlist 	*lexer(char *in, t_lexsig **siglexer);
+
+// Syntax ----------------------------------------------------------------------
+t_bool		syntax_analyze(t_dlist *tokens);
+t_bool		syntax_check_lside(t_dlist *tokens, t_type type);
+t_bool		syntax_check_adjacency(t_dlist *tokens, t_type type);
+t_bool		syntax_check_balance(t_dlist *tokens, t_type left, t_type right);
+t_bool		syntax_check_redir(t_dlist *tokens);
+t_bool		syntax_err_msg(char *msg, char *oper);
+t_bool		syntax_err_smsg(char *msg);
+
+// Parser ----------------------------------------------------------------------
+t_astree	*parser(t_dlist *tokens);
+t_tnode		*parse_expression(t_astree *tree, t_bnode **cursor);
+t_tnode		*parse_pipeline(t_astree *tree, t_bnode **cursor);
+t_tnode		*parse_command(t_astree *tree, t_bnode **cursor);
+t_tnode		*parse_redir(t_tnode *node, t_bnode **cursor);
+t_tnode		*parse_subshell(t_astree *tree, t_bnode **cursor);
+// ======================================================================= Front
+
+// Structure ===================================================================
+// String ----------------------------------------------------------------------
+void		print_string(void *ptr, int fd);
+void		destroy_string_lst(char **list);
+
+// Abstract Syntax Tree --------------------------------------------------------
+t_astree	*new_astree(void *data);
+void		destroy_astree(void *ptr);
+void		print_astree(void *ptr, int fd);
+t_tnode		*get_entry_astree(t_astree *tree);
+
+// Three-way Node --------------------------------------------------------------
+t_tnode		*new_tnode(void *origin, void *data);
+void		destroy_tnode(void *ptr);
+
+// Lexer Token -----------------------------------------------------------------
+t_bool		new_lextoken(t_lextoken **new, t_type type, char *content);
+void		destroy_lextoken(void *ptr);
+t_lextoken	*get_lextoken(void *ptr);
+void		next_lextoken(t_bnode **cursor);
+
+// Lexer Operation Signal ------------------------------------------------------
+t_lexsig	*new_lexsig(t_type type, char *sign, size_t size);
+t_lexsig	**new_lst_lexsig(void);
+void		destroy_lexsig(void *ptr);
+void		destroy_lst_lexsig(void *ptr);
+
+// Redirection -----------------------------------------------------------------
+t_redir		*new_redir(t_type type);
+void		destroy_redir(void *ptr);
+void		destroy_lst_redir(void *ptr);
+
+// Command ---------------------------------------------------------------------
+t_cmd		*new_cmd(void);
+void		destroy_cmd(void *ptr);
+t_cmd		*get_cmd(void *ptr);
+t_cmd		*set_arg_cmd(t_cmd *cmd, char *src);
+void		print_cmd(void *ptr, int fd);
+
+// Prompt ----------------------------------------------------------------------
+t_prompt	*new_prompt(void);
+void		destroy_prompt(void *ptr);
+// =================================================================== Structure
 
 #endif
