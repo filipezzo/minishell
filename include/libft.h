@@ -6,7 +6,7 @@
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 20:37:22 by mhidani           #+#    #+#             */
-/*   Updated: 2025/12/20 11:53:43 by mhidani          ###   ########.fr       */
+/*   Updated: 2026/01/06 00:38:18 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,6 @@ typedef struct s_dlist
 	size_t			size;
 }					t_dlist;
 
-// Abstract Syntax Tree --------------------------------------------------------
-typedef struct s_astree
-{
-	struct s_bnode	*root;
-	size_t			leaves;
-}					t_astree;
-
 // Bidirectional Node ----------------------------------------------------------
 typedef struct s_bnode
 {
@@ -49,14 +42,12 @@ typedef struct s_bnode
 	struct s_bnode	*left;
 	struct s_bnode	*right;
 	struct s_dlist	*structure;
-	t_bool			(*destroy_data)(void *);
+	void			(*destroy_data)(void *);
 }					t_bnode;
 // ============================================================= Data Structures
 
 // Special Generic Functions ===================================================
-typedef t_bool	(*destroy)(void *data);
-typedef t_bool	(*foreach_callback)(void *crr, void *tgt);
-typedef t_bool	(*destructor)(void *data);
+typedef void	(*destroy)(void *data);
 typedef t_bool	(*foreach_callback)(void *crr, void *tgt);
 // =================================================== Special Generic Functions
 
@@ -117,29 +108,19 @@ char		*ft_get_next_line(int fd);
 
 t_dlist		*ft_new_dlist(void);
 t_bool		ft_destroy_dlist(void *ptr);
-t_dlist		*ft_add_nd_dlist(t_dlist *list, void *data, destructor dst);
+t_dlist		*ft_add_nd_dlist(t_dlist *list, void *data, destroy dst);
 t_dlist		*ft_remove_nd_dlist(t_dlist *list, t_bnode *tgt);
 t_bnode		*ft_findin_dlist(t_dlist *list, void *data, t_bool (*eq)());
 t_bool		ft_foreach_dlist(t_dlist *list, void *data, foreach_callback cbk);
-
-// Abstract Syntax Tree --------------------------------------------------------
-
-t_astree	*ft_new_astree(void);
-t_bool		ft_destroy_astree(void *ptr);
-t_astree	*ft_add_lef_astree(t_astree *tree, void *data, destructor dst);
-t_astree	*ft_add_rig_astree(t_astree *tree, void *data, destructor dst);
-t_astree	*ft_add_lev_astree(t_astree *tree, void *data, destructor dst);
-t_bool		ft_remove_leave_astree(t_astree *tree, t_bnode *node);
-void		ft_print_astree(t_astree *tree);
 
 // Birectional Node ------------------------------------------------------------
 
 t_bnode		*ft_new_bnode(void *data, void *structure, destroy dst_dt);
 t_bool		ft_setdir_bnode(t_bnode *node, t_bnode *next, t_bnode *prev);
 t_bool		ft_destroy_bnode(void *ptr);
-t_bnode		*ft_new_bnode(void *data, void *structure, destructor dst);
+t_bnode		*ft_new_bnode(void *data, void *structure, destroy dst);
 t_bool		ft_setdir_bnode(t_bnode *node, t_bnode *left, t_bnode *right);
-t_bool		ft_destroy_bnode(void *ptr);
+t_bool		destroy_bnode(void *ptr);
 // =================================================== Data Structures Functions
 
 #endif
