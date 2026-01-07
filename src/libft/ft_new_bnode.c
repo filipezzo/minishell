@@ -6,7 +6,7 @@
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/09 09:55:06 by mhidani           #+#    #+#             */
-/*   Updated: 2026/01/06 00:51:18 by mhidani          ###   ########.fr       */
+/*   Updated: 2026/01/07 11:55:51 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_bnode	*ft_new_bnode(void *data, void *structure, destroy dst)
 
 	if (!data)
 		return (NULL);
-	node = malloc(sizeof(t_bnode));
+	node = ft_calloc(1, sizeof(t_bnode));
 	if (!node)
 		return (NULL);
 	node->data = data;

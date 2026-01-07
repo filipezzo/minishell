@@ -6,7 +6,7 @@
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/05 14:22:05 by mhidani           #+#    #+#             */
-/*   Updated: 2026/01/05 14:41:35 by mhidani          ###   ########.fr       */
+/*   Updated: 2026/01/07 11:56:37 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 t_bool	new_lextoken(t_lextoken **new, t_type type, char *content)
 {
-	*new = malloc(sizeof(t_lextoken));
+	*new = ft_calloc(1, sizeof(t_lextoken));
 	if (!new)
 		return (FALSE);
 	(*new)->mstype = LEXTOKEN_T;

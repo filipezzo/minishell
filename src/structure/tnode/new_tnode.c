@@ -6,7 +6,7 @@
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/04 19:32:28 by mhidani           #+#    #+#             */
-/*   Updated: 2026/01/06 00:30:41 by mhidani          ###   ########.fr       */
+/*   Updated: 2026/01/07 11:53:42 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ t_tnode	*new_tnode(void *origin, void *data)
 {
 	t_tnode	*tnode;
 
-	tnode = malloc(sizeof(t_tnode));
+	tnode = ft_calloc(1, sizeof(t_tnode));
 	if (!tnode)
 		return (NULL);
 	tnode->mstype = TNODE_T;

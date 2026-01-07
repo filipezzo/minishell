@@ -6,7 +6,7 @@
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/05 20:22:45 by mhidani           #+#    #+#             */
-/*   Updated: 2026/01/05 20:22:54 by mhidani          ###   ########.fr       */
+/*   Updated: 2026/01/07 11:11:40 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ t_prompt	*new_prompt(void)
 {
 	t_prompt	*prompt;
 
-	prompt = malloc(sizeof(t_prompt));
+	prompt = ft_calloc(1, sizeof(t_prompt));
 	if (!prompt)
 		return (NULL);
 	build_user_pmt(&prompt->user);
