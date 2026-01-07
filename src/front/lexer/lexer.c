@@ -6,7 +6,7 @@
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/28 18:43:44 by mhidani           #+#    #+#             */
-/*   Updated: 2026/01/06 00:40:35 by mhidani          ###   ########.fr       */
+/*   Updated: 2026/01/07 17:06:18 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,18 @@ t_dlist	*lexer(char *in, t_lexsig **lexsig)
 	{
 		while (*pivot && (*pivot == ' ' || *pivot == '\t'))
 			pivot++;
+		if (!*pivot)
+			break ;
 		if (lex_single_quote(&pivot, &unit))
 			ft_add_nd_dlist(list, unit, destroy_lextoken);
 		else if (lex_double_quote(&pivot, &unit))
 			ft_add_nd_dlist(list, unit, destroy_lextoken);
-		else if (lex_signs(&pivot, siglex, &unit))
+		else if (lex_signs(&pivot, lexsig, &unit))
 			ft_add_nd_dlist(list, unit, destroy_lextoken);
 		else if (lex_word(&pivot, &unit))
 			ft_add_nd_dlist(list, unit, destroy_lextoken);
+		else
+			pivot++;
 	}
 	return (list);
 }
