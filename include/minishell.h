@@ -253,7 +253,7 @@ t_bool		syntax_err_smsg(char *msg);
 
 // Parser ----------------------------------------------------------------------
 t_astree	*parser(t_dlist *tokens);
-t_tnode		*parse_expression(t_astree *tree, t_bnode **cursor);
+t_tnode		*parse_and_or(t_astree *tree, t_bnode **cursor);
 t_tnode		*parse_pipeline(t_astree *tree, t_bnode **cursor);
 t_tnode		*parse_command(t_astree *tree, t_bnode **cursor);
 t_tnode		*parse_redir(t_tnode *node, t_bnode **cursor);

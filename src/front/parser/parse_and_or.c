@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_expression.c                                 :+:      :+:    :+:   */
+/*   parse_and_or.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,9 +12,7 @@
 
 #include "minishell.h"
 
-static t_bool	is_expression(t_type type);
-
-t_tnode	*parse_expression(t_astree *tree, t_bnode **cursor)
+t_tnode	*parse_and_or(t_astree *tree, t_bnode **cursor)
 {
 	t_tnode		*node;
 	t_tnode		*aux;
@@ -24,7 +22,7 @@ t_tnode	*parse_expression(t_astree *tree, t_bnode **cursor)
 	if (!aux)
 		return (NULL);
 	token = get_lextoken(*cursor);
-	while (token && is_expression(token->type))
+	while (token && (token->type == OR || token->type == AND))
 	{
 		node = new_tnode(tree, ft_strdup(token->content));
 		node->type = token->type;
@@ -33,20 +31,10 @@ t_tnode	*parse_expression(t_astree *tree, t_bnode **cursor)
 		next_lextoken(cursor);
 		node->right = parse_pipeline(tree, cursor);
 		if (!node->right)
-			return (NULL);
+			return (destroy_tnode(node), NULL);
 		node->right->branch = node;
 		aux = node;
 		token = get_lextoken(*cursor);
 	}
 	return (aux);
-}
-
-static t_bool	is_expression(t_type type)
-{
-	return (
-		type == OR
-		|| type == AND
-		|| type == SEPARATOR
-		|| type == BACKGROUND
-	);
 }
