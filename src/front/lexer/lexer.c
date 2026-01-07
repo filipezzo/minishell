@@ -14,10 +14,10 @@
 
 static t_bool	lex_single_quote(char **str, t_lextoken **unit);
 static t_bool	lex_double_quote(char **str, t_lextoken **unit);
-static t_bool	lex_signs(char **str, t_lexsig **siglexer, t_lextoken **unit);
+static t_bool	lex_signs(char **str, t_lexsig **lexsig, t_lextoken **unit);
 static t_bool	lex_word(char **str, t_lextoken **unit);
 
-t_dlist	*lexer(char *in, t_lexsig **siglex)
+t_dlist	*lexer(char *in, t_lexsig **lexsig)
 {
 	t_dlist		*list;
 	t_lextoken	*unit;
@@ -91,24 +91,24 @@ static t_bool	lex_double_quote(char **str, t_lextoken **unit)
 	return (TRUE);
 }
 
-static t_bool	lex_signs(char **str, t_lexsig **siglex, t_lextoken **unit)
+static t_bool	lex_signs(char **str, t_lexsig **lexsig, t_lextoken **unit)
 {
 	size_t	i;
 
 	if (!*str || !**str)
 		return (FALSE);
-	if (!*str || !siglex)
+	if (!*str || !lexsig)
 		return (FALSE);
 	i = 0;
-	while (siglex[i] != NULL)
+	while (lexsig[i] != NULL)
 	{
-		if (ft_strncmp(*str, siglex[i]->sign, siglex[i]->size) == 0)
+		if (ft_strncmp(*str, lexsig[i]->sign, lexsig[i]->size) == 0)
 		{
 			if (!new_lextoken(unit, WORD, NULL))
 				return (FALSE);
-			(*unit)->type = siglex[i]->type;
-			(*unit)->content = ft_strndup(siglex[i]->sign, siglex[i]->size);
-			(*str) += siglex[i]->size;
+			(*unit)->type = lexsig[i]->type;
+			(*unit)->content = ft_strndup(lexsig[i]->sign, lexsig[i]->size);
+			(*str) += lexsig[i]->size;
 			return (TRUE);
 		}
 		i++;
