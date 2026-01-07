@@ -6,7 +6,7 @@
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/28 16:47:27 by mhidani           #+#    #+#             */
-/*   Updated: 2026/01/03 13:08:27 by mhidani          ###   ########.fr       */
+/*   Updated: 2026/01/07 13:02:34 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 t_bool	syntax_analyze(t_dlist *tokens)
 {
+	if (!tokens)
+		return (FALSE);
 	return (
 		syntax_check_balance(tokens, LEFT_PAREN, RIGHT_PAREN)
 		&& syntax_check_adjacency(tokens, PIPE)
