@@ -6,7 +6,7 @@
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/05 15:35:13 by mhidani           #+#    #+#             */
-/*   Updated: 2026/01/05 18:39:53 by mhidani          ###   ########.fr       */
+/*   Updated: 2026/01/07 13:33:44 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ t_tnode	*parse_pipeline(t_astree *tree, t_bnode **cursor)
 		next_lextoken(cursor);
 		node->right = parse_command(tree, cursor);
 		if (!node->right)
-			return (NULL);
+			return (destroy_tnode(node), NULL);
 		node->right->branch = node;
 		aux = node;
 		token = get_lextoken(*cursor);

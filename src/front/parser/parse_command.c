@@ -6,7 +6,7 @@
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/05 17:40:12 by mhidani           #+#    #+#             */
-/*   Updated: 2026/01/06 00:43:57 by mhidani          ###   ########.fr       */
+/*   Updated: 2026/01/07 17:19:39 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static t_tnode	*parse_scommand(t_astree *tree, t_bnode **cursor)
 		else if (is_redirection(token->type))
 		{
 			if (!parse_redir(node, cursor))
-				return (NULL);
+				return (destroy_tnode(node), NULL);
 			token = get_lextoken(*cursor);
 			continue ;
 		}
