@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fsousa <fsousa@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 17:48:21 by fsousa            #+#    #+#             */
-/*   Updated: 2025/12/18 17:48:21 by fsousa           ###   ########.fr       */
+/*   Updated: 2026/01/07 17:58:16 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ int main(int argc, char **argv, char **envp)
 	cmd.redirections = &redir_node;
 
 	shell.cmd_list = &cmd;
+	start_prompt(&shell); // TODO: check order
 
 	printf("--- INICIANDO EXECUÇÃO: ls -la ---\n");
 	executor(&shell);
