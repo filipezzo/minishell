@@ -6,7 +6,7 @@
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/04 19:09:47 by mhidani           #+#    #+#             */
-/*   Updated: 2026/01/06 00:42:59 by mhidani          ###   ########.fr       */
+/*   Updated: 2026/01/07 17:25:53 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,11 @@
 t_astree	*parser(t_dlist *tokens)
 {
 	t_astree	*tree;
+	t_bnode		*cursor;
 
-	tree = new_astree(NULL);
-	tree->root = parse_expression(tree, &tokens->head);
+	cursor = tokens->head;
+	tree = new_astree();
+	tree->root = parse_and_or(tree, &cursor);
 	tree->entry = get_entry_astree(tree);
 	return (tree);
 }
