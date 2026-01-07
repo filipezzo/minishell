@@ -1,23 +1,23 @@
-NAME = minishell
+NAME			  = minishell
 
-SRC_DIR = src
-OBJ_DIR = obj
-BIN_DIR = bin
-INIT_DIR = init
-SLIB_DIR = lib
-STRUC_DIR = structure
-FRONT_DIR = front
-EXEC_DIR = exec
-BUILTIN_DIR = builtin
-LIBFT_DIR = libft
-INCLUDE_DIR = include
-UTILS_DIR = utils
-MOCK_DIR = mock
-SIGNAL_DIR = signals
+SRC_DIR			  = src
+OBJ_DIR			  = obj
+BIN_DIR			  = bin
+INIT_DIR		  = init
+SLIB_DIR		  = lib
+STRUC_DIR		  = structure
+FRONT_DIR		  = front
+EXEC_DIR		  = exec
+BUILTIN_DIR		  = builtin
+LIBFT_DIR		  = libft
+INCLUDE_DIR		  = include
+UTILS_DIR 		  = utils
+MOCK_DIR		  = mock
+SIGNAL_DIR		  = signals
 
-EXEC = $(BIN_DIR)/$(NAME)
+EXEC			  = $(BIN_DIR)/$(NAME)
 
-SRC_FILES = main.c
+SRC_FILES		  = main.c
 
 FRONT_READL_FILES = readline/build_dir_pmt.c readline/build_home_pmt.c \
 					readline/build_host_pmt.c readline/build_prompt.c \
@@ -26,7 +26,7 @@ FRONT_READL_FILES = readline/build_dir_pmt.c readline/build_home_pmt.c \
 FRONT_LEXER_FILES = lexer/lexer.c
 FRONT_SYNTX_FILES = syntax/syntax_analyze.c syntax/syntax_check.c \
 					syntax/syntax_check_redir.c syntax/syntax_error_msg.c
-FRONT_PARSR_FILES = parser/parse_command.c parser/parse_expression.c \
+FRONT_PARSR_FILES = parser/parse_command.c parser/parse_and_or.c \
 					parser/parse_pipeline.c parser/parser.c \
 					parser/parse_redir.c parser/parse_subshell.c
 STRUC_ASTRE_FILES = astree/destroy_astree.c astree/get_entry_astree.c \
@@ -52,7 +52,7 @@ UTIL_FILES		  = linked_list.c utils_env.c clean.c error.c utils_exec.c \
 INIT_FILES		  = init_env_list.c init_env.c
 SIGNAL_FILES	  = signals.c signals_heredoc.c
 
-LIBFT				= $(SLIB_DIR)/libft.a
+LIBFT			  = $(SLIB_DIR)/libft.a
 
 SRCS			  = $(addprefix $(SRC_DIR)/, $(SRC_FILES)) \
 					$(addprefix $(SRC_DIR)/$(STRUC_DIR)/, $(STRUC_ASTRE_FILES))\
@@ -74,13 +74,13 @@ SRCS			  = $(addprefix $(SRC_DIR)/, $(SRC_FILES)) \
 	   				$(addprefix $(SRC_DIR)/$(INIT_DIR)/, $(INIT_FILES))	\
 	   				$(addprefix $(SRC_DIR)/$(SIGNAL_DIR)/, $(SIGNAL_FILES))
 
-OBJS = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
-HEADER = $(INCLUDE_DIR)/minishell.h
+OBJS			  = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
+HEADER			  = $(INCLUDE_DIR)/minishell.h
 
-CC = cc
-CFLAGS = -g -Wall -Wextra -Werror -pthread
-IFLAGS = -I $(INCLUDE_DIR)
-RM = rm -rf
+CC				  = cc
+CFLAGS			  = -g -Wall -Wextra -Werror -pthread
+IFLAGS			  = -I $(INCLUDE_DIR)
+RM				  = rm -rf
 
 all: $(EXEC)
 
