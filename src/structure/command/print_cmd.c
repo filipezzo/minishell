@@ -6,7 +6,7 @@
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/05 17:45:37 by mhidani           #+#    #+#             */
-/*   Updated: 2026/01/05 18:03:43 by mhidani          ###   ########.fr       */
+/*   Updated: 2026/01/07 11:24:56 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static void	print_cmd_args(t_cmd *cmd, int fd)
 			ft_putstr_fd(", ", fd);
 		i++;
 	}
-	ft_putstr_fd(" ]", fd);
+	ft_putstr_fd(" ], ", fd);
 }
 
 static void print_cmd_redirs(t_cmd *cmd, int fd)
@@ -77,5 +77,5 @@ static void print_cmd_redirs(t_cmd *cmd, int fd)
 			ft_putstr_fd(", ", fd);
 		redir = redir->next;
 	}
-	ft_putstr_fd(" ]", fd);
+	ft_putstr_fd(" ], ", fd);
 }
