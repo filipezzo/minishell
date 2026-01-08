@@ -6,7 +6,7 @@
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/28 16:43:15 by mhidani           #+#    #+#             */
-/*   Updated: 2025/12/28 16:43:16 by mhidani          ###   ########.fr       */
+/*   Updated: 2026/01/06 00:42:14 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,12 @@ t_bool	syntax_check_redir(t_dlist *tokens)
 	pivot = tokens->head;
 	while (pivot)
 	{
-		type = ((t_lexunit *)(pivot->data))->type;
+		type = ((t_lextoken *)(pivot->data))->type;
 		if (is_redirection(type))
 		{
 			if (!pivot->right)
 				return (syntax_err_smsg("unexpected newline"));
-			if (!has_target(((t_lexunit *)pivot->right->data)->type))
+			if (!has_target(((t_lextoken *)pivot->right->data)->type))
 				return (syntax_err_smsg("unexpected token after redirection"));
 		}
 		pivot = pivot->right;

@@ -1,26 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   syntax_analyze.c                                   :+:      :+:    :+:   */
+/*   print_string.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/28 16:47:27 by mhidani           #+#    #+#             */
-/*   Updated: 2025/12/28 19:33:57 by mhidani          ###   ########.fr       */
+/*   Created: 2026/01/04 19:45:49 by mhidani           #+#    #+#             */
+/*   Updated: 2026/01/05 15:29:10 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minishell.h>
+#include "minishell.h"
 
-t_bool	syntax_analyze(t_dlist *tokens)
+void	print_string(void *ptr, int fd)
 {
-	return (
-		syntax_check_balance(tokens, LPAREN, RPAREN)
-		&& syntax_check_adjacency(tokens, PIPE)
-		&& syntax_check_redir(tokens)
-		&& syntax_check_lside(tokens, RUN_BKG)
-		&& syntax_check_adjacency(tokens, CMD_SEP)
-		&& syntax_check_adjacency(tokens, AND_IF)
-		&& syntax_check_adjacency(tokens, AND_OR)
-	);
+	char	*string;
+
+	if (!ptr || fd < 0)
+		return ;
+	string = (char *)ptr;
+	ft_putstr_fd(string, fd);
 }

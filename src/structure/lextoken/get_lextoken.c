@@ -1,32 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_new_dlist.c                                     :+:      :+:    :+:   */
+/*   get_lextoken.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/09 09:52:13 by mhidani           #+#    #+#             */
-/*   Updated: 2026/01/07 11:53:25 by mhidani          ###   ########.fr       */
+/*   Created: 2026/01/05 13:04:52 by mhidani           #+#    #+#             */
+/*   Updated: 2026/01/05 14:10:32 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-/**
- * Creates a double-linked list.
- * @param destroy_node Pointer to the function used to destroy a node using the
- * data as a parameter to found him.
- * @return New double-linked list allocated in the heap memory.
- */
-t_dlist	*ft_new_dlist(void)
+t_lextoken	*get_lextoken(void *ptr)
 {
-	t_dlist	*list;
+	t_bnode		*node;
+	t_lextoken	*token;
 
-	list = ft_calloc(1, sizeof(t_dlist));
-	if (!list)
+	if (!ptr)
 		return (NULL);
-	list->head = NULL;
-	list->tail = NULL;
-	list->size = 0;
-	return (list);
+	node = (t_bnode *)ptr;
+	if (!node->data)
+		return (NULL);
+	token = (t_lextoken *)node->data;
+	if (token->mstype != LEXTOKEN_T)
+		return (NULL);
+	return (token);
 }

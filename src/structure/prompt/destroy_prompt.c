@@ -1,31 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   prompt.c                                           :+:      :+:    :+:   */
+/*   destroy_prompt.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/26 11:20:58 by mhidani           #+#    #+#             */
-/*   Updated: 2025/12/26 11:29:12 by mhidani          ###   ########.fr       */
+/*   Updated: 2026/01/05 20:23:10 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-t_prompt	*new_prompt(void)
-{
-	t_prompt	*prompt;
-
-	prompt = malloc(sizeof(t_prompt));
-	if (!prompt)
-		return (NULL);
-	build_user_pmt(&prompt->user);
-	build_host_pmt(&prompt->host);
-	build_home_pmt(&prompt->home);
-	build_dir_pmt(prompt->home, &prompt->dir);
-	build_type_pmt(prompt->user, &prompt->type);
-	return (prompt);
-}
 
 void	destroy_prompt(void *ptr)
 {

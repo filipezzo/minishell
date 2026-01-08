@@ -1,32 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_new_dlist.c                                     :+:      :+:    :+:   */
+/*   new_tnode.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/09 09:52:13 by mhidani           #+#    #+#             */
-/*   Updated: 2026/01/07 11:53:25 by mhidani          ###   ########.fr       */
+/*   Created: 2026/01/04 19:32:28 by mhidani           #+#    #+#             */
+/*   Updated: 2026/01/07 11:53:42 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-/**
- * Creates a double-linked list.
- * @param destroy_node Pointer to the function used to destroy a node using the
- * data as a parameter to found him.
- * @return New double-linked list allocated in the heap memory.
- */
-t_dlist	*ft_new_dlist(void)
+t_tnode	*new_tnode(void *origin, void *data)
 {
-	t_dlist	*list;
+	t_tnode	*tnode;
 
-	list = ft_calloc(1, sizeof(t_dlist));
-	if (!list)
+	tnode = ft_calloc(1, sizeof(t_tnode));
+	if (!tnode)
 		return (NULL);
-	list->head = NULL;
-	list->tail = NULL;
-	list->size = 0;
-	return (list);
+	tnode->mstype = TNODE_T;
+	tnode->data = data;
+	tnode->type = WORD;
+	tnode->origin = origin;
+	tnode->branch = NULL;
+	tnode->left = NULL;
+	tnode->right = NULL;
+	tnode->destroy = free;
+	tnode->print = print_string;
+	return (tnode);
 }

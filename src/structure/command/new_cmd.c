@@ -1,32 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_new_dlist.c                                     :+:      :+:    :+:   */
+/*   new_cmd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/09 09:52:13 by mhidani           #+#    #+#             */
-/*   Updated: 2026/01/07 11:53:25 by mhidani          ###   ########.fr       */
+/*   Created: 2026/01/05 15:02:06 by mhidani           #+#    #+#             */
+/*   Updated: 2026/01/07 11:56:15 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-/**
- * Creates a double-linked list.
- * @param destroy_node Pointer to the function used to destroy a node using the
- * data as a parameter to found him.
- * @return New double-linked list allocated in the heap memory.
- */
-t_dlist	*ft_new_dlist(void)
+t_cmd	*new_cmd(void)
 {
-	t_dlist	*list;
+	t_cmd	*cmd;
 
-	list = ft_calloc(1, sizeof(t_dlist));
-	if (!list)
+	cmd = ft_calloc(1, sizeof(t_cmd));
+	if (!cmd)
 		return (NULL);
-	list->head = NULL;
-	list->tail = NULL;
-	list->size = 0;
-	return (list);
+	cmd->mstype = COMMAND_T;
+	cmd->args = NULL;
+	cmd->redirections = NULL;
+	cmd->pid = -1;
+	cmd->next = NULL;
+	return (cmd);
 }

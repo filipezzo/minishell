@@ -6,7 +6,7 @@
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/09 11:23:37 by mhidani           #+#    #+#             */
-/*   Updated: 2025/12/09 12:11:14 by mhidani          ###   ########.fr       */
+/*   Updated: 2026/01/07 15:17:02 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ t_bool	ft_destroy_bnode(void *ptr)
 	if (!ptr || !((t_bnode *)ptr)->destroy_data)
 		return (FALSE);
 	node = (t_bnode *)ptr;
-	node->destroy_data(node->data);
+	if (node->destroy_data)
+		node->destroy_data(node->data);
 	free(node);
 	return (TRUE);
 }

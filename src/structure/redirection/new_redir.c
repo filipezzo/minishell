@@ -1,32 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_new_dlist.c                                     :+:      :+:    :+:   */
+/*   new_redir.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/09 09:52:13 by mhidani           #+#    #+#             */
-/*   Updated: 2026/01/07 11:53:25 by mhidani          ###   ########.fr       */
+/*   Created: 2026/01/05 15:18:41 by mhidani           #+#    #+#             */
+/*   Updated: 2026/01/07 11:56:46 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-/**
- * Creates a double-linked list.
- * @param destroy_node Pointer to the function used to destroy a node using the
- * data as a parameter to found him.
- * @return New double-linked list allocated in the heap memory.
- */
-t_dlist	*ft_new_dlist(void)
+t_redir	*new_redir(t_type type)
 {
-	t_dlist	*list;
+	t_redir	*redir;
 
-	list = ft_calloc(1, sizeof(t_dlist));
-	if (!list)
+	redir = ft_calloc(1, sizeof(t_redir));
+	if (!redir)
 		return (NULL);
-	list->head = NULL;
-	list->tail = NULL;
-	list->size = 0;
-	return (list);
+	redir->mstype = REDIRECTION_T;
+	redir->type = type;
+	redir->file = NULL;
+	redir->next = NULL;
+	return (redir);
 }

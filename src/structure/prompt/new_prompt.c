@@ -1,32 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_new_dlist.c                                     :+:      :+:    :+:   */
+/*   new_prompt.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/09 09:52:13 by mhidani           #+#    #+#             */
-/*   Updated: 2026/01/07 11:53:25 by mhidani          ###   ########.fr       */
+/*   Created: 2026/01/05 20:22:45 by mhidani           #+#    #+#             */
+/*   Updated: 2026/01/07 11:11:40 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-/**
- * Creates a double-linked list.
- * @param destroy_node Pointer to the function used to destroy a node using the
- * data as a parameter to found him.
- * @return New double-linked list allocated in the heap memory.
- */
-t_dlist	*ft_new_dlist(void)
+t_prompt	*new_prompt(void)
 {
-	t_dlist	*list;
+	t_prompt	*prompt;
 
-	list = ft_calloc(1, sizeof(t_dlist));
-	if (!list)
+	prompt = ft_calloc(1, sizeof(t_prompt));
+	if (!prompt)
 		return (NULL);
-	list->head = NULL;
-	list->tail = NULL;
-	list->size = 0;
-	return (list);
+	build_user_pmt(&prompt->user);
+	build_host_pmt(&prompt->host);
+	build_home_pmt(&prompt->home);
+	build_dir_pmt(prompt->home, &prompt->dir);
+	build_type_pmt(prompt->user, &prompt->type);
+	return (prompt);
 }

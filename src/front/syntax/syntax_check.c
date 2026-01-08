@@ -6,7 +6,7 @@
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/28 12:40:35 by mhidani           #+#    #+#             */
-/*   Updated: 2025/12/28 16:35:04 by mhidani          ###   ########.fr       */
+/*   Updated: 2026/01/06 00:42:00 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,22 +18,22 @@ static t_bool	can_end_expected(t_type type);
 t_bool	syntax_check_lside(t_dlist *tokens, t_type type)
 {
 	t_bnode		*pivot;
-	t_lexunit	*lexunit;
+	t_lextoken	*lexunit;
 	char		*err;
 
 	err = "unexpected";
 	pivot = tokens->head;
 	while (pivot)
 	{
-		lexunit = ((t_lexunit *)pivot->data);
+		lexunit = ((t_lextoken *)pivot->data);
 		if (lexunit->type == type)
 		{
 			if (!pivot->left)
 				return (syntax_err_msg(err, lexunit->content));
-			if (!can_end_expected(((t_lexunit *)pivot->left->data)->type))
+			if (!can_end_expected(((t_lextoken *)pivot->left->data)->type))
 				return (syntax_err_msg(err, lexunit->content));
 			if (pivot->right
-				&& !can_start_expected(((t_lexunit *)pivot->right->data)->type))
+				&& !can_start_expected(((t_lextoken *)pivot->right->data)->type))
 				return (syntax_err_msg(err, lexunit->content));
 		}
 		pivot = pivot->right;
@@ -44,21 +44,21 @@ t_bool	syntax_check_lside(t_dlist *tokens, t_type type)
 t_bool	syntax_check_adjacency(t_dlist *tokens, t_type type)
 {
 	t_bnode		*pivot;
-	t_lexunit	*lexunit;
+	t_lextoken	*lexunit;
 	char		*err;
 
 	err = "unexpected";
 	pivot = tokens->head;
 	while (pivot)
 	{
-		lexunit = ((t_lexunit *)pivot->data);
+		lexunit = ((t_lextoken *)pivot->data);
 		if (lexunit->type == type)
 		{
 			if (!pivot->left || !pivot->right)
 				return (syntax_err_msg(err, lexunit->content));
-			if (!can_end_expected(((t_lexunit *)pivot->left->data)->type))
+			if (!can_end_expected(((t_lextoken *)pivot->left->data)->type))
 				return (syntax_err_msg(err, lexunit->content));
-			if (!can_start_expected(((t_lexunit *)pivot->right->data)->type))
+			if (!can_start_expected(((t_lextoken *)pivot->right->data)->type))
 				return (syntax_err_msg(err, lexunit->content));
 		}
 		pivot = pivot->right;
@@ -78,7 +78,7 @@ t_bool	syntax_check_balance(t_dlist *tokens, t_type left, t_type right)
 	pivot = tokens->head;
 	while (pivot)
 	{
-		type = ((t_lexunit *)pivot->data)->type;
+		type = ((t_lextoken *)pivot->data)->type;
 		if (type == left)
 			balance++;
 		else if (type == right)
@@ -96,7 +96,7 @@ static t_bool	can_start_expected(t_type type)
 {
 	return (
 		type == WORD
-		|| type == LPAREN
+		|| type == LEFT_PAREN
 	);
 }
 
@@ -104,6 +104,6 @@ static t_bool	can_end_expected(t_type type)
 {
 	return (
 		type == WORD
-		|| type == RPAREN
+		|| type == RIGHT_PAREN
 	);
 }

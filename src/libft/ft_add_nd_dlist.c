@@ -13,17 +13,17 @@
 #include "libft.h"
 
 /**
- * Adds the node created from the information passed as a parameter, always 
- * placing it as the last element of the list, which is the tail of the doubly 
- * linked list. If the list is still empty, the node will become both the head 
+ * Adds the node created from the information passed as a parameter, always
+ * placing it as the last element of the list, which is the tail of the doubly
+ * linked list. If the list is still empty, the node will become both the head
  * and tail.
  * @param list Data structure doubly linked list where the node will be placed.
  * @param data Node information.
- * @param dst Function used to destroy the information of the created node from 
+ * @param dst Function used to destroy the information of the created node from
  * the allocated memory.
  * @return Returns the same list to which the created node was added.
  */
-t_dlist	*ft_add_nd_dlist(t_dlist *list, void *data, destructor dst)
+t_dlist	*ft_add_nd_dlist(t_dlist *list, void *data, destroy dst)
 {
 	t_bnode	*node;
 
