@@ -107,11 +107,6 @@ typedef struct s_shell
 	pid_t			last_pid;
 }					t_shell;
 
-typedef struct s_shared_work
-{
-	struct s_lexsig **signs_lexer;
-}					t_shared_work;
-
 typedef struct s_astree
 {
 	t_mstype		mstype;
