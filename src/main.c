@@ -3,44 +3,67 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
+/*   By: fsousa <fsousa@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/18 17:48:21 by fsousa            #+#    #+#             */
-/*   Updated: 2026/01/07 17:58:16 by mhidani          ###   ########.fr       */
+/*   Created: 2026/01/11 15:59:06 by fsousa            #+#    #+#             */
+/*   Updated: 2026/01/11 16:02:24 by fsousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int main(int argc, char **argv, char **envp)
-{
+int	g_signal_status = 0;
 
-	t_shell shell;
-	t_cmd cmd;
-	t_redir redir_node;
+int	main(int argc, char **argv, char **envp)
+{
+	t_shell		shell;
+	t_lexsig	**lexer_conf;
+	t_dlist		*tokens;
+	t_astree	*tree;
+	char		*input;
 
 	(void)argc;
 	(void)argv;
-
 	ft_memset(&shell, 0, sizeof(t_shell));
 	init_env(&shell, envp);
-
-	ft_memset(&redir_node, 0, sizeof(t_redir));
-	redir_node.file = "teste.txt";
-	redir_node.type = REDIR_OUT;
-	redir_node.next = NULL;
-
-	char *args[] = {"ls", "-la", NULL};
-	ft_memset(&cmd, 0, sizeof(t_cmd));
-	cmd.args = args;
-	cmd.next = NULL;
-	cmd.redirections = &redir_node;
-
-	shell.cmd_list = &cmd;
-	start_prompt(&shell); // TODO: check order
-
-	printf("--- INICIANDO EXECUÇÃO: ls -la ---\n");
-	executor(&shell);
-	printf("--- FIM DA EXECUÇÃO (Exit Status: %d) ---\n", shell.exit_status);
-	return 0;
+	init_signals();
+	lexer_conf = init_lexer_config();
+	while (1)
+	{
+		if (g_signal_status != 0)
+		{
+			shell.exit_status = g_signal_status;
+			g_signal_status = 0;
+		}
+		input = readline("minishell$ ");
+		if (!input)
+		{
+			if (g_signal_status == 130)
+				continue ;
+			printf("exit\n");
+			break ;
+		}
+		if (input[0] != '\0')
+		{
+			add_history(input);
+			tokens = lexer(input, lexer_conf);
+			if (tokens)
+			{
+				tree = parser(tokens);
+				if (tree && tree->root)
+				{
+					run_ast(&shell, tree->root);
+					init_signals();
+				}
+				if (tree)
+					destroy_astree(tree);
+				ft_destroy_dlist(tokens);
+			}
+		}
+		free(input);
+	}
+	free_lexer_config(lexer_conf);
+	free_shell(&shell);
+	rl_clear_history();
+	return (shell.exit_status);
 }

@@ -23,7 +23,7 @@ FRONT_READL_FILES = readline/build_dir_pmt.c readline/build_home_pmt.c \
 					readline/build_host_pmt.c readline/build_prompt.c \
 					readline/build_type_pmt.c readline/build_user_pmt.c \
 					readline/start_prompt.c
-FRONT_LEXER_FILES = lexer/lexer.c
+FRONT_LEXER_FILES = lexer/lexer.c lexer/config_lexer.c
 FRONT_SYNTX_FILES = syntax/syntax_analyze.c syntax/syntax_check.c \
 					syntax/syntax_check_redir.c syntax/syntax_error_msg.c
 FRONT_PARSR_FILES = parser/parse_command.c parser/parse_and_or.c \
@@ -45,7 +45,7 @@ STRUC_STRIN_FILES = string/destroy_string_lst.c string/print_string.c
 BUILTIN_FILES	  = builtin.c builtin_echo.c builtin_pwd.c builtin_env.c \
 					builtin_export.c builtin_unset.c builtin_exit.c \
 					builtin_cd.c
-EXEC_FILES		  = executor.c redirect.c execute_external.c
+EXEC_FILES		  = executor.c redirect.c execute_external.c exec_ast.c
 MOCK_FILES		  = init_mock_env.c
 UTIL_FILES		  = linked_list.c utils_env.c clean.c error.c utils_exec.c \
 					lexel_utils.c
