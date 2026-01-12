@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   config_lexer.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fsousa <fsousa@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/11 13:47:15 by fsousa            #+#    #+#             */
-/*   Updated: 2026/01/11 16:01:36 by fsousa           ###   ########.fr       */
+/*   Updated: 2026/01/12 08:54:24 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ static t_lexsig *create_sig(t_type type, char *str)
     sig = malloc(sizeof(t_lexsig));
     if (!sig)
         return (NULL);
+    sig->mstype = LEXSIG_T;
     sig->type = type;
     sig->sign = ft_strdup(str);
     sig->size = ft_strlen(str);
@@ -33,7 +34,7 @@ t_lexsig **init_lexer_config(void)
 {
     t_lexsig **sigs;
 
-    sigs = malloc(sizeof(t_lexsig *) * 12); 
+    sigs = ft_calloc(12, sizeof(t_lexsig *));
     if (!sigs)
         return (NULL);
     int i = 0;
@@ -47,7 +48,7 @@ t_lexsig **init_lexer_config(void)
     sigs[i++] = create_sig(LEFT_PAREN, "(");
     sigs[i++] = create_sig(RIGHT_PAREN, ")");
     sigs[i++] = create_sig(SEPARATOR, ";");
-    sigs[i] = NULL; 
+    sigs[i] = NULL;
     return (sigs);
 }
 
