@@ -6,7 +6,7 @@
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 20:37:22 by mhidani           #+#    #+#             */
-/*   Updated: 2026/01/06 00:38:18 by mhidani          ###   ########.fr       */
+/*   Updated: 2026/01/12 09:13:15 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,8 @@
 # include <stdlib.h>
 # include <stdarg.h>
 
-typedef char t_bool;
+typedef char	t_bool;
 
-// Data Structures =============================================================
 // Doubly Linked List ----------------------------------------------------------
 typedef struct s_dlist
 {
@@ -44,12 +43,10 @@ typedef struct s_bnode
 	struct s_dlist	*structure;
 	void			(*destroy_data)(void *);
 }					t_bnode;
-// ============================================================= Data Structures
 
-// Special Generic Functions ===================================================
-typedef void	(*destroy)(void *data);
-typedef t_bool	(*foreach_callback)(void *crr, void *tgt);
-// =================================================== Special Generic Functions
+// Special Generic Functions ---------------------------------------------------
+typedef void	(*t_destroy)(void *data);
+typedef t_bool	(*t_foreach_callback)(void *crr, void *tgt);
 
 // Check and Manipulate character ----------------------------------------------
 t_bool		ft_isalpha(int c);
@@ -103,24 +100,20 @@ void		ft_putnbr_fd(int n, int fd);
 ssize_t		ft_fputstr_fd(int fd, char *src, ...);
 char		*ft_get_next_line(int fd);
 
-// Data Structures Functions ===================================================
 // Doubly Linked List ----------------------------------------------------------
-
 t_dlist		*ft_new_dlist(void);
 t_bool		ft_destroy_dlist(void *ptr);
-t_dlist		*ft_add_nd_dlist(t_dlist *list, void *data, destroy dst);
+t_dlist		*ft_add_nd_dlist(t_dlist *list, void *data, t_destroy dst);
 t_dlist		*ft_remove_nd_dlist(t_dlist *list, t_bnode *tgt);
 t_bnode		*ft_findin_dlist(t_dlist *list, void *data, t_bool (*eq)());
-t_bool		ft_foreach_dlist(t_dlist *list, void *data, foreach_callback cbk);
+t_bool		ft_foreach_dlist(t_dlist *list, void *data, t_foreach_callback cbk);
 
 // Birectional Node ------------------------------------------------------------
-
-t_bnode		*ft_new_bnode(void *data, void *structure, destroy dst_dt);
+t_bnode		*ft_new_bnode(void *data, void *structure, t_destroy dst_dt);
 t_bool		ft_setdir_bnode(t_bnode *node, t_bnode *next, t_bnode *prev);
 t_bool		ft_destroy_bnode(void *ptr);
-t_bnode		*ft_new_bnode(void *data, void *structure, destroy dst);
+t_bnode		*ft_new_bnode(void *data, void *structure, t_destroy dst);
 t_bool		ft_setdir_bnode(t_bnode *node, t_bnode *left, t_bnode *right);
 t_bool		destroy_bnode(void *ptr);
-// =================================================== Data Structures Functions
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals_heredoc.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fsousa <fsousa@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/11 14:36:43 by fsousa            #+#    #+#             */
-/*   Updated: 2026/01/11 16:02:00 by fsousa           ###   ########.fr       */
+/*   Updated: 2026/01/12 09:29:05 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ static void	handle_sigint_heredoc(int sig)
 
 void	set_signals_heredoc(void)
 {
-	struct sigaction sa_int;
-	struct sigaction sa_quit;
+	struct sigaction	sa_int;
+	struct sigaction	sa_quit;
 
 	sa_int.sa_handler = &handle_sigint_heredoc;
 	sa_int.sa_flags = 0;

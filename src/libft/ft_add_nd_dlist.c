@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_add_nd_dlist.c                                     :+:      :+:    :+:   */
+/*   ft_add_nd_dlist.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/09 13:21:13 by mhidani           #+#    #+#             */
-/*   Updated: 2025/12/09 15:39:13 by mhidani          ###   ########.fr       */
+/*   Created: 2026/01/12 09:38:44 by mhidani           #+#    #+#             */
+/*   Updated: 2026/01/12 09:38:45 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
  * the allocated memory.
  * @return Returns the same list to which the created node was added.
  */
-t_dlist	*ft_add_nd_dlist(t_dlist *list, void *data, destroy dst)
+t_dlist	*ft_add_nd_dlist(t_dlist *list, void *data, t_destroy dst)
 {
 	t_bnode	*node;
 

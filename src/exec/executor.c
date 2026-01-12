@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fsousa <fsousa@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/15 18:07:04 by fsousa            #+#    #+#             */
-/*   Updated: 2025/12/20 15:22:15 by fsousa           ###   ########.fr       */
+/*   Updated: 2026/01/12 09:32:45 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void handle_child_process(t_shell *shell, t_cmd *cmd, int fd_in,
-								 int end[2])
+static void	handle_child_process(t_shell *shell, t_cmd *cmd, int fd_in,
+								int end[2])
 {
 	set_signals_child();
 	if (fd_in != STDIN_FILENO)
@@ -35,10 +35,11 @@ static void handle_child_process(t_shell *shell, t_cmd *cmd, int fd_in,
 		execute_external(shell, cmd);
 }
 
-static void wait_all_children(t_shell *shell)
+static void	wait_all_children(t_shell *shell)
 {
-	pid_t pid;
-	int status;
+	pid_t	pid;
+	int		status;
+	int		sig;
 
 	pid = 0;
 	while (pid != -1 || errno != ECHILD)
@@ -50,8 +51,6 @@ static void wait_all_children(t_shell *shell)
 				shell->exit_status = WEXITSTATUS(status);
 			else if (WIFSIGNALED(status))
 			{
-				int sig;
-
 				sig = WTERMSIG(status);
 				shell->exit_status = 128 + sig;
 				if (sig == SIGINT)
@@ -64,9 +63,9 @@ static void wait_all_children(t_shell *shell)
 	}
 }
 
-static pid_t handle_fork(t_shell *shell, t_cmd *cmd, int fd_in, int end[2])
+static pid_t	handle_fork(t_shell *shell, t_cmd *cmd, int fd_in, int end[2])
 {
-	pid_t pid;
+	pid_t	pid;
 
 	pid = fork();
 	if (pid == -1)
@@ -76,11 +75,11 @@ static pid_t handle_fork(t_shell *shell, t_cmd *cmd, int fd_in, int end[2])
 	return (pid);
 }
 
-static void execute_pipeline(t_shell *shell, t_cmd *cmd)
+static void	execute_pipeline(t_shell *shell, t_cmd *cmd)
 {
-	int fd_in;
-	int end[2];
-	pid_t pid;
+	int		fd_in;
+	int		end[2];
+	pid_t	pid;
 
 	set_signals_exec();
 	fd_in = STDIN_FILENO;
@@ -103,13 +102,13 @@ static void execute_pipeline(t_shell *shell, t_cmd *cmd)
 	wait_all_children(shell);
 }
 
-void executor(t_shell *shell)
+void	executor(t_shell *shell)
 {
-	t_cmd *head;
+	t_cmd	*head;
 
 	head = shell->cmd_list;
 	if (!head)
-		return;
+		return ;
 	if (!head->next && is_command_builtin(head->args[0]))
 	{
 		shell->saved_stdin = dup(STDIN_FILENO);

@@ -6,7 +6,7 @@
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/28 12:40:35 by mhidani           #+#    #+#             */
-/*   Updated: 2026/01/06 00:42:00 by mhidani          ###   ########.fr       */
+/*   Updated: 2026/01/12 09:20:21 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,10 @@ t_bool	syntax_check_lside(t_dlist *tokens, t_type type)
 		{
 			if (!pivot->left)
 				return (syntax_err_msg(err, lexunit->content));
-			if (!can_end_expected(((t_lextoken *)pivot->left->data)->type))
+			if (!can_end_expected(bnode_to_lextoken(pivot->left)->type))
 				return (syntax_err_msg(err, lexunit->content));
 			if (pivot->right
-				&& !can_start_expected(((t_lextoken *)pivot->right->data)->type))
+				&& !can_start_expected(bnode_to_lextoken(pivot->right)->type))
 				return (syntax_err_msg(err, lexunit->content));
 		}
 		pivot = pivot->right;
