@@ -6,7 +6,7 @@
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 17:12:39 by mhidani           #+#    #+#             */
-/*   Updated: 2026/01/13 23:23:34 by mhidani          ###   ########.fr       */
+/*   Updated: 2026/01/14 12:46:14 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,14 @@ void	expand_simple(t_shell *sh, char *src, t_cmd *cmd)
 {
 	char	*value;
 	char	**splited;
+	size_t	i;
 	size_t	pos;
 
 	if (!sh || !src || !cmd)
 		return ;
-	value = expand_dolar(sh, src);
-	if (!value)
-		value = expand_tilde(src);
-	splited = ft_split(value, ' ');
+	i = 0;
+	value = find_expand(sh, src, &i);
+	splited = ft_split(value, ' '); // TODO: analisar se será necesário criar um split que segue o padrão IFS
 	pos = args_pos(cmd->args, src);
 	realloc_args_in(cmd, pos, splited);
 	destroy_string_lst(splited);
