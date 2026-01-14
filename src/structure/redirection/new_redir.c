@@ -12,9 +12,9 @@
 
 #include "minishell.h"
 
-t_redir	*new_redir(t_type type)
+t_redir *new_redir(t_type type)
 {
-	t_redir	*redir;
+	t_redir *redir;
 
 	redir = ft_calloc(1, sizeof(t_redir));
 	if (!redir)
@@ -22,6 +22,7 @@ t_redir	*new_redir(t_type type)
 	redir->mstype = REDIRECTION_T;
 	redir->type = type;
 	redir->file = NULL;
+	redir->heredoc_fd = -1;
 	redir->next = NULL;
 	return (redir);
 }

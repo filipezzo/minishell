@@ -12,15 +12,17 @@
 
 #include "minishell.h"
 
-void	destroy_redir(void *ptr)
+void destroy_redir(void *ptr)
 {
-	t_redir	*redir;
+	t_redir *redir;
 
 	if (!ptr)
-		return ;
+		return;
 	redir = (t_redir *)ptr;
 	if (redir->mstype != REDIRECTION_T)
-		return ;
+		return;
+	if (redir->heredoc_fd != -1)
+		close(redir->heredoc_fd);
 	free(redir->file);
 	free(redir);
 }

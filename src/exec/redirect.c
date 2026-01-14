@@ -12,9 +12,24 @@
 
 #include "minishell.h"
 
-int	redirect_input(const char *filename)
+static int redirect_heredoc(t_redir *r)
 {
-	int	fd;
+	if (r->heredoc_fd == -1)
+		return (0);
+
+	if (dup2(r->heredoc_fd, STDIN_FILENO) == -1)
+	{
+		perror("dup2 heredoc");
+		return (0);
+	}
+	close(r->heredoc_fd);
+	r->heredoc_fd = -1;
+	return (1);
+}
+
+static int redirect_input(const char *filename)
+{
+	int fd;
 
 	fd = open(filename, O_RDONLY);
 	if (fd == -1)
@@ -32,9 +47,9 @@ int	redirect_input(const char *filename)
 	return (1);
 }
 
-int	redirect_output(const char *filename)
+static int redirect_output(const char *filename)
 {
-	int	fd;
+	int fd;
 
 	fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd == -1)
@@ -52,9 +67,9 @@ int	redirect_output(const char *filename)
 	return (1);
 }
 
-int	redirect_append(const char *filename)
+static int redirect_append(const char *filename)
 {
-	int	fd;
+	int fd;
 
 	fd = open(filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (fd == -1)
@@ -72,9 +87,9 @@ int	redirect_append(const char *filename)
 	return (1);
 }
 
-int	apply_redirect(t_cmd *cmd)
+int apply_redirect(t_cmd *cmd)
 {
-	t_redir	*r;
+	t_redir *r;
 
 	r = cmd->redirections;
 	while (r)
@@ -93,6 +108,11 @@ int	apply_redirect(t_cmd *cmd)
 		{
 			if (!redirect_append(r->file))
 				return (0);
+		}
+		else if (r->type == REDIR_HEREDOC)
+		{
+			if (!redirect_heredoc(r))
+				return 0;
 		}
 		r = r->next;
 	}

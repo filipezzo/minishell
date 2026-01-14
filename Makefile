@@ -14,7 +14,7 @@ INCLUDE_DIR		  = include
 UTILS_DIR 		  = utils
 MOCK_DIR		  = mock
 SIGNAL_DIR		  = signals
-
+HEREDOC_DIR		  = heredoc
 EXEC			  = $(BIN_DIR)/$(NAME)
 
 SRC_FILES		  = main.c
@@ -43,6 +43,7 @@ BUILTIN_FILES	  = builtin.c builtin_echo.c builtin_pwd.c builtin_env.c \
 					builtin_export.c builtin_unset.c builtin_exit.c \
 					builtin_cd.c
 EXEC_FILES		  = executor.c redirect.c execute_external.c exec_ast.c
+HEREDOC_FILES	  = heredoc.c heredoc_fds.c heredoc_prepare.c
 MOCK_FILES		  = init_mock_env.c
 UTIL_FILES		  = linked_list.c utils_env.c clean.c error.c utils_exec.c \
 					lexel_utils.c
@@ -68,7 +69,9 @@ SRCS			  = $(addprefix $(SRC_DIR)/, $(SRC_FILES)) \
 	   				$(addprefix $(SRC_DIR)/$(MOCK_DIR)/, $(MOCK_FILES)) \
 	   				$(addprefix $(SRC_DIR)/$(UTILS_DIR)/, $(UTIL_FILES)) \
 	   				$(addprefix $(SRC_DIR)/$(INIT_DIR)/, $(INIT_FILES))	\
-	   				$(addprefix $(SRC_DIR)/$(SIGNAL_DIR)/, $(SIGNAL_FILES))
+	   				$(addprefix $(SRC_DIR)/$(SIGNAL_DIR)/, $(SIGNAL_FILES))	\
+					$(addprefix $(SRC_DIR)/$(HEREDOC_DIR)/, $(HEREDOC_FILES))
+
 
 OBJS			  = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 HEADER			  = $(INCLUDE_DIR)/minishell.h
