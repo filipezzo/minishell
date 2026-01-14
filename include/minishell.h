@@ -240,17 +240,12 @@ void		next_lextoken(t_bnode **cursor);
 t_redir		*new_redir(t_type type);
 void		destroy_redir(void *ptr);
 void		destroy_lst_redir(void *ptr);
-
-// Command ---------------------------------------------------------------------
 t_cmd		*new_cmd(void);
 void		destroy_cmd(void *ptr);
 t_cmd		*get_cmd(void *ptr);
 t_cmd		*set_arg_cmd(t_cmd *cmd, char *src);
 void		print_cmd(void *ptr, int fd);
-
-// Prompt ----------------------------------------------------------------------
 t_prompt	*new_prompt(void);
 void		destroy_prompt(void *ptr);
-// =================================================================== Structure
 
 #endif
