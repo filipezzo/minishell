@@ -6,7 +6,7 @@
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 14:59:01 by mhidani           #+#    #+#             */
-/*   Updated: 2026/01/13 23:42:14 by mhidani          ###   ########.fr       */
+/*   Updated: 2026/01/14 09:31:39 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static void	expand_dissolution(t_shell *sh, t_tnode *node)
 		if (is_simple_expand(cmd->args[i]))
 			expand_simple(sh, cmd->args[i], cmd);
 		else if (is_dquote_expand(cmd->args[i]))
-			expand_dquote(sh, cmd->args[i], cmd);
+			expand_dquote(sh, cmd, i);
 		i++;
 	}
 }
