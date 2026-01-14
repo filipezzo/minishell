@@ -13,7 +13,7 @@
 #include "libft.h"
 
 static size_t	ft_nbr_length(int n);
-static void	ft_nrb_convert_to_str(int n, char *s, size_t i);
+static void		ft_nrb_convert_to_str(int n, char *s, size_t i);
 
 char	*ft_itoa(int n)
 {
