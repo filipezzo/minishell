@@ -3,14 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_cd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fsousa <fsousa@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/15 17:49:09 by fsousa            #+#    #+#             */
-/*   Updated: 2025/12/18 15:26:33 by fsousa           ###   ########.fr       */
+/*   Updated: 2026/01/13 18:13:52 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static char	*get_target_path(t_env *env, char **args);
+static int	execute_cwd(char *target, char *old_pwd_copy);
+static int	verify_target(char *target, char *old_pwd_copy);
 
 char	*get_env_value(t_env *env, char *key)
 {
@@ -23,6 +27,33 @@ char	*get_env_value(t_env *env, char *key)
 		env = env->next;
 	}
 	return (NULL);
+}
+
+int	builtin_cd(t_shell *shell, char **args)
+{
+	char	*target;
+	char	cwd_buffer[PATH_MAX];
+	char	*old_pwd_copy;
+
+	if (args[1] && args[2])
+	{
+		ft_putendl_fd("minishell: cd: too many arguments", STDERR_FILENO);
+		return (1);
+	}
+	if (getcwd(cwd_buffer, PATH_MAX))
+		old_pwd_copy = ft_strdup(cwd_buffer);
+	else
+		old_pwd_copy = ft_strdup("");
+	target = get_target_path(shell->env_list, args);
+	if (!verify_target(target, old_pwd_copy))
+		return (1);
+	if (!execute_cwd(target, old_pwd_copy))
+		return (1);
+	update_or_create_node(&shell->env_list, "OLDPWD", old_pwd_copy);
+	free(old_pwd_copy);
+	if (getcwd(cwd_buffer, PATH_MAX))
+		update_or_create_node(&shell->env_list, "PWD", cwd_buffer);
+	return (0);
 }
 
 static char	*get_target_path(t_env *env, char **args)
@@ -74,31 +105,4 @@ static int	verify_target(char *target, char *old_pwd_copy)
 		return (FALSE);
 	}
 	return (TRUE);
-}
-
-int	builtin_cd(t_shell *shell, char **args)
-{
-	char	*target;
-	char	cwd_buffer[PATH_MAX];
-	char	*old_pwd_copy;
-
-	if (args[1] && args[2])
-	{
-		ft_putendl_fd("minishell: cd: too many arguments", STDERR_FILENO);
-		return (1);
-	}
-	if (getcwd(cwd_buffer, PATH_MAX))
-		old_pwd_copy = ft_strdup(cwd_buffer);
-	else
-		old_pwd_copy = ft_strdup("");
-	target = get_target_path(shell->env_list, args);
-	if (!verify_target(target, old_pwd_copy))
-		return (1);
-	if (!execute_cwd(target, old_pwd_copy))
-		return (1);
-	update_or_create_node(&shell->env_list, "OLDPWD", old_pwd_copy);
-	free(old_pwd_copy);
-	if (getcwd(cwd_buffer, PATH_MAX))
-		update_or_create_node(&shell->env_list, "PWD", cwd_buffer);
-	return (0);
 }

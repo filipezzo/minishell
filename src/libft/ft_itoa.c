@@ -6,11 +6,28 @@
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 17:27:21 by mhidani           #+#    #+#             */
-/*   Updated: 2025/07/24 09:22:59 by mhidani          ###   ########.fr       */
+/*   Updated: 2026/01/13 18:08:34 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+
+static size_t	ft_nbr_length(int n);
+static void	ft_nrb_convert_to_str(int n, char *s, size_t i);
+
+char	*ft_itoa(int n)
+{
+	size_t	length;
+	char	*res;
+
+	length = ft_nbr_length(n);
+	res = (char *)malloc((length + 1) * sizeof(char));
+	if (!res)
+		return (NULL);
+	ft_nrb_convert_to_str(n, res, length - 1);
+	res[length] = '\0';
+	return (res);
+}
 
 static size_t	ft_nbr_length(int n)
 {
@@ -50,18 +67,4 @@ static void	ft_nrb_convert_to_str(int n, char *s, size_t i)
 		nbr /= 10;
 	}
 	s[i] = (nbr % 10) + '0';
-}
-
-char	*ft_itoa(int n)
-{
-	size_t	length;
-	char	*res;
-
-	length = ft_nbr_length(n);
-	res = (char *)malloc((length + 1) * sizeof(char));
-	if (!res)
-		return (NULL);
-	ft_nrb_convert_to_str(n, res, length - 1);
-	res[length] = '\0';
-	return (res);
 }

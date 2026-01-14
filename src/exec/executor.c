@@ -6,11 +6,40 @@
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/15 18:07:04 by fsousa            #+#    #+#             */
-/*   Updated: 2026/01/12 09:32:45 by mhidani          ###   ########.fr       */
+/*   Updated: 2026/01/13 18:22:23 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static void		handle_child_process(t_shell *sh, t_cmd *c, int in, int end[2]);
+static void		wait_all_children(t_shell *shell);
+static pid_t	handle_fork(t_shell *shell, t_cmd *cmd, int fd_in, int end[2]);
+static void		execute_pipeline(t_shell *shell, t_cmd *cmd);
+
+void	executor(t_shell *shell)
+{
+	t_cmd	*head;
+
+	head = shell->cmd_list;
+	if (!head)
+		return ;
+	if (!head->next && is_command_builtin(head->args[0]))
+	{
+		shell->saved_stdin = dup(STDIN_FILENO);
+		shell->saved_stdout = dup(STDOUT_FILENO);
+		if (apply_redirect(head))
+			shell->exit_status = run_builtin(shell, head);
+		else
+			shell->exit_status = 1;
+		dup2(shell->saved_stdin, STDIN_FILENO);
+		dup2(shell->saved_stdout, STDOUT_FILENO);
+		close(shell->saved_stdin);
+		close(shell->saved_stdout);
+	}
+	else
+		execute_pipeline(shell, head);
+}
 
 static void	handle_child_process(t_shell *shell, t_cmd *cmd, int fd_in,
 								int end[2])
@@ -100,28 +129,4 @@ static void	execute_pipeline(t_shell *shell, t_cmd *cmd)
 		cmd = cmd->next;
 	}
 	wait_all_children(shell);
-}
-
-void	executor(t_shell *shell)
-{
-	t_cmd	*head;
-
-	head = shell->cmd_list;
-	if (!head)
-		return ;
-	if (!head->next && is_command_builtin(head->args[0]))
-	{
-		shell->saved_stdin = dup(STDIN_FILENO);
-		shell->saved_stdout = dup(STDOUT_FILENO);
-		if (apply_redirect(head))
-			shell->exit_status = run_builtin(shell, head);
-		else
-			shell->exit_status = 1;
-		dup2(shell->saved_stdin, STDIN_FILENO);
-		dup2(shell->saved_stdout, STDOUT_FILENO);
-		close(shell->saved_stdin);
-		close(shell->saved_stdout);
-	}
-	else
-		execute_pipeline(shell, head);
 }

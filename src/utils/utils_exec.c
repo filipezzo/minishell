@@ -3,14 +3,40 @@
 /*                                                        :::      ::::::::   */
 /*   utils_exec.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fsousa <fsousa@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 15:02:46 by fsousa            #+#    #+#             */
-/*   Updated: 2025/12/20 15:42:44 by fsousa           ###   ########.fr       */
+/*   Updated: 2026/01/13 18:25:56 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static int	is_path_with_slash(const char *str);
+static char	*search_in_path(char *path_env, char *cmd);
+
+char	*find_command_path(t_shell *shell, char *cmd)
+{
+	char	*path_env;
+	char	*found_path;
+
+	if (!cmd)
+		return (NULL);
+	if (is_path_with_slash(cmd))
+	{
+		if (access(cmd, F_OK | X_OK) == 0)
+		{
+			found_path = ft_strdup(cmd);
+			return (found_path);
+		}
+		return (NULL);
+	}
+	path_env = get_env_value(shell->env_list, "PATH");
+	if (!path_env)
+		return (NULL);
+	found_path = search_in_path(path_env, cmd);
+	return (found_path);
+}
 
 static int	is_path_with_slash(const char *str)
 {
@@ -52,27 +78,4 @@ static char	*search_in_path(char *path_env, char *cmd)
 	}
 	free_full_matrix(arr);
 	return (NULL);
-}
-
-char	*find_command_path(t_shell *shell, char *cmd)
-{
-	char	*path_env;
-	char	*found_path;
-
-	if (!cmd)
-		return (NULL);
-	if (is_path_with_slash(cmd))
-	{
-		if (access(cmd, F_OK | X_OK) == 0)
-		{
-			found_path = ft_strdup(cmd);
-			return (found_path);
-		}
-		return (NULL);
-	}
-	path_env = get_env_value(shell->env_list, "PATH");
-	if (!path_env)
-		return (NULL);
-	found_path = search_in_path(path_env, cmd);
-	return (found_path);
 }
