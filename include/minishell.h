@@ -6,7 +6,7 @@
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/12 09:05:43 by mhidani           #+#    #+#             */
-/*   Updated: 2026/01/12 10:00:10 by mhidani          ###   ########.fr       */
+/*   Updated: 2026/01/13 22:24:45 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,11 +120,6 @@ typedef struct s_shell
 	int				saved_stdout;
 	pid_t			last_pid;
 }					t_shell;
-
-typedef struct s_shared_work
-{
-	struct s_lexsig	**signs_lexer;
-}					t_shared_work;
 
 typedef struct s_astree
 {
