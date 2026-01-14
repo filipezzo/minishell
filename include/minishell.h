@@ -30,7 +30,7 @@
 # include <sys/wait.h>
 # include <unistd.h>
 
-extern int			g_signal_status;
+extern int	g_signal_status;
 
 typedef enum e_type
 {
