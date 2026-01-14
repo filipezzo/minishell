@@ -21,9 +21,8 @@ SRC_FILES		  = main.c
 
 FRONT_READL_FILES = readline/build_dir_pmt.c readline/build_home_pmt.c \
 					readline/build_host_pmt.c readline/build_prompt.c \
-					readline/build_type_pmt.c readline/build_user_pmt.c \
-					readline/start_prompt.c
-FRONT_LEXER_FILES = lexer/lexer.c
+					readline/build_type_pmt.c readline/build_user_pmt.c
+FRONT_LEXER_FILES = lexer/lexer.c lexer/config_lexer.c
 FRONT_SYNTX_FILES = syntax/syntax_analyze.c syntax/syntax_check.c \
 					syntax/syntax_check_redir.c syntax/syntax_error_msg.c
 FRONT_PARSR_FILES = parser/parse_command.c parser/parse_and_or.c \
@@ -32,8 +31,6 @@ FRONT_PARSR_FILES = parser/parse_command.c parser/parse_and_or.c \
 STRUC_ASTRE_FILES = astree/destroy_astree.c astree/get_entry_astree.c \
 					astree/new_astree.c astree/print_astree.c
 STRUC_TNODE_FILES = tnode/destroy_tnode.c tnode/new_tnode.c
-STRUC_LEXSG_FILES = lexsig/destroy_lexsig.c lexsig/destroy_lst_lexsig.c \
-					lexsig/new_lexsig.c lexsig/new_lst_lexsig.c
 STRUC_LEXTK_FILES = lextoken/destroy_lextoken.c lextoken/get_lextoken.c \
 					lextoken/new_lextoken.c lextoken/next_lextoken.c
 STRUC_REDIR_FILES = redirection/destroy_lst_redir.c \
@@ -45,7 +42,7 @@ STRUC_STRIN_FILES = string/destroy_string_lst.c string/print_string.c
 BUILTIN_FILES	  = builtin.c builtin_echo.c builtin_pwd.c builtin_env.c \
 					builtin_export.c builtin_unset.c builtin_exit.c \
 					builtin_cd.c
-EXEC_FILES		  = executor.c redirect.c execute_external.c
+EXEC_FILES		  = executor.c redirect.c execute_external.c exec_ast.c
 MOCK_FILES		  = init_mock_env.c
 UTIL_FILES		  = linked_list.c utils_env.c clean.c error.c utils_exec.c \
 					lexel_utils.c
@@ -57,7 +54,6 @@ LIBFT			  = $(SLIB_DIR)/libft.a
 SRCS			  = $(addprefix $(SRC_DIR)/, $(SRC_FILES)) \
 					$(addprefix $(SRC_DIR)/$(STRUC_DIR)/, $(STRUC_ASTRE_FILES))\
 					$(addprefix $(SRC_DIR)/$(STRUC_DIR)/, $(STRUC_TNODE_FILES))\
-					$(addprefix $(SRC_DIR)/$(STRUC_DIR)/, $(STRUC_LEXSG_FILES))\
 					$(addprefix $(SRC_DIR)/$(STRUC_DIR)/, $(STRUC_LEXTK_FILES))\
 					$(addprefix $(SRC_DIR)/$(STRUC_DIR)/, $(STRUC_REDIR_FILES))\
 					$(addprefix $(SRC_DIR)/$(STRUC_DIR)/, $(STRUC_PROMP_FILES))\

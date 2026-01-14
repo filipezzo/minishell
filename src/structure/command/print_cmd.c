@@ -6,14 +6,14 @@
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/05 17:45:37 by mhidani           #+#    #+#             */
-/*   Updated: 2026/01/07 11:24:56 by mhidani          ###   ########.fr       */
+/*   Updated: 2026/01/12 09:28:33 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 static void	print_cmd_args(t_cmd *cmd, int fd);
-static void print_cmd_redirs(t_cmd *cmd, int fd);
+static void	print_cmd_redirs(t_cmd *cmd, int fd);
 
 void	print_cmd(void *ptr, int fd)
 {
@@ -51,7 +51,7 @@ static void	print_cmd_args(t_cmd *cmd, int fd)
 	ft_putstr_fd(" ], ", fd);
 }
 
-static void print_cmd_redirs(t_cmd *cmd, int fd)
+static void	print_cmd_redirs(t_cmd *cmd, int fd)
 {
 	t_redir	*redir;
 	char	*type;

@@ -6,7 +6,7 @@
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/24 12:27:31 by mhidani           #+#    #+#             */
-/*   Updated: 2025/12/26 11:24:37 by mhidani          ###   ########.fr       */
+/*   Updated: 2026/01/12 09:58:14 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,12 @@ char	*build_prompt(t_prompt *prompt)
 	char	*dir;
 	char	*type;
 
+	if (!prompt)
+	{
+		prompt = malloc(sizeof(t_prompt));
+		if (!prompt)
+			return ("minishell$ ");
+	}
 	user = build_user_pmt(&prompt->user);
 	host = build_host_pmt(&prompt->host);
 	home = build_home_pmt(&prompt->home);
@@ -31,7 +37,9 @@ char	*build_prompt(t_prompt *prompt)
 		return (ft_strdup("minishell$ "));
 	else if (is_unknown("?", (char *[]){dir, type}, 2))
 		return (ft_strdup("minishell$ "));
-	return (ft_strcat(7, user, "@", host, ":", dir, type, " "));
+	free(prompt->display);
+	prompt->display = ft_strcat(7, user, "@", host, ":", dir, type, " ");
+	return (prompt->display);
 }
 
 static t_bool	is_unknown(char *target, char **list, size_t size)
