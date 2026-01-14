@@ -6,7 +6,7 @@
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/12 09:05:43 by mhidani           #+#    #+#             */
-/*   Updated: 2026/01/13 22:24:45 by mhidani          ###   ########.fr       */
+/*   Updated: 2026/01/13 23:47:24 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -238,7 +238,7 @@ void		print_astree(void *ptr, int fd);
 t_tnode		*get_entry_astree(t_astree *tree);
 t_tnode		*new_tnode(void *origin, void *data);
 void		destroy_tnode(void *ptr);
-t_bool		new_lextoken(t_lextoken **new, t_type typ, char *cnt);
+t_bool		new_lextoken(t_lextoken **new, t_type type, char *content);
 void		destroy_lextoken(void *ptr);
 t_lextoken	*get_lextoken(void *ptr);
 t_lextoken	*bnode_to_lextoken(t_bnode *node);
