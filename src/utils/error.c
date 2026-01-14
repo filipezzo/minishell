@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fsousa <fsousa@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 15:45:54 by fsousa            #+#    #+#             */
-/*   Updated: 2025/12/20 15:42:21 by fsousa           ###   ########.fr       */
+/*   Updated: 2026/01/13 15:35:19 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,4 +29,14 @@ int	handling_builtin_error_args(char **args, char *builtin, int option)
 		return (0);
 	}
 	return (1);
+}
+
+int	pms_err(char *msg, int err)
+{
+	if (!msg || !*msg)
+		return (-1);
+	ft_putstr_fd("minishell: ", STDERR_FILENO);
+	ft_putstr_fd(msg, STDERR_FILENO);
+	ft_putstr_fd("\n", STDERR_FILENO);
+	return (err);
 }
