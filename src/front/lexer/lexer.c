@@ -6,7 +6,7 @@
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/28 18:43:44 by mhidani           #+#    #+#             */
-/*   Updated: 2026/01/13 16:47:38 by mhidani          ###   ########.fr       */
+/*   Updated: 2026/01/14 12:45:12 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,12 +54,12 @@ static t_bool	lex_squote(char **str, t_lextoken **unit)
 		return (FALSE);
 	if (**str != '\'' || !*str)
 		return (FALSE);
-	start = ++(*str);
+	start = (*str)++;
 	while (**str && **str != '\'')
 		(*str)++;
 	if (**str != '\'')
 		return (pms_err("unexpected EOF while looking for matching \'", FALSE));
-	content = ft_strndup(start, *str - start);
+	content = ft_strndup(start, *str - start + 1);
 	if (!content)
 		return (FALSE);
 	if (!new_lextoken(unit, WORD, content))
