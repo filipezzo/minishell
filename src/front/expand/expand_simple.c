@@ -6,7 +6,7 @@
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 17:12:39 by mhidani           #+#    #+#             */
-/*   Updated: 2026/01/14 12:46:14 by mhidani          ###   ########.fr       */
+/*   Updated: 2026/01/14 13:09:06 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ static void		realloc_args_in(t_cmd *cmd, size_t idx, char **splited);
 
 void	expand_simple(t_shell *sh, char *src, t_cmd *cmd)
 {
+	char	*env;
 	char	*value;
 	char	**splited;
 	size_t	i;
@@ -27,7 +28,13 @@ void	expand_simple(t_shell *sh, char *src, t_cmd *cmd)
 	if (!sh || !src || !cmd)
 		return ;
 	i = 0;
-	value = find_expand(sh, src, &i);
+	env = find_env(sh, src, &i);
+	if (*env == '$')
+		value = expand_dollar(sh, env);
+	else if (*env == '~')
+		value = expand_tilde();
+	else
+		return ;
 	splited = ft_split(value, ' '); // TODO: analisar se será necesário criar um split que segue o padrão IFS
 	pos = args_pos(cmd->args, src);
 	realloc_args_in(cmd, pos, splited);
