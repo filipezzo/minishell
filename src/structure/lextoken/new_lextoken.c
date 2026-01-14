@@ -6,7 +6,7 @@
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/05 14:22:05 by mhidani           #+#    #+#             */
-/*   Updated: 2026/01/07 11:56:37 by mhidani          ###   ########.fr       */
+/*   Updated: 2026/01/13 15:32:15 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 t_bool	new_lextoken(t_lextoken **new, t_type type, char *content)
 {
+	if (!content && !*content)
+		return (FALSE);
 	*new = ft_calloc(1, sizeof(t_lextoken));
 	if (!new)
 		return (FALSE);
@@ -21,8 +23,6 @@ t_bool	new_lextoken(t_lextoken **new, t_type type, char *content)
 	(*new)->type = WORD;
 	if (type)
 		(*new)->type = type;
-	content = NULL;
-	if (content)
-		(*new)->content = content;
+	(*new)->content = content;
 	return (TRUE);
 }
