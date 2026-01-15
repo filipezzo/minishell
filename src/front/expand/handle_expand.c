@@ -6,13 +6,13 @@
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 17:27:28 by mhidani           #+#    #+#             */
-/*   Updated: 2026/01/14 13:53:51 by mhidani          ###   ########.fr       */
+/*   Updated: 2026/01/14 22:20:06 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	get_dollar_env(char *src, char *env, size_t *idx);
+static char	*get_dollar_env(char *src, size_t *idx);
 
 char	*expand_dollar(t_shell *sh, char *env)
 {
@@ -62,16 +62,20 @@ char	*find_env(char *src, size_t *idx)
 	return (NULL);
 }
 
-static void	get_dollar_env(char *src, char *env, size_t *idx)
+static char	*get_dollar_env(char *src, size_t *idx)
 {
 	size_t	j;
+	char	*env;
 
 	if (src[*idx] != '$')
 		return (NULL);
-	j = idx + 1;
+	j = *idx + 1;
 	while (src[j] && (ft_isalnum(src[j]) || src[j] == '_'))
 		j++;
-	ft_strlcpy(env, (src + *idx), j - *idx - 1);
+	env = ft_calloc(j - *idx + 1, sizeof(char));
+	if (!env)
+		return (NULL);
+	ft_strlcpy(env, src + *idx, j - *idx + 1);
 	*idx = j;
-	return (j);
+	return (env);
 }
