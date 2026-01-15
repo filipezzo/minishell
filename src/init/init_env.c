@@ -6,29 +6,16 @@
 /*   By: fsousa <fsousa@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/20 15:26:27 by fsousa            #+#    #+#             */
-/*   Updated: 2026/01/15 13:36:40 by fsousa           ###   ########.fr       */
+/*   Updated: 2026/01/15 13:42:14 by fsousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	update_shlvl(t_shell *shell)
-{
 static void	update_shlvl(t_shell *shell);
 static void	parse_and_add(t_shell *shell, char *env_str);
+static void	update_shlvl(t_shell *shell);
 
-void	init_env(t_shell *shell, char **envp)
-{
-	int	i;
-
-	i = 0;
-	while (envp[i])
-	{
-		parse_and_add(shell, envp[i]);
-		i++;
-	}
-	update_shlvl(shell);
-}
 
 static void	update_shlvl(t_shell *shell)
 {

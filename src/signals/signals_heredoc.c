@@ -6,12 +6,14 @@
 /*   By: fsousa <fsousa@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/11 14:36:43 by fsousa            #+#    #+#             */
-/*   Updated: 2026/01/15 13:36:50 by fsousa           ###   ########.fr       */
+/*   Updated: 2026/01/15 13:42:40 by fsousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "minishell.h"
+
+static void	handle_sigint_heredoc(int sig);
 
 static void	handle_sigint_heredoc(int sig)
 {
@@ -20,7 +22,6 @@ static void	handle_sigint_heredoc(int sig)
 	write(STDOUT_FILENO, "\n", 1);
 	rl_done = 1;
 }
-static void	handle_sigint_heredoc(int sig);
 
 void	set_signals_heredoc(void)
 {
@@ -31,12 +32,4 @@ void	set_signals_heredoc(void)
 	sa.sa_handler = handle_sigint_heredoc;
 	sigaction(SIGINT, &sa, NULL);
 	signal(SIGQUIT, SIG_IGN);
-}
-
-static void	handle_sigint_heredoc(int sig)
-{
-	(void)sig;
-	write(1, "\n", 1);
-	g_signal_status = 130;
-	close(STDIN_FILENO);
 }

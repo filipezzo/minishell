@@ -6,7 +6,7 @@
 /*   By: fsousa <fsousa@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/12 09:05:43 by mhidani           #+#    #+#             */
-/*   Updated: 2026/01/15 13:34:30 by fsousa           ###   ########.fr       */
+/*   Updated: 2026/01/15 13:40:59 by fsousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -241,7 +241,6 @@ void				destroy_redir(void *ptr);
 void				destroy_lst_redir(void *ptr);
 int					run_heredoc(char *delimiter);
 int					redirect_heredoc(t_redir *r);
-void				execute_pipeline(t_shell *shell, t_cmd *cmd);
 int					prepare_all_heredocs(t_cmd *cmd_list);
 int					prepare_pipeline_heredocs(t_cmd *cmd_list);
 void				close_heredoc_fds_cmd(t_cmd *cmd);
@@ -260,9 +259,6 @@ void				destroy_prompt(void *ptr);
 char		**env_list_to_array(t_env *env_list);
 void		init_env(t_shell *shell, char **envp);
 int			is_command_builtin(const char *command_name);
-int			redirect_input(const char *filename);
-int			redirect_output(const char *filename);
-int			redirect_append(const char *filename);
 int			builtin_cd(t_shell *shell, char **args);
 int			builtin_echo(t_cmd *cmd);
 int			builtin_env(t_env *list, char **args);
@@ -289,9 +285,6 @@ void		free_full_matrix(char **arr);
 void		executor(t_shell *shell);
 void		execute_external(t_shell *shell, t_cmd *cmd);
 void		run_ast(t_shell *shell, t_tnode *node);
-int			redirect_input(const char *filename);
-int			redirect_output(const char *filename);
-int			redirect_append(const char *filename);
 int			apply_redirect(t_cmd *cmd);
 int			is_command_builtin(const char *command_name);
 int			builtin_echo(t_cmd *cmd);
