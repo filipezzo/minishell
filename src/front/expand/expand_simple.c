@@ -6,7 +6,7 @@
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 17:12:39 by mhidani           #+#    #+#             */
-/*   Updated: 2026/01/14 13:09:06 by mhidani          ###   ########.fr       */
+/*   Updated: 2026/01/14 21:52:44 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ void	expand_simple(t_shell *sh, char *src, t_cmd *cmd)
 	splited = ft_split(value, ' '); // TODO: analisar se será necesário criar um split que segue o padrão IFS
 	pos = args_pos(cmd->args, src);
 	realloc_args_in(cmd, pos, splited);
+	free(env);
+	free(value);
 	destroy_string_lst(splited);
 }
 
