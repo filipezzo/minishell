@@ -28,7 +28,7 @@ void	expand_simple(t_shell *sh, char *src, t_cmd *cmd)
 	if (!sh || !src || !cmd)
 		return ;
 	i = 0;
-	env = find_env(sh, src, &i);
+	env = find_env(src, &i);
 	if (*env == '$')
 		value = expand_dollar(sh, env);
 	else if (*env == '~')
