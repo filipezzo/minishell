@@ -3,26 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_exit.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fsousa <fsousa@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/15 17:49:38 by fsousa            #+#    #+#             */
-/*   Updated: 2025/12/15 18:42:34 by fsousa           ###   ########.fr       */
+/*   Updated: 2026/01/13 18:14:28 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	verify_exit_args(t_shell *shell, char **args)
-{
-	if (!ft_isnumeric(args[1]))
-	{
-		ft_putstr_fd("minishell: exit: ", 2);
-		ft_putstr_fd(args[1], 2);
-		ft_putendl_fd(": numeric argument required.", 2);
-		free_shell(shell);
-		exit(255);
-	}
-}
+static void	verify_exit_args(t_shell *shell, char **args);
 
 int	builtin_exit(t_shell *shell, char **args)
 {
@@ -45,4 +35,16 @@ int	builtin_exit(t_shell *shell, char **args)
 	number = ft_atol(args[1]);
 	free_shell(shell);
 	exit(number % 256);
+}
+
+static void	verify_exit_args(t_shell *shell, char **args)
+{
+	if (!ft_isnumeric(args[1]))
+	{
+		ft_putstr_fd("minishell: exit: ", 2);
+		ft_putstr_fd(args[1], 2);
+		ft_putendl_fd(": numeric argument required.", 2);
+		free_shell(shell);
+		exit(255);
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/12 09:05:43 by mhidani           #+#    #+#             */
-/*   Updated: 2026/01/12 10:00:10 by mhidani          ###   ########.fr       */
+/*   Updated: 2026/01/14 19:41:08 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@
 # include <sys/wait.h>
 # include <unistd.h>
 
-extern int			g_signal_status;
+extern int	g_signal_status;
 
 typedef enum e_type
 {
@@ -121,11 +121,6 @@ typedef struct s_shell
 	pid_t			last_pid;
 }					t_shell;
 
-typedef struct s_shared_work
-{
-	struct s_lexsig	**signs_lexer;
-}					t_shared_work;
-
 typedef struct s_astree
 {
 	t_mstype		mstype;
@@ -188,6 +183,7 @@ void		update_or_create_node(t_env **head, char *key, char *value);
 int			count_list_elements(t_env *list);
 void		free_shell(t_shell *shell);
 int			handling_builtin_error_args(char **args, char *builtin, int option);
+int			pms_err(char *msg, int err);
 void		free_full_matrix(char **arr);
 void		executor(t_shell *shell);
 void		execute_external(t_shell *shell, t_cmd *cmd);
@@ -227,8 +223,14 @@ t_astree	*parser(t_dlist *tokens);
 t_tnode		*parse_and_or(t_astree *tree, t_bnode **cursor);
 t_tnode		*parse_pipeline(t_astree *tree, t_bnode **cursor);
 t_tnode		*parse_command(t_astree *tree, t_bnode **cursor);
-t_tnode		*parse_redir(t_tnode *node, t_bnode **cursor);
 t_tnode		*parse_subshell(t_astree *tree, t_bnode **cursor);
+t_tnode		*parse_redir(t_tnode *node, t_bnode **cursor);
+void		expand(t_shell *sh, t_tnode *cursor);
+void		expand_simple(t_shell *sh, char *src, t_cmd *cmd);
+void		expand_dquote(t_shell *sh, t_cmd *cmd, size_t idx);
+char		*find_env(char *src, size_t *idx);
+char		*expand_dollar(t_shell *sh, char *env);
+char		*expand_tilde(void);
 void		print_string(void *ptr, int fd);
 void		destroy_string_lst(char **list);
 t_astree	*new_astree(void);
@@ -245,17 +247,12 @@ void		next_lextoken(t_bnode **cursor);
 t_redir		*new_redir(t_type type);
 void		destroy_redir(void *ptr);
 void		destroy_lst_redir(void *ptr);
-
-// Command ---------------------------------------------------------------------
 t_cmd		*new_cmd(void);
 void		destroy_cmd(void *ptr);
 t_cmd		*get_cmd(void *ptr);
 t_cmd		*set_arg_cmd(t_cmd *cmd, char *src);
 void		print_cmd(void *ptr, int fd);
-
-// Prompt ----------------------------------------------------------------------
 t_prompt	*new_prompt(void);
 void		destroy_prompt(void *ptr);
-// =================================================================== Structure
 
 #endif
