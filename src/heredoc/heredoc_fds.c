@@ -1,25 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   syntax_error_msg.c                                 :+:      :+:    :+:   */
+/*   heredoc_fds.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fsousa <fsousa@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/27 18:19:15 by mhidani           #+#    #+#             */
-/*   Updated: 2026/01/15 11:42:46 by fsousa           ###   ########.fr       */
+/*   Created: 2026/01/15 13:15:34 by fsousa            #+#    #+#             */
+/*   Updated: 2026/01/15 13:15:42 by fsousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_bool	syntax_err_msg(char *msg, char *oper)
+void	close_heredoc_fds_cmd(t_cmd *cmd)
 {
-	ft_fputstr_fd(STDERR_FILENO, "minishell: %s '%s'\n", msg, oper);
-	return (FALSE);
-}
+	t_redir	*r;
 
-t_bool	syntax_err_smsg(char *msg)
-{
-	ft_fputstr_fd(STDERR_FILENO, "minishell: %s\n", msg);
-	return (FALSE);
+	if (!cmd)
+		return ;
+	r = cmd->redirections;
+	while (r)
+	{
+		if (r->type == REDIR_HEREDOC && r->heredoc_fd != -1)
+		{
+			close(r->heredoc_fd);
+			r->heredoc_fd = -1;
+		}
+		r = r->next;
+	}
 }

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_ast.c                                         :+:      :+:    :+:   */
+/*   execute_ast.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
+/*   By: fsousa <fsousa@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/11 16:01:21 by fsousa            #+#    #+#             */
-/*   Updated: 2026/01/13 18:16:38 by mhidani          ###   ########.fr       */
+/*   Updated: 2026/01/15 13:34:47 by fsousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,27 @@ static t_cmd	*flatten_pipeline(t_tnode *node)
 	return (NULL);
 }
 
+static int	prepare_pipe(t_shell *shell, t_cmd *cmd_list)
+{
+	t_cmd	*cursor;
+	t_cmd	*next_backup;
+
+	if (!prepare_pipeline_heredocs(cmd_list))
+	{
+		if (g_signal_status == 130)
+			shell->exit_status = 130;
+		cursor = cmd_list;
+		while (cursor)
+		{
+			next_backup = cursor->next;
+			cursor->next = NULL;
+			cursor = next_backup;
+		}
+		return (0);
+	}
+	return (1);
+}
+
 static void	run_pipeline_node(t_shell *shell, t_tnode *node)
 {
 	t_cmd	*cmd_list;
@@ -87,6 +108,8 @@ static void	run_pipeline_node(t_shell *shell, t_tnode *node)
 
 	cmd_list = flatten_pipeline(node);
 	if (!cmd_list)
+		return ;
+	if (!prepare_pipe(shell, cmd_list))
 		return ;
 	shell->cmd_list = cmd_list;
 	executor(shell);
