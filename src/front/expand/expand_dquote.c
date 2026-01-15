@@ -6,7 +6,7 @@
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 17:13:16 by mhidani           #+#    #+#             */
-/*   Updated: 2026/01/14 23:04:58 by mhidani          ###   ########.fr       */
+/*   Updated: 2026/01/15 10:02:00 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,12 @@ void	expand_dquote(t_shell *sh, t_cmd *cmd, size_t idx)
 
 static char	*get_expanded_value(t_shell *sh, char *env)
 {
-	if (*env == '$')
+	t_bool	check_next;
+	char	*next;
+
+	next = (env + 1);
+	check_next = *next && (*next != ' ' || *next != '\t' || *next != '\n');
+	if (*env == '$' && check_next)
 		return (expand_dollar(sh, env));
 	else if (*env == '~')
 		return (expand_tilde());
