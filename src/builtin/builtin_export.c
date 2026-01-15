@@ -3,14 +3,47 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_export.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fsousa <fsousa@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/15 17:49:42 by fsousa            #+#    #+#             */
-/*   Updated: 2025/12/15 18:32:16 by fsousa           ###   ########.fr       */
+/*   Updated: 2026/01/13 18:15:23 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static void	handle_export_arg(t_shell *shell, char *arg);
+static void	sort_env_array(t_env **arr, int size);
+static void	print_env(t_env **arr, int count);
+static void	print_sorted_env(t_env *list);
+
+int	builtin_export(t_shell *shell, char **args)
+{
+	int	i;
+	int	exit_code;
+
+	i = 1;
+	exit_code = 0;
+	if (!args[i])
+	{
+		print_sorted_env(shell->env_list);
+		return (0);
+	}
+	while (args[i])
+	{
+		if (!is_valid_env_key(args[i]))
+		{
+			ft_putstr_fd("minishell: export: `", 2);
+			ft_putstr_fd(args[i], 2);
+			ft_putendl_fd("': not a valid identifier", 2);
+			exit_code = 1;
+		}
+		else
+			handle_export_arg(shell, args[i]);
+		i++;
+	}
+	return (exit_code);
+}
 
 static void	handle_export_arg(t_shell *shell, char *arg)
 {
@@ -100,32 +133,4 @@ static void	print_sorted_env(t_env *list)
 	sort_env_array(arr, count);
 	print_env(arr, count);
 	free(arr);
-}
-
-int	builtin_export(t_shell *shell, char **args)
-{
-	int	i;
-	int	exit_code;
-
-	i = 1;
-	exit_code = 0;
-	if (!args[i])
-	{
-		print_sorted_env(shell->env_list);
-		return (0);
-	}
-	while (args[i])
-	{
-		if (!is_valid_env_key(args[i]))
-		{
-			ft_putstr_fd("minishell: export: `", 2);
-			ft_putstr_fd(args[i], 2);
-			ft_putendl_fd("': not a valid identifier", 2);
-			exit_code = 1;
-		}
-		else
-			handle_export_arg(shell, args[i]);
-		i++;
-	}
-	return (exit_code);
 }

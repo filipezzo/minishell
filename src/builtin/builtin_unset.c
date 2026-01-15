@@ -3,14 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_unset.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fsousa <fsousa@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/15 17:49:49 by fsousa            #+#    #+#             */
-/*   Updated: 2025/12/15 18:32:44 by fsousa           ###   ########.fr       */
+/*   Updated: 2026/01/13 18:15:44 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static void	remove_node(t_env **head, char *key);
+
+int	builtin_unset(t_env **env_list, char **args)
+{
+	int	i;
+
+	i = 1;
+	while (args[i])
+	{
+		remove_node(env_list, args[i]);
+		i++;
+	}
+	return (0);
+}
 
 static void	remove_node(t_env **head, char *key)
 {
@@ -39,17 +54,4 @@ static void	remove_node(t_env **head, char *key)
 		prev = current;
 		current = current->next;
 	}
-}
-
-int	builtin_unset(t_env **env_list, char **args)
-{
-	int	i;
-
-	i = 1;
-	while (args[i])
-	{
-		remove_node(env_list, args[i]);
-		i++;
-	}
-	return (0);
 }

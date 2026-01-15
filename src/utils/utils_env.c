@@ -3,14 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   utils_env.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fsousa <fsousa@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 17:48:09 by fsousa            #+#    #+#             */
-/*   Updated: 2025/12/20 15:48:34 by fsousa           ###   ########.fr       */
+/*   Updated: 2026/01/13 18:25:34 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static int	handle_node_value(t_env *node, char *key, char *value);
+static void	append_end_node(t_env **head, char *key, char *value);
 
 void	free_env_node(t_env *node)
 {
@@ -38,6 +41,28 @@ int	is_valid_env_key(char *str)
 		i++;
 	}
 	return (1);
+}
+
+void	update_or_create_node(t_env **head, char *key, char *value)
+{
+	t_env	*current;
+
+	current = *head;
+	while (current)
+	{
+		if (ft_strcmp(current->key, key) == 0)
+		{
+			if (value)
+			{
+				if (current->value)
+					free(current->value);
+				current->value = ft_strdup(value);
+			}
+			return ;
+		}
+		current = current->next;
+	}
+	append_end_node(head, key, value);
 }
 
 static int	handle_node_value(t_env *node, char *key, char *value)
@@ -83,26 +108,4 @@ static void	append_end_node(t_env **head, char *key, char *value)
 	while (current->next != NULL)
 		current = current->next;
 	current->next = node;
-}
-
-void	update_or_create_node(t_env **head, char *key, char *value)
-{
-	t_env	*current;
-
-	current = *head;
-	while (current)
-	{
-		if (ft_strcmp(current->key, key) == 0)
-		{
-			if (value)
-			{
-				if (current->value)
-					free(current->value);
-				current->value = ft_strdup(value);
-			}
-			return ;
-		}
-		current = current->next;
-	}
-	append_end_node(head, key, value);
 }

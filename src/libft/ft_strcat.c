@@ -6,7 +6,7 @@
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/20 10:36:42 by mhidani           #+#    #+#             */
-/*   Updated: 2025/12/22 13:14:19 by mhidani          ###   ########.fr       */
+/*   Updated: 2026/01/13 18:12:38 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,6 @@
 
 static char	*return_err(char *str, va_list args);
 
-/**
- * Concatenates the number of strings provided into one string.
- * @param elements Number of strings specified that should be concatenated.
- * @param params These are the strings used to compose the final string.
- * @return A string with all the others concatenated.
- */
 char	*ft_strcat(size_t elements, char *s1, ...)
 {
 	va_list	args;

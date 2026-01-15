@@ -3,14 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   init_env_list.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fsousa <fsousa@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/20 15:27:00 by fsousa            #+#    #+#             */
-/*   Updated: 2025/12/20 15:36:53 by fsousa           ###   ########.fr       */
+/*   Updated: 2026/01/13 18:23:21 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static void	free_matrix(char **arr, int i);
+static char	*create_env_string(char *key, char *value);
+static int	handle_transform_list(t_env *env_list, char **arr);
+
+char	**env_list_to_array(t_env *env_list)
+{
+	int		count;
+	char	**arr;
+
+	count = count_list_elements(env_list);
+	arr = malloc(sizeof(char *) * (count + 1));
+	if (!arr)
+		return (NULL);
+	if (!handle_transform_list(env_list, arr))
+		return (NULL);
+	return (arr);
+}
 
 static void	free_matrix(char **arr, int i)
 {
@@ -60,18 +78,4 @@ static int	handle_transform_list(t_env *env_list, char **arr)
 	}
 	arr[i] = NULL;
 	return (1);
-}
-
-char	**env_list_to_array(t_env *env_list)
-{
-	int		count;
-	char	**arr;
-
-	count = count_list_elements(env_list);
-	arr = malloc(sizeof(char *) * (count + 1));
-	if (!arr)
-		return (NULL);
-	if (!handle_transform_list(env_list, arr))
-		return (NULL);
-	return (arr);
 }

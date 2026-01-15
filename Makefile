@@ -14,26 +14,25 @@ INCLUDE_DIR		  = include
 UTILS_DIR 		  = utils
 MOCK_DIR		  = mock
 SIGNAL_DIR		  = signals
-
+HEREDOC_DIR		  = heredoc
 EXEC			  = $(BIN_DIR)/$(NAME)
 
 SRC_FILES		  = main.c
 
 FRONT_READL_FILES = readline/build_dir_pmt.c readline/build_home_pmt.c \
 					readline/build_host_pmt.c readline/build_prompt.c \
-					readline/build_type_pmt.c readline/build_user_pmt.c \
-					readline/start_prompt.c
-FRONT_LEXER_FILES = lexer/lexer.c
+					readline/build_type_pmt.c readline/build_user_pmt.c
+FRONT_LEXER_FILES = lexer/lexer.c lexer/config_lexer.c
 FRONT_SYNTX_FILES = syntax/syntax_analyze.c syntax/syntax_check.c \
 					syntax/syntax_check_redir.c syntax/syntax_error_msg.c
 FRONT_PARSR_FILES = parser/parse_command.c parser/parse_and_or.c \
 					parser/parse_pipeline.c parser/parser.c \
 					parser/parse_redir.c parser/parse_subshell.c
+FRONT_EXPAN_FILES = expand/expand.c expand/expand_dquote.c \
+					expand/expand_simple.c expand/handle_expand.c
 STRUC_ASTRE_FILES = astree/destroy_astree.c astree/get_entry_astree.c \
 					astree/new_astree.c astree/print_astree.c
 STRUC_TNODE_FILES = tnode/destroy_tnode.c tnode/new_tnode.c
-STRUC_LEXSG_FILES = lexsig/destroy_lexsig.c lexsig/destroy_lst_lexsig.c \
-					lexsig/new_lexsig.c lexsig/new_lst_lexsig.c
 STRUC_LEXTK_FILES = lextoken/destroy_lextoken.c lextoken/get_lextoken.c \
 					lextoken/new_lextoken.c lextoken/next_lextoken.c
 STRUC_REDIR_FILES = redirection/destroy_lst_redir.c \
@@ -45,7 +44,9 @@ STRUC_STRIN_FILES = string/destroy_string_lst.c string/print_string.c
 BUILTIN_FILES	  = builtin.c builtin_echo.c builtin_pwd.c builtin_env.c \
 					builtin_export.c builtin_unset.c builtin_exit.c \
 					builtin_cd.c
-EXEC_FILES		  = executor.c redirect.c execute_external.c
+EXEC_FILES		  = executor.c redirect.c execute_external.c execute_ast.c  \
+					execute_pipeline.c
+HEREDOC_FILES	  = heredoc.c heredoc_fds.c heredoc_prepare.c heredoc_redirect.c
 MOCK_FILES		  = init_mock_env.c
 UTIL_FILES		  = linked_list.c utils_env.c clean.c error.c utils_exec.c \
 					lexel_utils.c
@@ -57,7 +58,6 @@ LIBFT			  = $(SLIB_DIR)/libft.a
 SRCS			  = $(addprefix $(SRC_DIR)/, $(SRC_FILES)) \
 					$(addprefix $(SRC_DIR)/$(STRUC_DIR)/, $(STRUC_ASTRE_FILES))\
 					$(addprefix $(SRC_DIR)/$(STRUC_DIR)/, $(STRUC_TNODE_FILES))\
-					$(addprefix $(SRC_DIR)/$(STRUC_DIR)/, $(STRUC_LEXSG_FILES))\
 					$(addprefix $(SRC_DIR)/$(STRUC_DIR)/, $(STRUC_LEXTK_FILES))\
 					$(addprefix $(SRC_DIR)/$(STRUC_DIR)/, $(STRUC_REDIR_FILES))\
 					$(addprefix $(SRC_DIR)/$(STRUC_DIR)/, $(STRUC_PROMP_FILES))\
@@ -67,12 +67,15 @@ SRCS			  = $(addprefix $(SRC_DIR)/, $(SRC_FILES)) \
 					$(addprefix $(SRC_DIR)/$(FRONT_DIR)/, $(FRONT_LEXER_FILES))\
 					$(addprefix $(SRC_DIR)/$(FRONT_DIR)/, $(FRONT_SYNTX_FILES))\
 					$(addprefix $(SRC_DIR)/$(FRONT_DIR)/, $(FRONT_PARSR_FILES))\
+					$(addprefix $(SRC_DIR)/$(FRONT_DIR)/, $(FRONT_EXPAN_FILES))\
        				$(addprefix $(SRC_DIR)/$(BUILTIN_DIR)/, $(BUILTIN_FILES)) \
 	   				$(addprefix $(SRC_DIR)/$(EXEC_DIR)/, $(EXEC_FILES)) \
 	   				$(addprefix $(SRC_DIR)/$(MOCK_DIR)/, $(MOCK_FILES)) \
 	   				$(addprefix $(SRC_DIR)/$(UTILS_DIR)/, $(UTIL_FILES)) \
 	   				$(addprefix $(SRC_DIR)/$(INIT_DIR)/, $(INIT_FILES))	\
-	   				$(addprefix $(SRC_DIR)/$(SIGNAL_DIR)/, $(SIGNAL_FILES))
+	   				$(addprefix $(SRC_DIR)/$(SIGNAL_DIR)/, $(SIGNAL_FILES))	\
+					$(addprefix $(SRC_DIR)/$(HEREDOC_DIR)/, $(HEREDOC_FILES))
+
 
 OBJS			  = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 HEADER			  = $(INCLUDE_DIR)/minishell.h

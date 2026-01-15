@@ -1,25 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   destroy_lexsig.c                                   :+:      :+:    :+:   */
+/*   heredoc_redirect.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
+/*   By: fsousa <fsousa@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/05 14:35:38 by mhidani           #+#    #+#             */
-/*   Updated: 2026/01/05 20:06:32 by mhidani          ###   ########.fr       */
+/*   Created: 2026/01/15 12:02:59 by fsousa            #+#    #+#             */
+/*   Updated: 2026/01/15 12:03:44 by fsousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	destroy_lexsig(void *ptr)
+int	redirect_heredoc(t_redir *r)
 {
-	t_lexsig	*signal;
-
-	if (!ptr)
-		return ;
-	signal = (t_lexsig *)ptr;
-	if (signal->mstype != LEXSIG_T)
-		return ;
-	free(signal);
+	if (r->heredoc_fd == -1)
+		return (0);
+	if (dup2(r->heredoc_fd, STDIN_FILENO) == -1)
+	{
+		perror("dup2 heredoc");
+		return (0);
+	}
+	close(r->heredoc_fd);
+	r->heredoc_fd = -1;
+	return (1);
 }

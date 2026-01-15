@@ -1,30 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   destroy_lst_lexsig.c                               :+:      :+:    :+:   */
+/*   heredoc_fds.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
+/*   By: fsousa <fsousa@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/05 14:43:21 by mhidani           #+#    #+#             */
-/*   Updated: 2026/01/05 14:45:32 by mhidani          ###   ########.fr       */
+/*   Created: 2026/01/15 13:15:34 by fsousa            #+#    #+#             */
+/*   Updated: 2026/01/15 13:15:42 by fsousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	destroy_lst_lexsig(void *ptr)
+void	close_heredoc_fds_cmd(t_cmd *cmd)
 {
-	t_lexsig	**lst;
-	size_t		i;
+	t_redir	*r;
 
-	if (!ptr)
+	if (!cmd)
 		return ;
-	lst = (t_lexsig **)ptr;
-	i = 0;
-	while (lst[i])
+	r = cmd->redirections;
+	while (r)
 	{
-		destroy_lexsig(lst[i]);
-		i++;
+		if (r->type == REDIR_HEREDOC && r->heredoc_fd != -1)
+		{
+			close(r->heredoc_fd);
+			r->heredoc_fd = -1;
+		}
+		r = r->next;
 	}
-	free(lst);
 }

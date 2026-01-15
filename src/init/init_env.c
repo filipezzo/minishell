@@ -6,11 +6,33 @@
 /*   By: fsousa <fsousa@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/20 15:26:27 by fsousa            #+#    #+#             */
-/*   Updated: 2025/12/20 15:26:47 by fsousa           ###   ########.fr       */
+/*   Updated: 2026/01/15 13:50:54 by fsousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static void	update_shlvl(t_shell *shell);
+static void	parse_and_add(t_shell *shell, char *env_str);
+static void	update_shlvl(t_shell *shell);
+
+static void	update_shlvl(t_shell *shell)
+{
+	char	*val_str;
+	char	*new_val;
+	int		lvl;
+
+	val_str = get_env_value(shell->env_list, "SHLVL");
+	if (!val_str)
+		lvl = 1;
+	else
+		lvl = ft_atoi(val_str) + 1;
+	if (lvl < 0)
+		lvl = 1;
+	new_val = ft_itoa(lvl);
+	update_or_create_node(&shell->env_list, "SHLVL", new_val);
+	free(new_val);
+}
 
 static void	parse_and_add(t_shell *shell, char *env_str)
 {
@@ -45,4 +67,5 @@ void	init_env(t_shell *shell, char **envp)
 		parse_and_add(shell, envp[i]);
 		i++;
 	}
+	update_shlvl(shell);
 }
