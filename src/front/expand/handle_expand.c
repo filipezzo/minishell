@@ -14,7 +14,7 @@
 
 static void	get_dollar_env(char *src, char *env, size_t *idx);
 
-char	*expand_dolar(t_shell *sh, char *env)
+char	*expand_dollar(t_shell *sh, char *env)
 {
 	char	*value;
 
