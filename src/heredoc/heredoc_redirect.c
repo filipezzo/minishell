@@ -1,25 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   syntax_error_msg.c                                 :+:      :+:    :+:   */
+/*   heredoc_redirect.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fsousa <fsousa@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/27 18:19:15 by mhidani           #+#    #+#             */
-/*   Updated: 2026/01/15 11:42:46 by fsousa           ###   ########.fr       */
+/*   Created: 2026/01/15 12:02:59 by fsousa            #+#    #+#             */
+/*   Updated: 2026/01/15 12:03:44 by fsousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_bool	syntax_err_msg(char *msg, char *oper)
+int	redirect_heredoc(t_redir *r)
 {
-	ft_fputstr_fd(STDERR_FILENO, "minishell: %s '%s'\n", msg, oper);
-	return (FALSE);
-}
-
-t_bool	syntax_err_smsg(char *msg)
-{
-	ft_fputstr_fd(STDERR_FILENO, "minishell: %s\n", msg);
-	return (FALSE);
+	if (r->heredoc_fd == -1)
+		return (0);
+	if (dup2(r->heredoc_fd, STDIN_FILENO) == -1)
+	{
+		perror("dup2 heredoc");
+		return (0);
+	}
+	close(r->heredoc_fd);
+	r->heredoc_fd = -1;
+	return (1);
 }
