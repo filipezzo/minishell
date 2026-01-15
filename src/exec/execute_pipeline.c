@@ -1,48 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   executor.c                                         :+:      :+:    :+:   */
+/*   execute_pipeline.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fsousa <fsousa@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/15 18:07:04 by fsousa            #+#    #+#             */
-/*   Updated: 2026/01/15 13:35:57 by fsousa           ###   ########.fr       */
+/*   Created: 2026/01/15 11:45:48 by fsousa            #+#    #+#             */
+/*   Updated: 2026/01/15 12:00:24 by fsousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void		handle_child_process(t_shell *sh, t_cmd *c, int in, int end[2]);
-static void		wait_all_children(t_shell *shell);
-static pid_t	handle_fork(t_shell *shell, t_cmd *cmd, int fd_in, int end[2]);
-static void		execute_pipeline(t_shell *shell, t_cmd *cmd);
-
-void	executor(t_shell *shell)
-{
-	t_cmd	*head;
-
-	head = shell->cmd_list;
-	if (!head)
-		return ;
-	if (!head->next && is_command_builtin(head->args[0]))
-	{
-		shell->saved_stdin = dup(STDIN_FILENO);
-		shell->saved_stdout = dup(STDOUT_FILENO);
-		if (apply_redirect(head))
-			shell->exit_status = run_builtin(shell, head);
-		else
-			shell->exit_status = 1;
-		dup2(shell->saved_stdin, STDIN_FILENO);
-		dup2(shell->saved_stdout, STDOUT_FILENO);
-		close(shell->saved_stdin);
-		close(shell->saved_stdout);
-	}
-	else
-		execute_pipeline(shell, head);
-}
-
 static void	handle_child_process(t_shell *shell, t_cmd *cmd, int fd_in,
-								int end[2])
+		int end[2])
 {
 	set_signals_child();
 	if (fd_in != STDIN_FILENO)
@@ -62,6 +33,18 @@ static void	handle_child_process(t_shell *shell, t_cmd *cmd, int fd_in,
 		exit(run_builtin(shell, cmd));
 	else
 		execute_external(shell, cmd);
+}
+
+static pid_t	handle_fork(t_shell *shell, t_cmd *cmd, int fd_in, int end[2])
+{
+	pid_t	pid;
+
+	pid = fork();
+	if (pid == -1)
+		perror("fork");
+	if (pid == 0)
+		handle_child_process(shell, cmd, fd_in, end);
+	return (pid);
 }
 
 static void	wait_all_children(t_shell *shell)
@@ -92,19 +75,18 @@ static void	wait_all_children(t_shell *shell)
 	}
 }
 
-static pid_t	handle_fork(t_shell *shell, t_cmd *cmd, int fd_in, int end[2])
+static void	handle_fd(t_cmd *cmd, int *fd_in, int end[])
 {
-	pid_t	pid;
-
-	pid = fork();
-	if (pid == -1)
-		perror("fork");
-	if (pid == 0)
-		handle_child_process(shell, cmd, fd_in, end);
-	return (pid);
+	if (*fd_in != STDIN_FILENO)
+		close(*fd_in);
+	if (cmd->next)
+	{
+		*fd_in = end[0];
+		close(end[1]);
+	}
 }
 
-static void	execute_pipeline(t_shell *shell, t_cmd *cmd)
+void	execute_pipeline(t_shell *shell, t_cmd *cmd)
 {
 	int		fd_in;
 	int		end[2];
@@ -117,15 +99,15 @@ static void	execute_pipeline(t_shell *shell, t_cmd *cmd)
 		if (cmd->next)
 			pipe(end);
 		pid = handle_fork(shell, cmd, fd_in, end);
+		close_heredoc_fds_cmd(cmd);
+		if (pid == -1)
+		{
+			shell->exit_status = 1;
+			return ;
+		}
 		if (!cmd->next)
 			shell->last_pid = pid;
-		if (fd_in != STDIN_FILENO)
-			close(fd_in);
-		if (cmd->next)
-		{
-			fd_in = end[0];
-			close(end[1]);
-		}
+		handle_fd(cmd, &fd_in, end);
 		cmd = cmd->next;
 	}
 	wait_all_children(shell);

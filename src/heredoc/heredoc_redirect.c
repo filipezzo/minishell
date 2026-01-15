@@ -1,28 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   new_redir.c                                        :+:      :+:    :+:   */
+/*   heredoc_redirect.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
+/*   By: fsousa <fsousa@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/05 15:18:41 by mhidani           #+#    #+#             */
-/*   Updated: 2026/01/07 11:56:46 by mhidani          ###   ########.fr       */
+/*   Created: 2026/01/15 12:02:59 by fsousa            #+#    #+#             */
+/*   Updated: 2026/01/15 12:03:44 by fsousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_redir *new_redir(t_type type)
+int	redirect_heredoc(t_redir *r)
 {
-	t_redir *redir;
-
-	redir = ft_calloc(1, sizeof(t_redir));
-	if (!redir)
-		return (NULL);
-	redir->mstype = REDIRECTION_T;
-	redir->type = type;
-	redir->file = NULL;
-	redir->heredoc_fd = -1;
-	redir->next = NULL;
-	return (redir);
+	if (r->heredoc_fd == -1)
+		return (0);
+	if (dup2(r->heredoc_fd, STDIN_FILENO) == -1)
+	{
+		perror("dup2 heredoc");
+		return (0);
+	}
+	close(r->heredoc_fd);
+	r->heredoc_fd = -1;
+	return (1);
 }
