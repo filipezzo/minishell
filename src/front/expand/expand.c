@@ -6,7 +6,7 @@
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 14:59:01 by mhidani           #+#    #+#             */
-/*   Updated: 2026/01/14 09:31:39 by mhidani          ###   ########.fr       */
+/*   Updated: 2026/01/15 09:50:33 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,18 @@ static void	expand_dissolution(t_shell *sh, t_tnode *node)
 
 static t_bool	is_simple_expand(char *src)
 {
+	t_bool	check_next;
+	char	*next;
+
 	if (!src)
 		return (FALSE);
 	if (*src == '\"' || *src == '\'')
 		return (FALSE);
 	if (ft_strchr(src, ' ') || ft_strchr(src, '\t') || ft_strchr(src, '\n'))
 		return (FALSE);
-	if (*src == '$' || *src == '~')
+	next = (src + 1);
+	check_next = *next && (*next != ' ' || *next != '\t' || *next != '\n');
+	if ((*src == '$' && check_next) || *src == '~')
 		return (TRUE);
 	return (FALSE);
 }
