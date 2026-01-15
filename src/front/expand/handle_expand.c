@@ -26,6 +26,8 @@ char	*expand_dollar(t_shell *sh, char *env)
 	else
 	{
 		value = getenv((env + 1));
+		if (!value)
+			return (ft_strdup(""));
 		return (ft_strdup(value));
 	}
 }
