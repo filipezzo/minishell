@@ -6,7 +6,7 @@
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 17:27:28 by mhidani           #+#    #+#             */
-/*   Updated: 2026/01/14 22:20:06 by mhidani          ###   ########.fr       */
+/*   Updated: 2026/01/15 09:29:30 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*expand_dollar(t_shell *sh, char *env)
 	value = NULL;
 	if (!env || (env && *env != '$'))
 		return (NULL);
-	if (*(env + 1) == '?')
+	if (*(env + 1) && *(env + 1) == '?')
 		return (ft_itoa(sh->exit_status));
 	else
 	{
@@ -71,6 +71,8 @@ static char	*get_dollar_env(char *src, size_t *idx)
 		return (NULL);
 	j = *idx + 1;
 	while (src[j] && (ft_isalnum(src[j]) || src[j] == '_'))
+		j++;
+	if (src[j] == '?')
 		j++;
 	env = ft_calloc(j - *idx + 1, sizeof(char));
 	if (!env)
