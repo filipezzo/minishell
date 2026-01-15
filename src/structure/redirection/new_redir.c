@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   new_redir.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
+/*   By: fsousa <fsousa@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/05 15:18:41 by mhidani           #+#    #+#             */
-/*   Updated: 2026/01/07 11:56:46 by mhidani          ###   ########.fr       */
+/*   Updated: 2026/01/15 13:52:07 by fsousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_redir *new_redir(t_type type)
+t_redir	*new_redir(t_type type)
 {
-	t_redir *redir;
+	t_redir	*redir;
 
 	redir = ft_calloc(1, sizeof(t_redir));
 	if (!redir)
