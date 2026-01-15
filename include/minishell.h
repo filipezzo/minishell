@@ -6,7 +6,7 @@
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/12 09:05:43 by mhidani           #+#    #+#             */
-/*   Updated: 2026/01/14 13:12:32 by mhidani          ###   ########.fr       */
+/*   Updated: 2026/01/14 19:41:08 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -228,7 +228,7 @@ t_tnode		*parse_redir(t_tnode *node, t_bnode **cursor);
 void		expand(t_shell *sh, t_tnode *cursor);
 void		expand_simple(t_shell *sh, char *src, t_cmd *cmd);
 void		expand_dquote(t_shell *sh, t_cmd *cmd, size_t idx);
-char		*find_env(t_shell *sh, char *src, size_t *idx);
+char		*find_env(char *src, size_t *idx);
 char		*expand_dollar(t_shell *sh, char *env);
 char		*expand_tilde(void);
 void		print_string(void *ptr, int fd);

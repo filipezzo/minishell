@@ -46,23 +46,18 @@ char	*expand_tilde(void)
 	return (value);
 }
 
-char	*find_env(t_shell *sh, char *src, size_t *idx)
+char	*find_env(char *src, size_t *idx)
 {
-	char	*env;
-
+	if (src[*idx] == '~')
+	{
+		(*idx)++;
+		return (ft_strdup("~"));
+	}
 	while (src[*idx])
 	{
 		if (src[*idx] == '$')
-		{
-			get_dollar_env(src, env, idx);
-			return (env);
-		}
-		else if (src[*idx] == '~')
-		{
-			*idx++;
-			return (ft_strdup("~"));
-		}
-		*idx++;
+			return (get_dollar_env(src, idx));
+		(*idx)++;
 	}
 	return (NULL);
 }
