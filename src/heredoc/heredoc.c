@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: fsousa <fsousa@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/15 13:16:13 by fsousa            #+#    #+#             */
-/*   Updated: 2026/01/15 13:21:18 by fsousa           ###   ########.fr       */
+/*   Created: 2026/01/15 17:19:33 by fsousa            #+#    #+#             */
+/*   Updated: 2026/01/15 17:37:43 by fsousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,54 +19,82 @@ static int	is_delimiter(const char *line, const char *delimiter)
 	return (ft_strncmp(line, delimiter, ft_strlen(delimiter) + 1) == 0);
 }
 
-static int	handle_signal_status(char *line, int *p)
+static void	handle_pid_zero(pid_t pid, int *p, char *delimiter)
 {
-	if (g_signal_status == 130)
+	char	*line;
+
+	line = NULL;
+	if (pid == 0)
 	{
-		if (line)
-			free(line);
 		close(p[0]);
+		set_signals_heredoc_child();
+		while (1)
+		{
+			line = readline("> ");
+			if (!line)
+				break ;
+			if (is_delimiter(line, delimiter))
+			{
+				free(line);
+				break ;
+			}
+			write(p[1], line, ft_strlen(line));
+			write(p[1], "\n", 1);
+			free(line);
+		}
 		close(p[1]);
-		return (0);
+		_exit(0);
 	}
-	return (1);
 }
 
-static int	handle_pipe(int *p)
+static int	handle_pids(pid_t pid, int *p, char *delimiter)
 {
-	if (pipe(p) == -1)
+	if (pid == -1)
 	{
-		perror("pipe heredoc");
-		return (0);
+		perror("fork heredoc");
+		close(p[0]);
+		close(p[1]);
+		return (-1);
 	}
-	return (1);
+	handle_pid_zero(pid, p, delimiter);
+	return (0);
+}
+
+static int	handle_sigint_status(int status, int *p)
+{
+	if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
+	{
+		g_signal_status = 130;
+		close(p[0]);
+		return (-1);
+	}
+	return (0);
 }
 
 int	run_heredoc(char *delimiter)
 {
 	int		p[2];
-	char	*line;
+	pid_t	pid;
+	int		status;
 
-	if (!handle_pipe(p))
-		return (-1);
-	g_signal_status = 0;
-	set_signals_heredoc();
-	while (1)
+	if (pipe(p) == -1)
 	{
-		line = readline("> ");
-		if (!handle_signal_status(line, p))
-			return (-1);
-		if (!line)
-			break ;
-		if (is_delimiter(line, delimiter))
-		{
-			free(line);
-			break ;
-		}
-		write(p[1], line, ft_strlen(line));
-		write(p[1], "\n", 1);
-		free(line);
+		perror("pipe heredoc");
+		return (-1);
 	}
+	pid = fork();
+	if (handle_pids(pid, p, delimiter) == -1)
+		return (-1);
 	close(p[1]);
+	signal(SIGINT, SIG_IGN);
+	waitpid(pid, &status, 0);
+	init_signals();
+	if (WIFEXITED(status) && WEXITSTATUS(status) == 130)
+	{
+		g_signal_status = 130;
+		close(p[0]);
+		return (-1);
+	}
+	handle_sigint_status(status, p);
 	return (p[0]);
 }

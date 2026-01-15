@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
+/*   By: fsousa <fsousa@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/12 09:05:43 by mhidani           #+#    #+#             */
-/*   Updated: 2026/01/15 16:08:42 by mhidani          ###   ########.fr       */
+/*   Updated: 2026/01/15 17:35:49 by fsousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,7 +173,8 @@ int					is_command_builtin(const char *cmd);
 void				init_signals(void);
 void				set_signals_exec(void);
 void				set_signals_child(void);
-void				set_signals_heredoc(void);
+void				set_signals_heredoc_child(void);
+void				heredoc_child_sigint(int sig);
 void				free_env_node(t_env *node);
 char				*get_env_value(t_env *env, char *key);
 int					is_valid_env_key(char *str);
@@ -231,7 +232,6 @@ void				destroy_redir(void *ptr);
 void				destroy_lst_redir(void *ptr);
 int					run_heredoc(char *delimiter);
 int					redirect_heredoc(t_redir *r);
-int					prepare_all_heredocs(t_cmd *cmd_list);
 int					prepare_pipeline_heredocs(t_cmd *cmd_list);
 void				close_heredoc_fds_cmd(t_cmd *cmd);
 int					pms_err(char *msg, int err);
