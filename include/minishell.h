@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fsousa <fsousa@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/12 09:05:43 by mhidani           #+#    #+#             */
-/*   Updated: 2026/01/15 14:22:35 by fsousa           ###   ########.fr       */
+/*   Updated: 2026/01/15 16:08:42 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -224,7 +224,7 @@ void				destroy_tnode(void *ptr);
 t_bool				new_lextoken(t_lextoken **new, t_type type, char *content);
 void				destroy_lextoken(void *ptr);
 t_lextoken			*get_lextoken(void *ptr);
-t_lextoken			*bnode_to_lextoken(t_bnode *node);
+t_lextoken			*to_lextoken(t_bnode *node);
 void				next_lextoken(t_bnode **cursor);
 t_redir				*new_redir(t_type type);
 void				destroy_redir(void *ptr);
