@@ -3,30 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   init_mock_env.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fsousa <fsousa@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/20 15:41:31 by fsousa            #+#    #+#             */
-/*   Updated: 2025/12/20 15:41:40 by fsousa           ###   ########.fr       */
+/*   Updated: 2026/01/13 18:24:02 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static t_env	*create_mock_node(char *key, char *value)
-{
-	t_env	*node;
-
-	node = malloc(sizeof(t_env));
-	if (!node)
-		return (NULL);
-	if (value)
-		node->value = ft_strdup(value);
-	else
-		node->value = NULL;
-	node->key = ft_strdup(key);
-	node->next = NULL;
-	return (node);
-}
+static t_env	*create_mock_node(char *key, char *value);
 
 void	init_mock_env(t_shell *shell)
 {
@@ -44,4 +30,20 @@ void	init_mock_env(t_shell *shell)
 	n2->next = n3;
 	n3->next = n4;
 	n4->next = NULL;
+}
+
+static t_env	*create_mock_node(char *key, char *value)
+{
+	t_env	*node;
+
+	node = malloc(sizeof(t_env));
+	if (!node)
+		return (NULL);
+	if (value)
+		node->value = ft_strdup(value);
+	else
+		node->value = NULL;
+	node->key = ft_strdup(key);
+	node->next = NULL;
+	return (node);
 }

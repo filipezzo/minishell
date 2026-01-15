@@ -6,18 +6,12 @@
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/09 11:23:37 by mhidani           #+#    #+#             */
-/*   Updated: 2026/01/07 15:17:02 by mhidani          ###   ########.fr       */
+/*   Updated: 2026/01/13 18:10:37 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-/**
- * Destroy the bidirectional node.
- * @param ptr Pointer reference to the bidirectional node.
- * @return True if the destruction process node was successfull, and false if it
- * was not possible to destroy bidirectional node.
- */
 t_bool	ft_destroy_bnode(void *ptr)
 {
 	t_bnode	*node;

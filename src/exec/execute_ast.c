@@ -1,16 +1,47 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_ast.c                                         :+:      :+:    :+:   */
+/*   execute_ast.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fsousa <fsousa@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/11 16:01:21 by fsousa            #+#    #+#             */
-/*   Updated: 2026/01/15 11:41:23 by fsousa           ###   ########.fr       */
+/*   Updated: 2026/01/15 13:34:47 by fsousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static t_cmd	*get_cmd_from_node(t_tnode *node);
+static t_cmd	*flatten_pipeline(t_tnode *node);
+static void		run_pipeline_node(t_shell *shell, t_tnode *node);
+
+void	run_ast(t_shell *shell, t_tnode *node)
+{
+	if (!node)
+		return ;
+	if (node->type == SUBSHELL)
+	{
+		run_ast(shell, node->left);
+		return ;
+	}
+	if (node->type == AND)
+	{
+		run_ast(shell, node->left);
+		if (shell->exit_status == 0)
+			run_ast(shell, node->right);
+	}
+	else if (node->type == OR)
+	{
+		run_ast(shell, node->left);
+		if (shell->exit_status != 0)
+			run_ast(shell, node->right);
+	}
+	else if (node->type == PIPE || node->type == COMMAND)
+	{
+		run_pipeline_node(shell, node);
+	}
+}
 
 static t_cmd	*get_cmd_from_node(t_tnode *node)
 {
@@ -90,31 +121,4 @@ static void	run_pipeline_node(t_shell *shell, t_tnode *node)
 		cursor = next_backup;
 	}
 	shell->cmd_list = NULL;
-}
-
-void	run_ast(t_shell *shell, t_tnode *node)
-{
-	if (!node)
-		return ;
-	if (node->type == SUBSHELL)
-	{
-		run_ast(shell, node->left);
-		return ;
-	}
-	if (node->type == AND)
-	{
-		run_ast(shell, node->left);
-		if (shell->exit_status == 0)
-			run_ast(shell, node->right);
-	}
-	else if (node->type == OR)
-	{
-		run_ast(shell, node->left);
-		if (shell->exit_status != 0)
-			run_ast(shell, node->right);
-	}
-	else if (node->type == PIPE || node->type == COMMAND)
-	{
-		run_pipeline_node(shell, node);
-	}
 }

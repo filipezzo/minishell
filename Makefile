@@ -28,6 +28,8 @@ FRONT_SYNTX_FILES = syntax/syntax_analyze.c syntax/syntax_check.c \
 FRONT_PARSR_FILES = parser/parse_command.c parser/parse_and_or.c \
 					parser/parse_pipeline.c parser/parser.c \
 					parser/parse_redir.c parser/parse_subshell.c
+FRONT_EXPAN_FILES = expand/expand.c expand/expand_dquote.c \
+					expand/expand_simple.c expand/handle_expand.c
 STRUC_ASTRE_FILES = astree/destroy_astree.c astree/get_entry_astree.c \
 					astree/new_astree.c astree/print_astree.c
 STRUC_TNODE_FILES = tnode/destroy_tnode.c tnode/new_tnode.c
@@ -65,6 +67,7 @@ SRCS			  = $(addprefix $(SRC_DIR)/, $(SRC_FILES)) \
 					$(addprefix $(SRC_DIR)/$(FRONT_DIR)/, $(FRONT_LEXER_FILES))\
 					$(addprefix $(SRC_DIR)/$(FRONT_DIR)/, $(FRONT_SYNTX_FILES))\
 					$(addprefix $(SRC_DIR)/$(FRONT_DIR)/, $(FRONT_PARSR_FILES))\
+					$(addprefix $(SRC_DIR)/$(FRONT_DIR)/, $(FRONT_EXPAN_FILES))\
        				$(addprefix $(SRC_DIR)/$(BUILTIN_DIR)/, $(BUILTIN_FILES)) \
 	   				$(addprefix $(SRC_DIR)/$(EXEC_DIR)/, $(EXEC_FILES)) \
 	   				$(addprefix $(SRC_DIR)/$(MOCK_DIR)/, $(MOCK_FILES)) \
