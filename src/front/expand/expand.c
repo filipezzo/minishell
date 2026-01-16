@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
+/*   By: fsousa <fsousa@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 14:59:01 by mhidani           #+#    #+#             */
-/*   Updated: 2026/01/15 15:55:14 by mhidani          ###   ########.fr       */
+/*   Updated: 2026/01/16 15:10:01 by fsousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,8 @@ static t_bool	is_simple_expand(char *src)
 	if (ft_strchr(src, ' ') || ft_strchr(src, '\t') || ft_strchr(src, '\n'))
 		return (FALSE);
 	next = (src + 1);
-	check_next = *next && (*next != ' ' || *next != '\t' || *next != '\n');
-	if ((*src == '$' && check_next) || *src == '~')
+	check_next = (*next != ' ' || *next != '\t' || *next != '\n');
+	if ((*src == '$' && *next && check_next) || *src == '~')
 		return (TRUE);
 	return (FALSE);
 }

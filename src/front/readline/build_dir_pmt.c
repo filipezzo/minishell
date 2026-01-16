@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   build_dir_pmt.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
+/*   By: fsousa <fsousa@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 15:03:36 by mhidani           #+#    #+#             */
-/*   Updated: 2026/01/05 22:03:32 by mhidani          ###   ########.fr       */
+/*   Updated: 2026/01/16 15:18:09 by fsousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,10 @@ static t_bool	is_unmodifiable(char *home, char *crr, char *dir)
 
 	home_sz = ft_strlen(home);
 	crr_sz = ft_strlen(crr);
-	is_hm = ft_strncmp(crr, home, home_sz) == 0 && ft_strncmp(dir, "~", 1) == 0;
+	is_hm = ft_strncmp(crr, home, home_sz) == 0;
 	is_equals = ft_strncmp(crr + home_sz, dir + 1, crr_sz - home_sz) == 0;
 	is_same = ft_strncmp(crr, dir, crr_sz) == 0;
-	if (*dir && is_hm && is_equals)
+	if (*dir && is_hm && ft_strncmp(dir, "~", 1) == 0 && is_equals)
 		return (TRUE);
 	if (is_same)
 		return (TRUE);
