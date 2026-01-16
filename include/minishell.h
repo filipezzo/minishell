@@ -6,7 +6,7 @@
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/12 09:05:43 by mhidani           #+#    #+#             */
-/*   Updated: 2026/01/16 19:46:50 by mhidani          ###   ########.fr       */
+/*   Updated: 2026/01/16 19:52:40 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 # include <signal.h>
 # include <stdio.h>
 # include <stdlib.h>
+# include <dirent.h>
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <termios.h>
