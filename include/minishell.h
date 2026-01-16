@@ -6,7 +6,7 @@
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/12 09:05:43 by mhidani           #+#    #+#             */
-/*   Updated: 2026/01/14 19:41:08 by mhidani          ###   ########.fr       */
+/*   Updated: 2026/01/16 11:55:58 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 # include <signal.h>
 # include <stdio.h>
 # include <stdlib.h>
+# include <dirent.h>
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <unistd.h>
@@ -232,6 +233,7 @@ char		*find_env(char *src, size_t *idx);
 char		*expand_dollar(t_shell *sh, char *env);
 char		*expand_tilde(void);
 void		print_string(void *ptr, int fd);
+size_t		size_string_lst(char **list);
 void		destroy_string_lst(char **list);
 t_astree	*new_astree(void);
 void		destroy_astree(void *ptr);
