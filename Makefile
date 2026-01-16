@@ -47,7 +47,6 @@ BUILTIN_FILES	  = builtin.c builtin_echo.c builtin_pwd.c builtin_env.c \
 EXEC_FILES		  = executor.c redirect.c execute_external.c execute_ast.c  \
 					execute_pipeline.c
 HEREDOC_FILES	  = heredoc.c heredoc_fds.c heredoc_prepare.c heredoc_redirect.c
-MOCK_FILES		  = init_mock_env.c
 UTIL_FILES		  = linked_list.c utils_env.c clean.c error.c utils_exec.c \
 					lexel_utils.c
 INIT_FILES		  = init_env_list.c init_env.c
@@ -70,7 +69,6 @@ SRCS			  = $(addprefix $(SRC_DIR)/, $(SRC_FILES)) \
 					$(addprefix $(SRC_DIR)/$(FRONT_DIR)/, $(FRONT_EXPAN_FILES))\
        				$(addprefix $(SRC_DIR)/$(BUILTIN_DIR)/, $(BUILTIN_FILES)) \
 	   				$(addprefix $(SRC_DIR)/$(EXEC_DIR)/, $(EXEC_FILES)) \
-	   				$(addprefix $(SRC_DIR)/$(MOCK_DIR)/, $(MOCK_FILES)) \
 	   				$(addprefix $(SRC_DIR)/$(UTILS_DIR)/, $(UTIL_FILES)) \
 	   				$(addprefix $(SRC_DIR)/$(INIT_DIR)/, $(INIT_FILES))	\
 	   				$(addprefix $(SRC_DIR)/$(SIGNAL_DIR)/, $(SIGNAL_FILES))	\

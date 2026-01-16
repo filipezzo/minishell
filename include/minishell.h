@@ -6,7 +6,7 @@
 /*   By: fsousa <fsousa@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/12 09:05:43 by mhidani           #+#    #+#             */
-/*   Updated: 2026/01/15 17:35:49 by fsousa           ###   ########.fr       */
+/*   Updated: 2026/01/16 18:03:04 by fsousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,7 +190,6 @@ void				run_ast(t_shell *shell, t_tnode *node);
 int					apply_redirect(t_cmd *cmd);
 char				*find_command_path(t_shell *shell, char *cmd);
 t_bool				lex_isjump(char c);
-void				init_mock_env(t_shell *shell);
 char				*build_prompt(t_prompt *prompt);
 char				*build_user_pmt(char **crr);
 char				*build_host_pmt(char **crr);
