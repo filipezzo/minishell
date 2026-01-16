@@ -6,7 +6,7 @@
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/12 09:05:43 by mhidani           #+#    #+#             */
-/*   Updated: 2026/01/16 19:45:42 by mhidani          ###   ########.fr       */
+/*   Updated: 2026/01/16 19:46:50 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -214,6 +214,7 @@ t_tnode				*parse_command(t_astree *tree, t_bnode **cursor);
 t_tnode				*parse_redir(t_tnode *node, t_bnode **cursor);
 t_tnode				*parse_subshell(t_astree *tree, t_bnode **cursor);
 void				print_string(void *ptr, int fd);
+size_t				strlst_size(char **list);
 void				destroy_string_lst(char **list);
 t_astree			*new_astree(void);
 void				destroy_astree(void *ptr);
