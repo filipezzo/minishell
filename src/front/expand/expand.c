@@ -6,7 +6,7 @@
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 14:59:01 by mhidani           #+#    #+#             */
-/*   Updated: 2026/01/15 09:50:33 by mhidani          ###   ########.fr       */
+/*   Updated: 2026/01/15 15:55:14 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static void	expand_dissolution(t_shell *sh, t_tnode *node)
 	if (!cmd)
 		return ;
 	i = 0;
-	while (cmd->args[i])
+	while (cmd->args && cmd->args[i])
 	{
 		if (is_simple_expand(cmd->args[i]))
 			expand_simple(sh, cmd->args[i], cmd);
