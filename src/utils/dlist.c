@@ -6,13 +6,13 @@
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 00:22:26 by mhidani           #+#    #+#             */
-/*   Updated: 2026/01/19 11:16:19 by mhidani          ###   ########.fr       */
+/*   Updated: 2026/01/19 15:25:04 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_bool iseq_list_and_cmtx(t_dlist *list, char **mtx)
+t_bool	iseq_list_and_cmtx(t_dlist *list, char **mtx)
 {
 	size_t	i;
 	t_bnode	*cursor;
