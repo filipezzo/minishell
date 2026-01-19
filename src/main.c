@@ -5,13 +5,15 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/11 15:59:06 by fsousa            #+#    #+#             */
-/*   Updated: 2026/01/13 23:42:37 by mhidani          ###   ########.fr       */
+/*   Created: 2026/01/16 18:06:41 by fsousa            #+#    #+#             */
+/*   Updated: 2026/01/16 19:47:23 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+
 #include "minishell.h"
 
+/* Global variable used to track signal handling state */
 int	g_signal_status = 0;
 
 int	main(int argc, char **argv, char **envp)
@@ -51,6 +53,7 @@ int	main(int argc, char **argv, char **envp)
 			{
 				tree = parser(tokens);
 				expand(&shell, tree->root);
+				wildcard(tree);
 				if (tree && tree->root)
 				{
 					run_ast(&shell, tree->root);

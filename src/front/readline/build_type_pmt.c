@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   build_type_pmt.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
+/*   By: fsousa <fsousa@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 16:03:38 by mhidani           #+#    #+#             */
-/*   Updated: 2025/12/26 11:24:37 by mhidani          ###   ########.fr       */
+/*   Updated: 2026/01/16 15:19:55 by fsousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,12 @@ static t_bool	is_unmodifiable(char *user, char *type)
 {
 	t_bool	isroot;
 	t_bool	isother;
+	t_bool	ishash;
+	t_bool	isdollar;
 
-	isroot = ft_strncmp(user, "root", 4) == 0 && ft_strncmp(type, "#", 1) == 0;
-	isother = ft_strncmp(user, "root", 4) != 0 && ft_strncmp(type, "$", 1) == 0;
+	isroot = ft_strncmp(user, "root", 4) == 0;
+	ishash = ft_strncmp(type, "#", 1) == 0;
+	isdollar = ft_strncmp(type, "$", 1) == 0;
+	isother = ft_strncmp(user, "root", 4) != 0;
 	return (isroot || isother);
 }

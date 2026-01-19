@@ -6,13 +6,13 @@
 /*   By: fsousa <fsousa@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/15 18:07:07 by fsousa            #+#    #+#             */
-/*   Updated: 2025/12/20 15:25:43 by fsousa           ###   ########.fr       */
+/*   Updated: 2026/01/15 12:10:53 by fsousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	redirect_input(const char *filename)
+static int	redirect_input(const char *filename)
 {
 	int	fd;
 
@@ -32,7 +32,7 @@ int	redirect_input(const char *filename)
 	return (1);
 }
 
-int	redirect_output(const char *filename)
+static int	redirect_output(const char *filename)
 {
 	int	fd;
 
@@ -52,7 +52,7 @@ int	redirect_output(const char *filename)
 	return (1);
 }
 
-int	redirect_append(const char *filename)
+static int	redirect_append(const char *filename)
 {
 	int	fd;
 
@@ -72,11 +72,8 @@ int	redirect_append(const char *filename)
 	return (1);
 }
 
-int	apply_redirect(t_cmd *cmd)
+static int	handle_redirect(t_redir *r)
 {
-	t_redir	*r;
-
-	r = cmd->redirections;
 	while (r)
 	{
 		if (r->type == REDIR_IN)
@@ -94,7 +91,17 @@ int	apply_redirect(t_cmd *cmd)
 			if (!redirect_append(r->file))
 				return (0);
 		}
+		else if (r->type == REDIR_HEREDOC)
+		{
+			if (!redirect_heredoc(r))
+				return (0);
+		}
 		r = r->next;
 	}
 	return (1);
+}
+
+int	apply_redirect(t_cmd *cmd)
+{
+	return (handle_redirect(cmd->redirections));
 }

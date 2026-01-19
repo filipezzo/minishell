@@ -6,7 +6,7 @@
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/05 17:45:37 by mhidani           #+#    #+#             */
-/*   Updated: 2026/01/12 09:28:33 by mhidani          ###   ########.fr       */
+/*   Updated: 2026/01/15 15:58:45 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static void	print_cmd_args(t_cmd *cmd, int fd)
 
 	i = 0;
 	ft_putstr_fd("args: [ ", fd);
-	while (cmd->args[i])
+	while (cmd->args && cmd->args[i])
 	{
 		ft_putstr_fd(cmd->args[i], fd);
 		if (cmd->args[i + 1] != NULL)

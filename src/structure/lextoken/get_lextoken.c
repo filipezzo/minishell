@@ -6,7 +6,7 @@
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/05 13:04:52 by mhidani           #+#    #+#             */
-/*   Updated: 2026/01/12 09:18:06 by mhidani          ###   ########.fr       */
+/*   Updated: 2026/01/15 14:19:40 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ t_lextoken	*get_lextoken(void *ptr)
 	return (token);
 }
 
-t_lextoken	*bnode_to_lextoken(t_bnode *node)
+t_lextoken	*to_lextoken(t_bnode *node)
 {
 	t_lextoken	*lextoken;
 

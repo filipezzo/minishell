@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   new_redir.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
+/*   By: fsousa <fsousa@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/05 15:18:41 by mhidani           #+#    #+#             */
-/*   Updated: 2026/01/07 11:56:46 by mhidani          ###   ########.fr       */
+/*   Updated: 2026/01/15 13:52:07 by fsousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ t_redir	*new_redir(t_type type)
 	redir->mstype = REDIRECTION_T;
 	redir->type = type;
 	redir->file = NULL;
+	redir->heredoc_fd = -1;
 	redir->next = NULL;
 	return (redir);
 }

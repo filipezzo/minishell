@@ -1,25 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   syntax_error_msg.c                                 :+:      :+:    :+:   */
+/*   strlst_size.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fsousa <fsousa@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/27 18:19:15 by mhidani           #+#    #+#             */
-/*   Updated: 2026/01/15 11:42:46 by fsousa           ###   ########.fr       */
+/*   Created: 2026/01/16 18:53:15 by mhidani           #+#    #+#             */
+/*   Updated: 2026/01/16 18:55:38 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_bool	syntax_err_msg(char *msg, char *oper)
+size_t	strlst_size(char **list)
 {
-	ft_fputstr_fd(STDERR_FILENO, "minishell: %s '%s'\n", msg, oper);
-	return (FALSE);
-}
+	size_t	i;
 
-t_bool	syntax_err_smsg(char *msg)
-{
-	ft_fputstr_fd(STDERR_FILENO, "minishell: %s\n", msg);
-	return (FALSE);
+	if (!list)
+		return (0);
+	i = 0;
+	while (list[i])
+		i++;
+	return (i);
 }

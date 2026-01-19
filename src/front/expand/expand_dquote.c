@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_dquote.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
+/*   By: fsousa <fsousa@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 17:13:16 by mhidani           #+#    #+#             */
-/*   Updated: 2026/01/14 23:04:58 by mhidani          ###   ########.fr       */
+/*   Updated: 2026/01/16 15:08:55 by fsousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,12 @@ void	expand_dquote(t_shell *sh, t_cmd *cmd, size_t idx)
 
 static char	*get_expanded_value(t_shell *sh, char *env)
 {
-	if (*env == '$')
+	t_bool	check_next;
+	char	*next;
+
+	next = (env + 1);
+	check_next = (*next != ' ' || *next != '\t' || *next != '\n');
+	if (*env == '$' && *next && check_next)
 		return (expand_dollar(sh, env));
 	else if (*env == '~')
 		return (expand_tilde());
