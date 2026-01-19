@@ -6,7 +6,7 @@
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/12 09:05:43 by mhidani           #+#    #+#             */
-/*   Updated: 2026/01/19 15:07:21 by mhidani          ###   ########.fr       */
+/*   Updated: 2026/01/19 15:26:01 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,6 +191,7 @@ void				run_ast(t_shell *shell, t_tnode *node);
 int					apply_redirect(t_cmd *cmd);
 char				*find_command_path(t_shell *shell, char *cmd);
 t_bool				lex_isjump(char c);
+t_dlist				*get_names_crrdir(void);
 char				*build_prompt(t_prompt *prompt);
 char				*build_user_pmt(char **crr);
 char				*build_host_pmt(char **crr);
@@ -216,7 +217,7 @@ t_tnode				*parse_redir(t_tnode *node, t_bnode **cursor);
 t_tnode				*parse_subshell(t_astree *tree, t_bnode **cursor);
 void				print_string(void *ptr, int fd);
 size_t				strlst_size(char **list);
-void				destroy_string_lst(char **list);
+void				destroy_cmtx(char **list);
 t_astree			*new_astree(void);
 void				destroy_astree(void *ptr);
 void				print_astree(void *ptr, int fd);
@@ -249,5 +250,11 @@ void				expand_dquote(t_shell *sh, t_cmd *cmd, size_t idx);
 char				*find_env(char *src, size_t *idx);
 char				*expand_dollar(t_shell *sh, char *env);
 char				*expand_tilde(void);
+void				wildcard(t_astree *tree);
+t_dlist				*expand_args_at(t_dlist *dst, t_dlist *src, size_t itgt);
+char				**match_wildcard(t_dlist *names, char **args, size_t itgt);
+t_bool				iseq_list_and_cmtx(t_dlist *list, char **mtx);
+char				**convert_lst_to_cmtx(t_dlist *list);
+t_dlist				*convert_cmtx_to_lst(char **cmtx);
 
 #endif
