@@ -6,7 +6,7 @@
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 17:12:39 by mhidani           #+#    #+#             */
-/*   Updated: 2026/01/14 23:05:17 by mhidani          ###   ########.fr       */
+/*   Updated: 2026/01/19 01:45:03 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	expand_simple(t_shell *sh, char *src, t_cmd *cmd)
 	realloc_args_in(cmd, pos, splited);
 	free(env);
 	free(value);
-	destroy_string_lst(splited);
+	destroy_cmtx(splited);
 }
 
 static size_t	args_size(char **args)
@@ -99,6 +99,6 @@ static void	realloc_args_in(t_cmd *cmd, size_t idx, char **splited)
 	move_items(new, cmd->args, 0, idx);
 	move_items(new, splited, idx, idx + extra_size);
 	move_items(new, cmd->args, idx + extra_size, old_size + extra_size);
-	destroy_string_lst(cmd->args);
+	destroy_cmtx(cmd->args);
 	cmd->args = new;
 }

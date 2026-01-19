@@ -6,7 +6,7 @@
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/05 15:25:40 by mhidani           #+#    #+#             */
-/*   Updated: 2026/01/06 00:35:59 by mhidani          ###   ########.fr       */
+/*   Updated: 2026/01/19 01:45:03 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ t_cmd	*set_arg_cmd(t_cmd *cmd, char *src)
 		i++;
 	}
 	new_args[size] = ft_strdup(src);
-	destroy_string_lst(cmd->args);
+	destroy_cmtx(cmd->args);
 	cmd->args = new_args;
 	return (cmd);
 }
