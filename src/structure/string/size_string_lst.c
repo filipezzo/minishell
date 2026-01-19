@@ -1,27 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   destroy_cmd.c                                      :+:      :+:    :+:   */
+/*   size_string_lst.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/05 15:05:07 by mhidani           #+#    #+#             */
-/*   Updated: 2026/01/19 01:45:03 by mhidani          ###   ########.fr       */
+/*   Created: 2026/01/16 11:54:23 by mhidani           #+#    #+#             */
+/*   Updated: 2026/01/16 11:55:37 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	destroy_cmd(void *ptr)
+size_t	size_string_lst(char **list)
 {
-	t_cmd	*cmd;
+	size_t	size;
 
-	if (!ptr)
-		return ;
-	cmd = (t_cmd *)ptr;
-	if (cmd->mstype != COMMAND_T)
-		return ;
-	destroy_cmtx(cmd->args);
-	destroy_lst_redir(cmd->redirections);
-	free(cmd);
+	if (!list)
+		return (0);
+	size = 0;
+	while (list[size])
+		size++;
+	return (size);
 }

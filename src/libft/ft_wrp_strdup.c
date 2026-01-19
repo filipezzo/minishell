@@ -1,28 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   destroy_string_lst.c                              :+:      :+:    :+:   */
+/*   ft_wrp_strdup.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/05 15:08:17 by mhidani           #+#    #+#             */
-/*   Updated: 2026/01/05 15:09:38 by mhidani          ###   ########.fr       */
+/*   Created: 2026/01/19 11:13:33 by mhidani           #+#    #+#             */
+/*   Updated: 2026/01/19 11:14:35 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-void	destroy_string_lst(char **list)
+void	*ft_wrp_strdup(void *src)
 {
-	size_t	i;
+	char	*str;
 
-	if (!list)
-		return ;
-	i = 0;
-	while (list[i])
-	{
-		free(list[i]);
-		i++;
-	}
-	free(list);
+	if (!src)
+		return (NULL);
+	str = ft_strdup((char *)src);
+	return (str);
 }

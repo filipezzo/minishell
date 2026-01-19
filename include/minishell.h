@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fsousa <fsousa@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/12 09:05:43 by mhidani           #+#    #+#             */
-/*   Updated: 2026/01/16 18:03:04 by fsousa           ###   ########.fr       */
+/*   Updated: 2026/01/19 15:07:21 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 # include <signal.h>
 # include <stdio.h>
 # include <stdlib.h>
+# include <dirent.h>
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <termios.h>
@@ -214,6 +215,7 @@ t_tnode				*parse_command(t_astree *tree, t_bnode **cursor);
 t_tnode				*parse_redir(t_tnode *node, t_bnode **cursor);
 t_tnode				*parse_subshell(t_astree *tree, t_bnode **cursor);
 void				print_string(void *ptr, int fd);
+size_t				strlst_size(char **list);
 void				destroy_string_lst(char **list);
 t_astree			*new_astree(void);
 void				destroy_astree(void *ptr);

@@ -1,27 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   destroy_cmd.c                                      :+:      :+:    :+:   */
+/*   ft_dlst_dup.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/05 15:05:07 by mhidani           #+#    #+#             */
-/*   Updated: 2026/01/19 01:45:03 by mhidani          ###   ########.fr       */
+/*   Created: 2026/01/19 11:08:57 by mhidani           #+#    #+#             */
+/*   Updated: 2026/01/19 11:18:09 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-void	destroy_cmd(void *ptr)
+t_dlist	*ft_dlst_dup(t_dlist *src, void *(dup)(), void (*destroy)())
 {
-	t_cmd	*cmd;
+	t_dlist	*new;
+	t_bnode	*node;
 
-	if (!ptr)
-		return ;
-	cmd = (t_cmd *)ptr;
-	if (cmd->mstype != COMMAND_T)
-		return ;
-	destroy_cmtx(cmd->args);
-	destroy_lst_redir(cmd->redirections);
-	free(cmd);
+	if (!src)
+		return (NULL);
+	new = ft_new_dlist();
+	if (!new)
+		return (NULL);
+	if (src->size == 0)
+		return (new);
+	node = src->head;
+	while (node)
+	{
+		ft_add_nd_dlist(new, dup(node->data), destroy);
+		node = node->right;
+	}
+	return (new);
 }

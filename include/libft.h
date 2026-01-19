@@ -6,7 +6,7 @@
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 20:37:22 by mhidani           #+#    #+#             */
-/*   Updated: 2026/01/12 09:13:15 by mhidani          ###   ########.fr       */
+/*   Updated: 2026/01/19 14:58:31 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,12 @@
 # include <stdarg.h>
 
 typedef char	t_bool;
+
+typedef enum	e_sort
+{
+	ASC_SORT,
+	DESC_SORT,
+}				t_sort;
 
 // Doubly Linked List ----------------------------------------------------------
 typedef struct s_dlist
@@ -83,6 +89,7 @@ void		ft_bzero(void *s, size_t n);
 void		*ft_memcpy(void *dst, const void *src, size_t n);
 void		*ft_memmove(void *dst, const void *src, size_t n);
 void		*ft_memchr(const void *s, int c, size_t n);
+void		ft_swap(void **p1, void **p2);
 int			ft_memcmp(const void *s1, const void *s2, size_t n);
 char		*ft_strdup(const char *src);
 char		*ft_strndup(const char *src, size_t n);
@@ -106,6 +113,8 @@ t_bool		ft_destroy_dlist(void *ptr);
 t_dlist		*ft_add_nd_dlist(t_dlist *list, void *data, t_destroy dst);
 t_dlist		*ft_remove_nd_dlist(t_dlist *list, t_bnode *tgt);
 t_bnode		*ft_findin_dlist(t_dlist *list, void *data, t_bool (*eq)());
+t_dlist		*ft_dlst_dup(t_dlist *src, void *(dup)(), void (*destroy)());
+t_bool		ft_sort_dlist(t_dlist *list, t_sort dir, int (*cmp)());
 t_bool		ft_foreach_dlist(t_dlist *list, void *data, t_foreach_callback cbk);
 
 // Birectional Node ------------------------------------------------------------
@@ -115,5 +124,9 @@ t_bool		ft_destroy_bnode(void *ptr);
 t_bnode		*ft_new_bnode(void *data, void *structure, t_destroy dst);
 t_bool		ft_setdir_bnode(t_bnode *node, t_bnode *left, t_bnode *right);
 t_bool		destroy_bnode(void *ptr);
+
+// Wrappers Classes ------------------------------------------------------------
+void		*ft_wrp_strdup(void *src);
+int			ft_wrp_strcmp(void *s1, void *s2);
 
 #endif

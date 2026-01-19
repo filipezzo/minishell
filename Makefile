@@ -30,6 +30,8 @@ FRONT_PARSR_FILES = parser/parse_command.c parser/parse_and_or.c \
 					parser/parse_redir.c parser/parse_subshell.c
 FRONT_EXPAN_FILES = expand/expand.c expand/expand_dquote.c \
 					expand/expand_simple.c expand/handle_expand.c
+FRONT_WILDC_FILES = wildcard/wildcard.c wildcard/expand_args_at.c \
+					wildcard/match_wildcard.c
 STRUC_ASTRE_FILES = astree/destroy_astree.c astree/get_entry_astree.c \
 					astree/new_astree.c astree/print_astree.c
 STRUC_TNODE_FILES = tnode/destroy_tnode.c tnode/new_tnode.c
@@ -40,7 +42,7 @@ STRUC_REDIR_FILES = redirection/destroy_lst_redir.c \
 STRUC_PROMP_FILES = prompt/destroy_prompt.c prompt/new_prompt.c
 STRUC_COMMD_FILES = command/destroy_cmd.c command/get_cmd.c \
 					command/new_cmd.c command/print_cmd.c command/set_arg_cmd.c
-STRUC_STRIN_FILES = string/destroy_string_lst.c string/print_string.c
+STRUC_STRIN_FILES = string/destroy_cmtx.c string/print_string.c
 BUILTIN_FILES	  = builtin.c builtin_echo.c builtin_pwd.c builtin_env.c \
 					builtin_export.c builtin_unset.c builtin_exit.c \
 					builtin_cd.c
@@ -48,7 +50,7 @@ EXEC_FILES		  = executor.c redirect.c execute_external.c execute_ast.c  \
 					execute_pipeline.c
 HEREDOC_FILES	  = heredoc.c heredoc_fds.c heredoc_prepare.c heredoc_redirect.c
 UTIL_FILES		  = linked_list.c utils_env.c clean.c error.c utils_exec.c \
-					lexel_utils.c
+					lexel_utils.c dlist.c get_names_crrdir.c
 INIT_FILES		  = init_env_list.c init_env.c
 SIGNAL_FILES	  = signals.c signals_heredoc.c
 
@@ -67,6 +69,7 @@ SRCS			  = $(addprefix $(SRC_DIR)/, $(SRC_FILES)) \
 					$(addprefix $(SRC_DIR)/$(FRONT_DIR)/, $(FRONT_SYNTX_FILES))\
 					$(addprefix $(SRC_DIR)/$(FRONT_DIR)/, $(FRONT_PARSR_FILES))\
 					$(addprefix $(SRC_DIR)/$(FRONT_DIR)/, $(FRONT_EXPAN_FILES))\
+					$(addprefix $(SRC_DIR)/$(FRONT_DIR)/, $(FRONT_WILDC_FILES))\
        				$(addprefix $(SRC_DIR)/$(BUILTIN_DIR)/, $(BUILTIN_FILES)) \
 	   				$(addprefix $(SRC_DIR)/$(EXEC_DIR)/, $(EXEC_FILES)) \
 	   				$(addprefix $(SRC_DIR)/$(UTILS_DIR)/, $(UTIL_FILES)) \

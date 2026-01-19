@@ -1,27 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   destroy_cmd.c                                      :+:      :+:    :+:   */
+/*   get_names_crrdir.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/05 15:05:07 by mhidani           #+#    #+#             */
-/*   Updated: 2026/01/19 01:45:03 by mhidani          ###   ########.fr       */
+/*   Created: 2026/01/19 11:20:53 by mhidani           #+#    #+#             */
+/*   Updated: 2026/01/19 11:21:24 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	destroy_cmd(void *ptr)
+t_dlist	*get_names_crrdir(void)
 {
-	t_cmd	*cmd;
+	DIR				*dir;
+	struct dirent	*entry;
+	t_dlist			*names;
 
-	if (!ptr)
-		return ;
-	cmd = (t_cmd *)ptr;
-	if (cmd->mstype != COMMAND_T)
-		return ;
-	destroy_cmtx(cmd->args);
-	destroy_lst_redir(cmd->redirections);
-	free(cmd);
+	dir = opendir(".");
+	if (!dir)
+		return (NULL);
+	names = ft_new_dlist();
+	if (!names)
+	{
+		closedir(dir);
+		return (NULL);
+	}
+	entry = readdir(dir);
+	while (entry)
+	{
+		ft_add_nd_dlist(names, ft_strdup(entry->d_name), free);
+		entry = readdir(dir);
+	}
+	closedir(dir);
+	return (names);
 }
