@@ -6,7 +6,7 @@
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 20:49:41 by mhidani           #+#    #+#             */
-/*   Updated: 2026/01/19 23:56:39 by mhidani          ###   ########.fr       */
+/*   Updated: 2026/01/20 15:04:14 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ t_bool	ft_is_ifs(char *src)
 {
 	if (!src)
 		return (FALSE);
-	return (ft_strchar(src, ' ')
+	return (ft_strchr(src, ' ')
 		|| ft_strchr(src, '\t')
 		|| ft_strchr(src, '\n'));
 }
