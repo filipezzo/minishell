@@ -6,7 +6,7 @@
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/12 09:05:43 by mhidani           #+#    #+#             */
-/*   Updated: 2026/01/19 15:26:01 by mhidani          ###   ########.fr       */
+/*   Updated: 2026/01/19 16:41:42 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -256,5 +256,6 @@ char				**match_wildcard(t_dlist *names, char **args, size_t itgt);
 t_bool				iseq_list_and_cmtx(t_dlist *list, char **mtx);
 char				**convert_lst_to_cmtx(t_dlist *list);
 t_dlist				*convert_cmtx_to_lst(char **cmtx);
+char				*replace_once(char *src, char *old, char *new);
 
 #endif

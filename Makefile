@@ -50,7 +50,7 @@ EXEC_FILES		  = executor.c redirect.c execute_external.c execute_ast.c  \
 					execute_pipeline.c
 HEREDOC_FILES	  = heredoc.c heredoc_fds.c heredoc_prepare.c heredoc_redirect.c
 UTIL_FILES		  = linked_list.c utils_env.c clean.c error.c utils_exec.c \
-					lexel_utils.c dlist.c get_names_crrdir.c
+					lexel_utils.c dlist.c get_names_crrdir.c replace_once.c
 INIT_FILES		  = init_env_list.c init_env.c
 SIGNAL_FILES	  = signals.c signals_heredoc.c
 
