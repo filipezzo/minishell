@@ -5,7 +5,7 @@ static void		expand_values(t_shell *shell, t_tnode *node);
 static t_bool	is_simple_expand(char *src);
 static t_bool	is_dquotes_expand(char *src);
 
-void	expand1(t_shell *shell, t_astree *tree)
+void	expand(t_shell *shell, t_astree *tree)
 {
 	if (!shell || !tree)
 		return ;

@@ -6,7 +6,7 @@
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/12 09:05:43 by mhidani           #+#    #+#             */
-/*   Updated: 2026/01/20 15:10:26 by mhidani          ###   ########.fr       */
+/*   Updated: 2026/01/20 17:39:03 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -244,9 +244,9 @@ t_cmd				*set_arg_cmd(t_cmd *cmd, char *src);
 void				print_cmd(void *ptr, int fd);
 t_prompt			*new_prompt(void);
 void				destroy_prompt(void *ptr);
-void				expand1(t_shell *shell, t_astree *tree);
+void				expand(t_shell *shell, t_astree *tree);
 void				expand_simple(t_shell *shell, t_cmd *cmd, size_t i);
-void	expand_dquotes(t_shell *shell, t_cmd *cmd, size_t i);
+void				expand_dquotes(t_shell *shell, t_cmd *cmd, size_t i);
 char				*find_env(char *src, size_t *idx);
 char				*expand_tilde(void);
 void				wildcard(t_astree *tree);

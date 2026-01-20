@@ -6,7 +6,7 @@
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/11 15:59:06 by fsousa            #+#    #+#             */
-/*   Updated: 2026/01/20 15:06:21 by mhidani          ###   ########.fr       */
+/*   Updated: 2026/01/20 17:39:03 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	main(int argc, char **argv, char **envp)
 			if (syntax_analyze(tokens))
 			{
 				tree = parser(tokens);
-				expand1(&shell, tree);
+				expand(&shell, tree);
 				wildcard(tree);
 				if (tree && tree->root)
 				{
