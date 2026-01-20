@@ -28,8 +28,7 @@ FRONT_SYNTX_FILES = syntax/syntax_analyze.c syntax/syntax_check.c \
 FRONT_PARSR_FILES = parser/parse_command.c parser/parse_and_or.c \
 					parser/parse_pipeline.c parser/parser.c \
 					parser/parse_redir.c parser/parse_subshell.c
-FRONT_EXPAN_FILES = expand/expand.c expand/expand_dquote.c \
-					expand/expand_simple.c expand/handle_expand.c
+FRONT_EXPAN_FILES = expand/expand1.c expand/expand_no_quotes.c
 FRONT_WILDC_FILES = wildcard/wildcard.c wildcard/expand_args_at.c \
 					wildcard/match_wildcard.c
 STRUC_ASTRE_FILES = astree/destroy_astree.c astree/get_entry_astree.c \
@@ -50,7 +49,7 @@ EXEC_FILES		  = executor.c redirect.c execute_external.c execute_ast.c  \
 					execute_pipeline.c
 HEREDOC_FILES	  = heredoc.c heredoc_fds.c heredoc_prepare.c heredoc_redirect.c
 UTIL_FILES		  = linked_list.c utils_env.c clean.c error.c utils_exec.c \
-					lexel_utils.c dlist.c get_names_crrdir.c
+					lexel_utils.c dlist.c get_names_crrdir.c replace_once.c
 INIT_FILES		  = init_env_list.c init_env.c
 SIGNAL_FILES	  = signals.c signals_heredoc.c
 

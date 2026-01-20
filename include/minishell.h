@@ -6,7 +6,7 @@
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/12 09:05:43 by mhidani           #+#    #+#             */
-/*   Updated: 2026/01/19 15:26:01 by mhidani          ###   ########.fr       */
+/*   Updated: 2026/01/20 15:10:26 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -244,11 +244,10 @@ t_cmd				*set_arg_cmd(t_cmd *cmd, char *src);
 void				print_cmd(void *ptr, int fd);
 t_prompt			*new_prompt(void);
 void				destroy_prompt(void *ptr);
-void				expand(t_shell *sh, t_tnode *cursor);
-void				expand_simple(t_shell *sh, char *src, t_cmd *cmd);
-void				expand_dquote(t_shell *sh, t_cmd *cmd, size_t idx);
+void				expand1(t_shell *shell, t_astree *tree);
+void				expand_simple(t_shell *shell, t_cmd *cmd, size_t i);
+void	expand_dquotes(t_shell *shell, t_cmd *cmd, size_t i);
 char				*find_env(char *src, size_t *idx);
-char				*expand_dollar(t_shell *sh, char *env);
 char				*expand_tilde(void);
 void				wildcard(t_astree *tree);
 t_dlist				*expand_args_at(t_dlist *dst, t_dlist *src, size_t itgt);
@@ -256,5 +255,6 @@ char				**match_wildcard(t_dlist *names, char **args, size_t itgt);
 t_bool				iseq_list_and_cmtx(t_dlist *list, char **mtx);
 char				**convert_lst_to_cmtx(t_dlist *list);
 t_dlist				*convert_cmtx_to_lst(char **cmtx);
+char				*replace_once(char *src, char *old, char *new);
 
 #endif
