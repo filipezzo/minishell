@@ -5,7 +5,7 @@ static void		expand_values(t_shell *shell, t_tnode *node);
 static t_bool	is_simple_expand(char *src);
 static t_bool	is_dquotes_expand(char *src);
 
-void	expand(t_shell *shell, t_astree *tree)
+void	expand1(t_shell *shell, t_astree *tree)
 {
 	if (!shell || !tree)
 		return ;
@@ -28,7 +28,7 @@ static void	expand_values(t_shell *shell, t_tnode *node)
 			if (is_simple_expand(cmd->args[i]))
 				expand_simple(shell, cmd, i);
 			else if (is_dquotes_expand(cmd->args[i]))
-				expand_dquote(shell, cmd, i);
+				expand_dquotes(shell, cmd, i);
 			i++;
 		}
 	}
@@ -46,7 +46,7 @@ static t_bool	is_simple_expand(char *src)
 		return (FALSE);
 	if (*src == '$' && *(src + 1) && !ft_is_ifs(src + 1))
 		return (TRUE);
-	if (*src == '~');
+	if (*src == '~')
 		return (TRUE);
 	return (FALSE);
 }
@@ -59,8 +59,6 @@ static t_bool	is_dquotes_expand(char *src)
 		return (FALSE);
 	i = ft_strlen(src) - 1;
 	if (*src == '\'' && *(src + i) == '\'')
-		return (FALSE);
-	if (ft_is_ifs(src))
 		return (FALSE);
 	if (*src == '\"' && *(src + i) == '\"' && ft_strchr(src, '$'))
 		return (TRUE);
