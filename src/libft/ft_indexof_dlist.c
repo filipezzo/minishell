@@ -6,14 +6,14 @@
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 22:31:00 by mhidani           #+#    #+#             */
-/*   Updated: 2026/01/20 01:44:33 by mhidani          ###   ########.fr       */
+/*   Updated: 2026/01/20 15:05:52 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static t_bnode	*travel_back(t_bnode **node, size_t size, size_t idx);
-static t_bnode	*travel_front(t_bnode **node, size_t size, size_t idx);
+static void	travel_back(t_bnode **node, size_t size, size_t idx);
+static void	travel_front(t_bnode **node, size_t idx);
 
 t_bnode	*ft_indexof_dlist(t_dlist *list, size_t idx)
 {
@@ -29,12 +29,12 @@ t_bnode	*ft_indexof_dlist(t_dlist *list, size_t idx)
 	else
 	{
 		node = list->head;
-		travel_front(&node, list->size, idx);
+		travel_front(&node, idx);
 	}
 	return (node);
 }
 
-static t_bnode	*travel_back(t_bnode **node, size_t size, size_t idx)
+static void	travel_back(t_bnode **node, size_t size, size_t idx)
 {
 	size_t	i;
 
@@ -46,7 +46,7 @@ static t_bnode	*travel_back(t_bnode **node, size_t size, size_t idx)
 	}
 }
 
-static t_bnode	*travel_front(t_bnode **node, size_t size, size_t idx)
+static void	travel_front(t_bnode **node, size_t idx)
 {
 	size_t	i;
 
