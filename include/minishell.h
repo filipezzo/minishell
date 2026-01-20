@@ -6,7 +6,7 @@
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/12 09:05:43 by mhidani           #+#    #+#             */
-/*   Updated: 2026/01/20 17:39:03 by mhidani          ###   ########.fr       */
+/*   Updated: 2026/01/20 17:44:05 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -247,6 +247,7 @@ void				destroy_prompt(void *ptr);
 void				expand(t_shell *shell, t_astree *tree);
 void				expand_simple(t_shell *shell, t_cmd *cmd, size_t i);
 void				expand_dquotes(t_shell *shell, t_cmd *cmd, size_t i);
+void				minilexer_expand(t_dlist *tokens, char *src);
 char				*find_env(char *src, size_t *idx);
 char				*expand_tilde(void);
 void				wildcard(t_astree *tree);
