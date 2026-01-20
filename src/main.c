@@ -6,7 +6,7 @@
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/11 15:59:06 by fsousa            #+#    #+#             */
-/*   Updated: 2026/01/20 17:39:03 by mhidani          ###   ########.fr       */
+/*   Updated: 2026/01/20 17:40:40 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,16 +32,14 @@ int	main(int argc, char **argv, char **envp)
 	lexer_conf = init_lexer_config();
 	while (1)
 	{
+		input = readline("minishell$ ");
 		if (g_signal_status != 0)
 		{
 			shell.exit_status = g_signal_status;
 			g_signal_status = 0;
 		}
-		input = readline("minishell$ ");
 		if (!input)
 		{
-			if (g_signal_status == 130)
-				continue ;
 			printf("exit\n");
 			break ;
 		}
