@@ -6,7 +6,7 @@
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 20:37:22 by mhidani           #+#    #+#             */
-/*   Updated: 2026/01/19 14:58:31 by mhidani          ###   ########.fr       */
+/*   Updated: 2026/01/19 23:18:17 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ t_bool		ft_isspace(int c);
 t_bool		ft_toupper(int c);
 t_bool		ft_tolower(int c);
 t_bool		ft_isnumeric(char *str);
+t_bool		ft_is_ifs(char *src);
 
 // Manipulate Strings ----------------------------------------------------------
 size_t		ft_strlen(const char *s);
@@ -113,6 +114,7 @@ t_bool		ft_destroy_dlist(void *ptr);
 t_dlist		*ft_add_nd_dlist(t_dlist *list, void *data, t_destroy dst);
 t_dlist		*ft_remove_nd_dlist(t_dlist *list, t_bnode *tgt);
 t_bnode		*ft_findin_dlist(t_dlist *list, void *data, t_bool (*eq)());
+t_bnode		*ft_indexof_dlist(t_dlist *list, size_t idx);
 t_dlist		*ft_dlst_dup(t_dlist *src, void *(dup)(), void (*destroy)());
 t_bool		ft_sort_dlist(t_dlist *list, t_sort dir, int (*cmp)());
 t_bool		ft_foreach_dlist(t_dlist *list, void *data, t_foreach_callback cbk);
