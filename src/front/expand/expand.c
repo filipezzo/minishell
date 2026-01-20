@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fsousa <fsousa@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 14:59:01 by mhidani           #+#    #+#             */
-/*   Updated: 2026/01/16 15:10:01 by fsousa           ###   ########.fr       */
+/*   Updated: 2026/01/19 15:39:23 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ static void	expand_dissolution(t_shell *sh, t_tnode *node)
 
 static t_bool	is_simple_expand(char *src)
 {
-	t_bool	check_next;
 	char	*next;
 
 	if (!src)
@@ -57,8 +56,9 @@ static t_bool	is_simple_expand(char *src)
 	if (ft_strchr(src, ' ') || ft_strchr(src, '\t') || ft_strchr(src, '\n'))
 		return (FALSE);
 	next = (src + 1);
-	check_next = (*next != ' ' || *next != '\t' || *next != '\n');
-	if ((*src == '$' && *next && check_next) || *src == '~')
+	if (*src == '$' && *next && *next != ' ' && *next != '\t' && *next != '\n')
+		return (TRUE);
+	if (*src == '~')
 		return (TRUE);
 	return (FALSE);
 }

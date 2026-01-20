@@ -6,7 +6,7 @@
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 17:12:39 by mhidani           #+#    #+#             */
-/*   Updated: 2026/01/19 01:45:03 by mhidani          ###   ########.fr       */
+/*   Updated: 2026/01/19 17:05:40 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,25 +21,49 @@ void	expand_simple(t_shell *sh, char *src, t_cmd *cmd)
 {
 	char	*env;
 	char	*value;
+	char	*expanded;
 	char	**splited;
 	size_t	i;
 	size_t	pos;
 
 	if (!sh || !src || !cmd)
 		return ;
-	i = 0;
-	env = find_env(src, &i);
-	if (*env == '$')
-		value = expand_dollar(sh, env);
-	else if (*env == '~')
-		value = expand_tilde();
-	else
+	expanded = ft_strdup(src);
+	if (!expanded)
 		return ;
-	splited = ft_split(value, ' ');
+	i = 0;
+	while (expanded[i])
+	{
+		env = find_env(expanded, &i);
+		if (!env)
+			continue ;
+		if (*env == '$')
+			value = expand_dollar(sh, env);
+		else if (*env == '~')
+			value = expand_tilde();
+		else
+		{
+			free(env);
+			continue ;
+		}
+		if (!value)
+		{
+			free(env);
+			continue ;
+		}
+		char *temp = replace_once(expanded, env, value);
+		free(expanded);
+		expanded = temp;
+		free(env);
+		free(value);
+		i = 0;
+	}
+	splited = ft_split(expanded, ' ');
+	free(expanded);
+	if (!splited)
+		return ;
 	pos = args_pos(cmd->args, src);
 	realloc_args_in(cmd, pos, splited);
-	free(env);
-	free(value);
 	destroy_cmtx(splited);
 }
 
@@ -93,12 +117,13 @@ static void	realloc_args_in(t_cmd *cmd, size_t idx, char **splited)
 		cmd->args[idx] = ft_strdup(splited[0]);
 		return ;
 	}
-	new = ft_calloc(old_size + extra_size + 1, sizeof(char *));
+	new = ft_calloc(old_size + extra_size, sizeof(char *));
 	if (!new)
 		return ;
 	move_items(new, cmd->args, 0, idx);
-	move_items(new, splited, idx, idx + extra_size);
-	move_items(new, cmd->args, idx + extra_size, old_size + extra_size);
+	move_items(new, splited, idx, extra_size);
+	move_items(new, cmd->args + idx + 1, idx + extra_size,
+		old_size + extra_size - 1);
 	destroy_cmtx(cmd->args);
 	cmd->args = new;
 }
