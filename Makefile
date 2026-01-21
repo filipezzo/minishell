@@ -28,7 +28,8 @@ FRONT_SYNTX_FILES = syntax/syntax_analyze.c syntax/syntax_check.c \
 FRONT_PARSR_FILES = parser/parse_command.c parser/parse_and_or.c \
 					parser/parse_pipeline.c parser/parser.c \
 					parser/parse_redir.c parser/parse_subshell.c
-FRONT_EXPAN_FILES = expand/expand1.c expand/expand_no_quotes.c
+FRONT_EXPAN_FILES = expand/expand.c expand/handle_expand.c \
+					expand/minilex_expand.c expand/sanitize_quotes.c
 FRONT_WILDC_FILES = wildcard/wildcard.c wildcard/expand_args_at.c \
 					wildcard/match_wildcard.c
 STRUC_ASTRE_FILES = astree/destroy_astree.c astree/get_entry_astree.c \
@@ -113,7 +114,7 @@ re: fclean all
 
 valgrind: $(EXEC)
 	@echo "\033[1;36m[VALGRIND]\033[0m Executando análise de memória...\n"
-	valgrind -q --suppressions=readline.sup --track-fds=yes \
+	valgrind -s --suppressions=readline.supp --track-fds=yes \
 		--leak-check=full --show-leak-kinds=all ./$(EXEC)
 
 .PHONY: all clean fclean re valgrind

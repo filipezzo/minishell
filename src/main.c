@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fsousa <fsousa@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/11 15:59:06 by fsousa            #+#    #+#             */
-/*   Updated: 2026/01/20 17:12:44 by fsousa           ###   ########.fr       */
+/*   Updated: 2026/01/21 15:43:43 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,9 @@ int	main(int argc, char **argv, char **envp)
 			if (syntax_analyze(tokens))
 			{
 				tree = parser(tokens);
-				expand1(&shell, tree);
+				expand(&shell, tree);
 				wildcard(tree);
+				sanitize_quotes(tree);
 				if (tree && tree->root)
 				{
 					run_ast(&shell, tree->root);
