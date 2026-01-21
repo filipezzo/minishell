@@ -6,7 +6,7 @@
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/12 09:05:43 by mhidani           #+#    #+#             */
-/*   Updated: 2026/01/21 15:42:46 by mhidani          ###   ########.fr       */
+/*   Updated: 2026/01/21 19:01:26 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,10 +109,8 @@ typedef struct s_prompt
 {
 	char			*user;
 	char			*host;
-	char			*home;
 	char			*dir;
-	char			*type;
-	char			*display;
+	char			*utype;
 }					t_prompt;
 
 typedef struct s_shell
@@ -192,12 +190,11 @@ int					apply_redirect(t_cmd *cmd);
 char				*find_command_path(t_shell *shell, char *cmd);
 t_bool				lex_isjump(char c);
 t_dlist				*get_names_crrdir(void);
-char				*build_prompt(t_prompt *prompt);
-char				*build_user_pmt(char **crr);
-char				*build_host_pmt(char **crr);
-char				*build_home_pmt(char **crr);
-char				*build_dir_pmt(char *home, char **crr);
-char				*build_type_pmt(char *user, char **crr);
+char				*build_prompt(void);
+char				*build_prompt_user(void);
+char				*build_prompt_host(void);
+char				*build_prompt_dir(void);
+char				*build_prompt_utype(void);
 t_dlist				*lexer(char *in, t_lexsig **siglexer);
 t_lexsig			**init_lexer_config(void);
 void				free_lexer_config(t_lexsig **sigs);
@@ -242,7 +239,6 @@ void				destroy_cmd(void *ptr);
 t_cmd				*get_cmd(void *ptr);
 t_cmd				*set_arg_cmd(t_cmd *cmd, char *src);
 void				print_cmd(void *ptr, int fd);
-t_prompt			*new_prompt(void);
 void				destroy_prompt(void *ptr);
 void				expand(t_shell *shell, t_astree *tree);
 void				expand_simple(t_shell *shell, t_cmd *cmd, size_t i);

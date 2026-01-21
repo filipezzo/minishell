@@ -5,55 +5,69 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/24 12:27:31 by mhidani           #+#    #+#             */
-/*   Updated: 2026/01/12 09:58:14 by mhidani          ###   ########.fr       */
+/*   Created: 2026/01/21 17:37:56 by mhidani           #+#    #+#             */
+/*   Updated: 2026/01/21 20:06:25 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static t_bool	is_unknown(char *target, char **list, size_t size);
+static t_bool	is_valid_prompt(t_prompt *prompt);
+static char		*alloc_all_prompt(t_prompt *prompt);
 
-char	*build_prompt(t_prompt *prompt)
+char	*build_prompt(void)
 {
-	char	*user;
-	char	*host;
-	char	*home;
-	char	*dir;
-	char	*type;
+	t_prompt	prompt;
+	char		*res;
 
-	if (!prompt)
+	prompt.user = build_prompt_user();
+	prompt.host = build_prompt_host();
+	prompt.dir = build_prompt_dir();
+	prompt.utype = build_prompt_utype();
+	if (!is_valid_prompt(&prompt))
 	{
-		prompt = malloc(sizeof(t_prompt));
-		if (!prompt)
-			return ("minishell$ ");
+		destroy_prompt(&prompt);
+		return (ft_strdup("minishell$ "));
 	}
-	user = build_user_pmt(&prompt->user);
-	host = build_host_pmt(&prompt->host);
-	home = build_home_pmt(&prompt->home);
-	dir = build_dir_pmt(prompt->home, &prompt->dir);
-	type = build_type_pmt(prompt->user, &prompt->type);
-	if (is_unknown("unknown", (char *[]){user, host, home}, 3))
-		return (ft_strdup("minishell$ "));
-	else if (is_unknown("?", (char *[]){dir, type}, 2))
-		return (ft_strdup("minishell$ "));
-	free(prompt->display);
-	prompt->display = ft_strcat(7, user, "@", host, ":", dir, type, " ");
-	return (prompt->display);
+	res = alloc_all_prompt(&prompt);
+	destroy_prompt(&prompt);
+	return (res);
 }
 
-static t_bool	is_unknown(char *target, char **list, size_t size)
+static t_bool	is_valid_prompt(t_prompt *prompt)
 {
-	size_t	target_sz;
-	size_t	i;
+	if (ft_strncmp(prompt->user, "unknown", 7) == 0)
+		return (FALSE);
+	if (ft_strncmp(prompt->host, "unknown", 7) == 0)
+		return (FALSE);
+	if (ft_strncmp(prompt->dir, "?", 1) == 0)
+		return (FALSE);
+	if (ft_strncmp(prompt->utype, "?", 1) == 0)
+		return (FALSE);
+	return (TRUE);
+}
 
-	target_sz = ft_strlen(target);
-	i = 0;
-	while (i < size)
-	{
-		if (ft_strncmp(list[i], target, target_sz) == 0)
-			return (TRUE);
-		i++;
-	}
-	return (FALSE);
+static char	*alloc_all_prompt(t_prompt *prompt)
+{
+	size_t	user;
+	size_t	host;
+	size_t	dir;
+	size_t	utype;
+	char	*res;
+
+	user = ft_strlen(prompt->user);
+	host = ft_strlen(prompt->host);
+	dir = ft_strlen(prompt->dir);
+	utype = ft_strlen(prompt->utype);
+	res = ft_calloc(user + host + dir + utype + 4, sizeof(char));
+	if (!res)
+		return (ft_strdup("minishell$ "));
+	ft_memmove(res, prompt->user, user);
+	res[user] = '@';
+	ft_memmove(res + user + 1, prompt->host, host);
+	res[user + host + 1] = ':';
+	ft_memmove(res + user + host + 2, prompt->dir, dir);
+	ft_memmove(res + user + host + dir + 2, prompt->utype, utype);
+	res[user + host + dir + utype + 2] = ' ';
+	return (res);
 }

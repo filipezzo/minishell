@@ -6,7 +6,7 @@
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/11 15:59:06 by fsousa            #+#    #+#             */
-/*   Updated: 2026/01/21 15:43:43 by mhidani          ###   ########.fr       */
+/*   Updated: 2026/01/21 19:02:16 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ int	main(int argc, char **argv, char **envp)
 	t_lexsig	**lexer_conf;
 	t_dlist		*tokens;
 	t_astree	*tree;
+	char		*prompt;
 	char		*input;
 
 	(void)argc;
@@ -32,7 +33,9 @@ int	main(int argc, char **argv, char **envp)
 	lexer_conf = init_lexer_config();
 	while (1)
 	{
-		input = readline("minishell$ ");
+		prompt = build_prompt();
+		input = readline(prompt);
+		free(prompt);
 		if (g_signal_status != 0)
 		{
 			shell.exit_status = g_signal_status;

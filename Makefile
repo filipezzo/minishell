@@ -1,3 +1,15 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2026/01/21 16:23:40 by mhidani           #+#    #+#              #
+#    Updated: 2026/01/21 19:01:45 by mhidani          ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 NAME			  = minishell
 
 SRC_DIR			  = src
@@ -17,11 +29,16 @@ SIGNAL_DIR		  = signals
 HEREDOC_DIR		  = heredoc
 EXEC			  = $(BIN_DIR)/$(NAME)
 
+# TODO: refact
+READLINE_DIR		= readline
+LEXER_DIR			= lexer
+PARSER_DIR			= parser
+EXPANDER_DIR		= expander
+WILDCARD_DIR		= wildcard
+
 SRC_FILES		  = main.c
 
-FRONT_READL_FILES = readline/build_dir_pmt.c readline/build_home_pmt.c \
-					readline/build_host_pmt.c readline/build_prompt.c \
-					readline/build_type_pmt.c readline/build_user_pmt.c
+FRONT_READL_FILES = readline/solve_prompt.c readline/build_prompt.c
 FRONT_LEXER_FILES = lexer/lexer.c lexer/config_lexer.c
 FRONT_SYNTX_FILES = syntax/syntax_analyze.c syntax/syntax_check.c \
 					syntax/syntax_check_redir.c syntax/syntax_error_msg.c
@@ -39,7 +56,7 @@ STRUC_LEXTK_FILES = lextoken/destroy_lextoken.c lextoken/get_lextoken.c \
 					lextoken/new_lextoken.c lextoken/next_lextoken.c
 STRUC_REDIR_FILES = redirection/destroy_lst_redir.c \
 					redirection/destroy_redir.c redirection/new_redir.c
-STRUC_PROMP_FILES = prompt/destroy_prompt.c prompt/new_prompt.c
+STRUC_PROMP_FILES = prompt/destroy_prompt.c
 STRUC_COMMD_FILES = command/destroy_cmd.c command/get_cmd.c \
 					command/new_cmd.c command/print_cmd.c command/set_arg_cmd.c
 STRUC_STRIN_FILES = string/destroy_cmtx.c string/print_string.c
