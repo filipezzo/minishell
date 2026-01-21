@@ -6,7 +6,7 @@
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/11 15:59:06 by fsousa            #+#    #+#             */
-/*   Updated: 2026/01/20 17:40:40 by mhidani          ###   ########.fr       */
+/*   Updated: 2026/01/21 15:43:43 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ int	main(int argc, char **argv, char **envp)
 				tree = parser(tokens);
 				expand(&shell, tree);
 				wildcard(tree);
+				sanitize_quotes(tree);
 				if (tree && tree->root)
 				{
 					run_ast(&shell, tree->root);
