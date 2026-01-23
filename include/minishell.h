@@ -6,7 +6,7 @@
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/12 09:05:43 by mhidani           #+#    #+#             */
-/*   Updated: 2026/01/21 19:01:26 by mhidani          ###   ########.fr       */
+/*   Updated: 2026/01/23 17:42:15 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,22 +113,13 @@ typedef struct s_prompt
 	char			*utype;
 }					t_prompt;
 
-typedef struct s_shell
-{
-	int				exit_status;
-	t_env			*env_list;
-	t_cmd			*cmd_list;
-	int				saved_stdin;
-	int				saved_stdout;
-	pid_t			last_pid;
-}					t_shell;
-
-typedef struct s_astree
+typedef struct s_lexconfig
 {
 	t_mstype		mstype;
-	struct s_tnode	*root;
-	struct s_tnode	*entry;
-}					t_astree;
+	t_type			type;
+	char			*sign;
+	size_t			size;
+}					t_lexconfig;
 
 typedef struct s_lextoken
 {
@@ -137,13 +128,12 @@ typedef struct s_lextoken
 	char			*content;
 }					t_lextoken;
 
-typedef struct s_lexsig
+typedef struct s_astree
 {
 	t_mstype		mstype;
-	t_type			type;
-	char			*sign;
-	size_t			size;
-}					t_lexsig;
+	struct s_tnode	*root;
+	struct s_tnode	*entry;
+}					t_astree;
 
 typedef struct s_tnode
 {
@@ -157,6 +147,17 @@ typedef struct s_tnode
 	void			(*destroy)(void *data);
 	void			(*print)(void *data, int fd);
 }					t_tnode;
+
+typedef struct s_shell
+{
+	int				exit_status;
+	t_env			*env_list;
+	t_cmd			*cmd_list;
+	int				saved_stdin;
+	int				saved_stdout;
+	pid_t			last_pid;
+	t_lexconfig		**lexconfig;
+}					t_shell;
 
 char				**env_list_to_array(t_env *env_list);
 void				init_env(t_shell *shell, char **envp);
@@ -195,9 +196,9 @@ char				*build_prompt_user(void);
 char				*build_prompt_host(void);
 char				*build_prompt_dir(void);
 char				*build_prompt_utype(void);
-t_dlist				*lexer(char *in, t_lexsig **siglexer);
-t_lexsig			**init_lexer_config(void);
-void				free_lexer_config(t_lexsig **sigs);
+t_dlist				*lexer(char *in, t_lexconfig **siglexer);
+t_lexconfig			**init_lexer_config(void);
+void				free_lexer_config(t_lexconfig **sigs);
 t_bool				syntax_analyze(t_dlist *tokens);
 t_bool				syntax_check_lside(t_dlist *tokens, t_type type);
 t_bool				syntax_check_adjacency(t_dlist *tokens, t_type type);

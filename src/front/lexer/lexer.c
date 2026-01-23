@@ -6,7 +6,7 @@
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/28 18:43:44 by mhidani           #+#    #+#             */
-/*   Updated: 2026/01/14 12:45:12 by mhidani          ###   ########.fr       */
+/*   Updated: 2026/01/23 13:08:56 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 static t_bool	lex_squote(char **str, t_lextoken **unit);
 static t_bool	lex_dquote(char **str, t_lextoken **unit);
-static t_bool	lex_signs(char **str, t_lexsig **lexsig, t_lextoken **unit);
+static t_bool	lex_signs(char **str, t_lexconfig **lexsig, t_lextoken **unit);
 static t_bool	lex_word(char **str, t_lextoken **unit);
 
-t_dlist	*lexer(char *in, t_lexsig **lexsig)
+t_dlist	*lexer(char *in, t_lexconfig **lexsig)
 {
 	t_dlist		*list;
 	t_lextoken	*unit;
@@ -95,7 +95,7 @@ static t_bool	lex_dquote(char **str, t_lextoken **unit)
 	return (TRUE);
 }
 
-static t_bool	lex_signs(char **str, t_lexsig **lexsig, t_lextoken **unit)
+static t_bool	lex_signs(char **str, t_lexconfig **lexsig, t_lextoken **unit)
 {
 	size_t	i;
 	char	*content;

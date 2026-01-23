@@ -6,17 +6,17 @@
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/11 13:47:15 by fsousa            #+#    #+#             */
-/*   Updated: 2026/01/12 09:27:49 by mhidani          ###   ########.fr       */
+/*   Updated: 2026/01/23 13:08:56 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static t_lexsig	*create_sig(t_type type, char *str)
+static t_lexconfig	*create_sig(t_type type, char *str)
 {
-	t_lexsig	*sig;
+	t_lexconfig	*sig;
 
-	sig = malloc(sizeof(t_lexsig));
+	sig = malloc(sizeof(t_lexconfig));
 	if (!sig)
 		return (NULL);
 	sig->mstype = LEXSIG_T;
@@ -27,12 +27,12 @@ static t_lexsig	*create_sig(t_type type, char *str)
 	return (sig);
 }
 
-t_lexsig	**init_lexer_config(void)
+t_lexconfig	**init_lexer_config(void)
 {
-	t_lexsig	**sigs;
+	t_lexconfig	**sigs;
 	size_t		i;
 
-	sigs = ft_calloc(12, sizeof(t_lexsig *));
+	sigs = ft_calloc(12, sizeof(t_lexconfig *));
 	if (!sigs)
 		return (NULL);
 	i = 0;
@@ -50,7 +50,7 @@ t_lexsig	**init_lexer_config(void)
 	return (sigs);
 }
 
-void	free_lexer_config(t_lexsig **sigs)
+void	free_lexer_config(t_lexconfig **sigs)
 {
 	int	i;
 
