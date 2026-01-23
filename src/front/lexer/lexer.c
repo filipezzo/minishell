@@ -6,7 +6,7 @@
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/28 18:43:44 by mhidani           #+#    #+#             */
-/*   Updated: 2026/01/23 13:08:56 by mhidani          ###   ########.fr       */
+/*   Updated: 2026/01/23 18:35:09 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static t_bool	lex_squote(char **str, t_lextoken **unit)
 	while (**str && **str != '\'')
 		(*str)++;
 	if (**str != '\'')
-		return (pms_err("unexpected EOF while looking for matching \'", FALSE));
+		return (perr_ms("unexpected EOF while looking for matching \'", FALSE));
 	content = ft_strndup(start, *str - start + 1);
 	if (!content)
 		return (FALSE);
@@ -85,7 +85,7 @@ static t_bool	lex_dquote(char **str, t_lextoken **unit)
 		(*str)++;
 	}
 	if (**str != '\"')
-		return (pms_err("unexpected EOF while looking for matching \"", FALSE));
+		return (perr_ms("unexpected EOF while looking for matching \"", FALSE));
 	content = ft_strndup(start, *str - start + 1);
 	if (!content)
 		return (FALSE);
@@ -130,7 +130,7 @@ static t_bool	lex_word(char **str, t_lextoken **unit)
 	if (!*str || !**str)
 		return (FALSE);
 	start = *str;
-	while (**str && !lex_isjump(**str))
+	while (**str && !lex_is_jump(**str))
 		(*str)++;
 	if ((*str - start) == 0)
 		return (FALSE);

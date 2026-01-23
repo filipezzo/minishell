@@ -6,7 +6,7 @@
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/28 16:43:15 by mhidani           #+#    #+#             */
-/*   Updated: 2026/01/06 00:42:14 by mhidani          ###   ########.fr       */
+/*   Updated: 2026/01/23 18:05:58 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ t_bool	syntax_check_redir(t_dlist *tokens)
 		if (is_redirection(type))
 		{
 			if (!pivot->right)
-				return (syntax_err_smsg("unexpected newline"));
+				return (perr_ms("unexpected newline", FALSE));
 			if (!has_target(((t_lextoken *)pivot->right->data)->type))
-				return (syntax_err_smsg("unexpected token after redirection"));
+				return (perr_ms("unexpected token after redirection", FALSE));
 		}
 		pivot = pivot->right;
 	}
