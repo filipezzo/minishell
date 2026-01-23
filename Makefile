@@ -6,7 +6,7 @@
 #    By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/01/21 16:23:40 by mhidani           #+#    #+#              #
-#    Updated: 2026/01/23 17:48:46 by mhidani          ###   ########.fr        #
+#    Updated: 2026/01/23 20:38:46 by mhidani          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,17 +29,11 @@ SIGNAL_DIR		  = signals
 HEREDOC_DIR		  = heredoc
 EXEC			  = $(BIN_DIR)/$(NAME)
 
-# TODO: refact
-READLINE_DIR		= readline
-LEXER_DIR			= lexer
-PARSER_DIR			= parser
-EXPANDER_DIR		= expander
-WILDCARD_DIR		= wildcard
-
 SRC_FILES		  = main.c start_minishell.c
 FRONTEND_FILES	  = handle_input.c
-FRONT_READL_FILES = readline/solve_prompt.c readline/build_prompt.c
-FRONT_LEXER_FILES = lexer/lexer.c lexer/config_lexer.c
+FRONT_PROMP_FILES = prompt/solve_prompt.c prompt/build_prompt.c \
+					prompt/destroy_prompt.c
+FRONT_LEXER_FILES = lexer/lexer.c lexer/config_lexer.c lexer/lex_is_jump.c
 FRONT_SYNTX_FILES = syntax/syntax_analyze.c syntax/syntax_check.c \
 					syntax/syntax_check_redir.c syntax/syntax_error_msg.c
 FRONT_PARSR_FILES = parser/parse_command.c parser/parse_and_or.c \
@@ -57,11 +51,10 @@ STRUC_LEXTK_FILES = lextoken/destroy_lextoken.c lextoken/get_lextoken.c \
 					lextoken/new_lextoken.c lextoken/next_lextoken.c
 STRUC_REDIR_FILES = redirection/destroy_lst_redir.c \
 					redirection/destroy_redir.c redirection/new_redir.c
-STRUC_PROMP_FILES = prompt/destroy_prompt.c
 STRUC_COMMD_FILES = command/destroy_cmd.c command/get_cmd.c \
 					command/new_cmd.c command/print_cmd.c command/set_arg_cmd.c
 STRUC_STRIN_FILES = string/destroy_cmtx.c string/print_string.c
-STRUC_SHELL_FILES = shell/shell.c
+STRUC_SHELL_FILES = shell/init_shell.c
 BUILTIN_FILES	  = builtin.c builtin_echo.c builtin_pwd.c builtin_env.c \
 					builtin_export.c builtin_unset.c builtin_exit.c \
 					builtin_cd.c
@@ -69,7 +62,7 @@ EXEC_FILES		  = executor.c redirect.c execute_external.c execute_ast.c  \
 					execute_pipeline.c
 HEREDOC_FILES	  = heredoc.c heredoc_fds.c heredoc_prepare.c heredoc_redirect.c
 UTIL_FILES		  = linked_list.c utils_env.c clean.c error.c utils_exec.c \
-					lexel_utils.c dlist.c get_names_crrdir.c replace_once.c
+					dlist.c get_names_crrdir.c
 INIT_FILES		  = init_env_list.c init_env.c
 SIGNAL_FILES	  = signals.c signals_heredoc.c
 
@@ -80,12 +73,11 @@ SRCS			  = $(addprefix $(SRC_DIR)/, $(SRC_FILES)) \
 					$(addprefix $(SRC_DIR)/$(STRUC_DIR)/, $(STRUC_TNODE_FILES))\
 					$(addprefix $(SRC_DIR)/$(STRUC_DIR)/, $(STRUC_LEXTK_FILES))\
 					$(addprefix $(SRC_DIR)/$(STRUC_DIR)/, $(STRUC_REDIR_FILES))\
-					$(addprefix $(SRC_DIR)/$(STRUC_DIR)/, $(STRUC_PROMP_FILES))\
 					$(addprefix $(SRC_DIR)/$(STRUC_DIR)/, $(STRUC_COMMD_FILES))\
 					$(addprefix $(SRC_DIR)/$(STRUC_DIR)/, $(STRUC_STRIN_FILES))\
 					$(addprefix $(SRC_DIR)/$(STRUC_DIR)/, $(STRUC_SHELL_FILES))\
 					$(addprefix $(SRC_DIR)/$(FRONT_DIR)/, $(FRONTEND_FILES)) \
-	   				$(addprefix $(SRC_DIR)/$(FRONT_DIR)/, $(FRONT_READL_FILES))\
+	   				$(addprefix $(SRC_DIR)/$(FRONT_DIR)/, $(FRONT_PROMP_FILES))\
 					$(addprefix $(SRC_DIR)/$(FRONT_DIR)/, $(FRONT_LEXER_FILES))\
 					$(addprefix $(SRC_DIR)/$(FRONT_DIR)/, $(FRONT_SYNTX_FILES))\
 					$(addprefix $(SRC_DIR)/$(FRONT_DIR)/, $(FRONT_PARSR_FILES))\
