@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fsousa <fsousa@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 17:47:44 by fsousa            #+#    #+#             */
-/*   Updated: 2025/12/20 15:43:36 by fsousa           ###   ########.fr       */
+/*   Updated: 2026/01/23 14:34:35 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void	free_shell(t_shell *shell)
 		free(shell->cmd_list);
 		shell->cmd_list = tmp;
 	}
+	free_lexer_config(shell->lexconfig);
 	rl_clear_history();
 }
 
