@@ -6,7 +6,7 @@
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/16 18:40:01 by mhidani           #+#    #+#             */
-/*   Updated: 2026/01/16 19:42:01 by mhidani          ###   ########.fr       */
+/*   Updated: 2026/01/23 17:36:05 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ static char	**convert(t_dlist *lst);
 
 char	**join_res_wildcard(t_dlist *list, char **strs, size_t i_arg)
 {
-    char	**new;
+	char	**new;
 	t_dlist	*aux;
-	
+
 	if (!list || !strs)
 		return (NULL);
 	aux = ft_new_dlist();
