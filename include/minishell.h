@@ -257,5 +257,7 @@ t_dlist				*convert_cmtx_to_lst(char **cmtx);
 char				*replace_once(char *src, char *old, char *new);
 void				init_shell(t_shell *shell, char **envp);
 void				assignment(t_tnode *node);
+t_astree			*handle_input(t_shell *shell, char *input);
+void				start_minishell(t_shell *shell, char **envp);
 
 #endif
