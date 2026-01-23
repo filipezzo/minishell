@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexel_utils.c                                      :+:      :+:    :+:   */
+/*   lex_is_jump.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fsousa <fsousa@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/20 15:43:22 by fsousa            #+#    #+#             */
-/*   Updated: 2025/12/20 15:43:52 by fsousa           ###   ########.fr       */
+/*   Updated: 2026/01/23 18:36:08 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_bool	lex_isjump(char c)
+t_bool	lex_is_jump(char c)
 {
 	char	*signs;
 	size_t	i;
