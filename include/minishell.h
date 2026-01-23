@@ -254,5 +254,7 @@ t_bool				iseq_list_and_cmtx(t_dlist *list, char **mtx);
 char				**convert_lst_to_cmtx(t_dlist *list);
 t_dlist				*convert_cmtx_to_lst(char **cmtx);
 char				*replace_once(char *src, char *old, char *new);
+void				init_shell(t_shell *shell, char **envp);
+void				assignment(t_tnode *node);
 
 #endif
