@@ -6,7 +6,7 @@
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 20:37:22 by mhidani           #+#    #+#             */
-/*   Updated: 2026/01/20 15:26:17 by mhidani          ###   ########.fr       */
+/*   Updated: 2026/01/23 17:51:36 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,13 @@
 # include <stdlib.h>
 # include <stdarg.h>
 
-typedef char	t_bool;
-
-typedef enum	e_sort
+typedef enum e_sort
 {
 	ASC_SORT,
 	DESC_SORT,
 }				t_sort;
+
+typedef char	t_bool;
 
 // Doubly Linked List ----------------------------------------------------------
 typedef struct s_dlist
@@ -70,7 +70,7 @@ t_bool		ft_is_ifs(char *src);
 size_t		ft_strlen(const char *s);
 size_t		ft_strlcpy(char *dst, const char *src, size_t dst_size);
 char		*ft_strcat(size_t elements, char *s1, ...);
-char    	*ft_strcatt(char *s1, char *s2);
+char		*ft_strcatt(char *s1, char *s2);
 size_t		ft_strlcat(char *dst, const char *src, size_t dsize);
 char		*ft_strchr(const char *s, int c);
 char		*ft_strrchr(const char *s, int c);
