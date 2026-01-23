@@ -6,7 +6,7 @@
 #    By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/01/21 16:23:40 by mhidani           #+#    #+#              #
-#    Updated: 2026/01/21 19:01:45 by mhidani          ###   ########.fr        #
+#    Updated: 2026/01/23 17:48:46 by mhidani          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,8 +36,8 @@ PARSER_DIR			= parser
 EXPANDER_DIR		= expander
 WILDCARD_DIR		= wildcard
 
-SRC_FILES		  = main.c
-
+SRC_FILES		  = main.c start_minishell.c
+FRONTEND_FILES	  = handle_input.c
 FRONT_READL_FILES = readline/solve_prompt.c readline/build_prompt.c
 FRONT_LEXER_FILES = lexer/lexer.c lexer/config_lexer.c
 FRONT_SYNTX_FILES = syntax/syntax_analyze.c syntax/syntax_check.c \
@@ -61,6 +61,7 @@ STRUC_PROMP_FILES = prompt/destroy_prompt.c
 STRUC_COMMD_FILES = command/destroy_cmd.c command/get_cmd.c \
 					command/new_cmd.c command/print_cmd.c command/set_arg_cmd.c
 STRUC_STRIN_FILES = string/destroy_cmtx.c string/print_string.c
+STRUC_SHELL_FILES = shell/shell.c
 BUILTIN_FILES	  = builtin.c builtin_echo.c builtin_pwd.c builtin_env.c \
 					builtin_export.c builtin_unset.c builtin_exit.c \
 					builtin_cd.c
@@ -82,6 +83,8 @@ SRCS			  = $(addprefix $(SRC_DIR)/, $(SRC_FILES)) \
 					$(addprefix $(SRC_DIR)/$(STRUC_DIR)/, $(STRUC_PROMP_FILES))\
 					$(addprefix $(SRC_DIR)/$(STRUC_DIR)/, $(STRUC_COMMD_FILES))\
 					$(addprefix $(SRC_DIR)/$(STRUC_DIR)/, $(STRUC_STRIN_FILES))\
+					$(addprefix $(SRC_DIR)/$(STRUC_DIR)/, $(STRUC_SHELL_FILES))\
+					$(addprefix $(SRC_DIR)/$(FRONT_DIR)/, $(FRONTEND_FILES)) \
 	   				$(addprefix $(SRC_DIR)/$(FRONT_DIR)/, $(FRONT_READL_FILES))\
 					$(addprefix $(SRC_DIR)/$(FRONT_DIR)/, $(FRONT_LEXER_FILES))\
 					$(addprefix $(SRC_DIR)/$(FRONT_DIR)/, $(FRONT_SYNTX_FILES))\
