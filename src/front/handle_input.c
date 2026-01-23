@@ -1,26 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   handle_input.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/11 15:59:06 by fsousa            #+#    #+#             */
-/*   Updated: 2026/01/23 17:32:26 by mhidani          ###   ########.fr       */
+/*   Created: 2026/01/23 17:24:08 by mhidani           #+#    #+#             */
+/*   Updated: 2026/01/23 17:43:31 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/* Global variable used to track signal handling state */
-int	g_signal_status = 0;
-
-int	main(int argc, char **argv, char **envp)
+t_astree	*handle_input(t_shell *shell, char *input)
 {
-	t_shell	shell;
+	t_dlist		*tokens;
+	t_astree	*astree;
 
-	(void)argc;
-	(void)argv;
-	start_minishell(&shell, envp);
-	return (shell.exit_status);
+	astree = NULL;
+	tokens = lexer(input, shell->lexconfig);
+	if (syntax_analyze(tokens))
+	{
+		astree = parser(tokens);
+		expand(shell, astree);
+		wildcard(astree);
+		sanitize_quotes(astree);
+		assignment(astree->root);
+	}
+	ft_destroy_dlist(tokens);
+	return (astree);
 }
