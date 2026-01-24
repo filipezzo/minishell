@@ -25,7 +25,7 @@ SRCS		= \
 			ft_strrchr.c ft_strtrim.c ft_substr.c ft_tolower.c ft_toupper.c \
 			ft_isnumeric.c ft_dlst_dup.c ft_wrp_strdup.c ft_wrp_strcmp.c \
 			ft_swap.c ft_sort_dlist.c ft_is_ifs.c ft_indexof_dlist.c \
-			ft_strcatt.c
+			ft_strcatt.c ft_chis_ifs.c
 OBJS		= $(patsubst %.c, $(OBJ_DIR)/%.o, $(SRCS))
 SLIB		= $(SLIB_DIR)/$(NAME).a
 
