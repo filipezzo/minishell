@@ -6,7 +6,7 @@
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 21:11:39 by mhidani           #+#    #+#             */
-/*   Updated: 2026/01/21 15:42:22 by mhidani          ###   ########.fr       */
+/*   Updated: 2026/01/24 14:47:38 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ static char	*expand_dollar(t_shell *shell, char *src)
 		return (ft_strdup("minishell"));
 	if (size == 2 && ft_isdigit(src[1]))
 		return (ft_strdup(""));
-	env = ft_strdup(getenv(src + 1));
+	env = ft_strdup(get_env_value(shell->env_list, (src + 1)));
 	if (!env)
 		return (ft_strdup(""));
 	return (env);
