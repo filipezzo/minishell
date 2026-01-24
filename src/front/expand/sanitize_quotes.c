@@ -6,7 +6,7 @@
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 17:48:15 by mhidani           #+#    #+#             */
-/*   Updated: 2026/01/21 15:49:25 by mhidani          ###   ########.fr       */
+/*   Updated: 2026/01/24 11:11:50 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,6 @@ static void	navast_change_commands(t_tnode *node)
 static char	*handle_sanitize_quotes(char *src)
 {
 	size_t	size;
-	t_bool	is_squotes;
-	t_bool	is_dquotes;
 	char	*new;
 
 	if (!src)
@@ -63,9 +61,8 @@ static char	*handle_sanitize_quotes(char *src)
 	size = ft_strlen(src);
 	if (size < 2)
 		return (NULL);
-	is_squotes = *src == '\'' && *(src + size - 1) == '\'';
-	is_dquotes = *src == '\"' && *(src + size - 1) == '\"';
-	if (is_squotes || is_dquotes)
+	if ((*src == '\'' && *(src + size - 1) == '\'')
+		|| (*src == '\"' && *(src + size - 1) == '\"'))
 	{
 		new = ft_substr(src, 1, size - 2);
 		if (new)

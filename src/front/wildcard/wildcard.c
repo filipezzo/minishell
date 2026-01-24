@@ -6,7 +6,7 @@
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 23:14:44 by mhidani           #+#    #+#             */
-/*   Updated: 2026/01/19 15:08:14 by mhidani          ###   ########.fr       */
+/*   Updated: 2026/01/24 11:12:50 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,15 +55,12 @@ static void	expand_wildcards(t_dlist *names, t_tnode *node)
 static t_bool	is_wildcard(char *src)
 {
 	size_t	last;
-	t_bool	is_squote;
-	t_bool	is_dquote;
 
 	if (!src)
 		return (FALSE);
 	last = ft_strlen(src);
-	is_squote = *src == '\'' && *(src + last) == '\'';
-	is_dquote = *src == '\"' && *(src + last) == '\"';
-	if (is_squote || is_dquote)
+	if ((*src == '\'' && *(src + last) == '\'')
+		|| (*src == '\"' && *(src + last) == '\"'))
 		return (FALSE);
 	if (ft_strchr(src, '*') || ft_strchr(src, '?'))
 		return (TRUE);

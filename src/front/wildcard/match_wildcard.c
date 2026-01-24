@@ -6,7 +6,7 @@
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 11:23:40 by mhidani           #+#    #+#             */
-/*   Updated: 2026/01/19 14:37:44 by mhidani          ###   ########.fr       */
+/*   Updated: 2026/01/24 11:15:07 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 static t_dlist	*match_to_names(t_dlist *names, char *wildcard);
 static t_bool	ismatch_wildcard(char *name, char *pattern);
+static t_bool	ignore_name(char *name, char *wildcard);
 static void		*helper_destroy(t_dlist *list);
 
 char	**match_wildcard(t_dlist *names, char **args, size_t itgt)
@@ -43,7 +44,6 @@ char	**match_wildcard(t_dlist *names, char **args, size_t itgt)
 
 static t_dlist	*match_to_names(t_dlist *names, char *wildcard)
 {
-	t_bool	ignore;
 	t_bnode	*node;
 	t_dlist	*match;
 
@@ -53,8 +53,8 @@ static t_dlist	*match_to_names(t_dlist *names, char *wildcard)
 	node = names->head;
 	while (node)
 	{
-		ignore = *(char *)node->data == '.' && *wildcard != '.';
-		if (!ignore && ismatch_wildcard((char *)node->data, wildcard))
+		if (!ignore_name((char *)node->data, wildcard)
+			&& ismatch_wildcard((char *)node->data, wildcard))
 			ft_add_nd_dlist(match, ft_strdup(node->data), free);
 		node = node->right;
 	}
@@ -93,6 +93,11 @@ static t_bool	ismatch_wildcard(char *name, char *pattern)
 	if (*name == *pattern)
 		return (ismatch_wildcard(name + 1, pattern + 1));
 	return (FALSE);
+}
+
+static t_bool	ignore_name(char *name, char *wildcard)
+{
+	return (*name == '.' && *wildcard != '.');
 }
 
 static void	*helper_destroy(t_dlist *list)
