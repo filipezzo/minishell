@@ -6,7 +6,7 @@
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 11:41:00 by mhidani           #+#    #+#             */
-/*   Updated: 2026/01/19 14:59:15 by mhidani          ###   ########.fr       */
+/*   Updated: 2026/01/23 17:34:00 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ static t_bnode	*desc_sort(t_bnode *first, t_bnode *last, int (*cmp)())
 	return (i);
 }
 
-static void		check_to_swap(t_bnode *n1, t_bnode *n2)
+static void	check_to_swap(t_bnode *n1, t_bnode *n2)
 {
 	if (n1 != n2)
 		ft_swap(&n1->data, &n2->data);

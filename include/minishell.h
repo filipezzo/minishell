@@ -6,7 +6,7 @@
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/12 09:05:43 by mhidani           #+#    #+#             */
-/*   Updated: 2026/01/21 15:42:46 by mhidani          ###   ########.fr       */
+/*   Updated: 2026/01/23 20:26:18 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,12 +73,35 @@ typedef enum e_mstype
 	COMMAND_T,
 }					t_mstype;
 
+typedef struct s_prompt
+{
+	char			*user;
+	char			*host;
+	char			*dir;
+	char			*utype;
+}					t_prompt;
+
 typedef enum e_sig
 {
 	STATE_PROMPT,
 	STATE_EXEC,
 	STATE_HEREDOC
 }					t_sig;
+
+typedef struct s_lexconfig
+{
+	t_mstype		mstype;
+	t_type			type;
+	char			*sign;
+	size_t			size;
+}					t_lexconfig;
+
+typedef struct s_lextoken
+{
+	enum e_mstype	mstype;
+	enum e_type		type;
+	char			*content;
+}					t_lextoken;
 
 typedef struct s_redir
 {
@@ -105,16 +128,6 @@ typedef struct s_env
 	struct s_env	*next;
 }					t_env;
 
-typedef struct s_prompt
-{
-	char			*user;
-	char			*host;
-	char			*home;
-	char			*dir;
-	char			*type;
-	char			*display;
-}					t_prompt;
-
 typedef struct s_shell
 {
 	int				exit_status;
@@ -123,6 +136,7 @@ typedef struct s_shell
 	int				saved_stdin;
 	int				saved_stdout;
 	pid_t			last_pid;
+	t_lexconfig		**lexconfig;
 }					t_shell;
 
 typedef struct s_astree
@@ -131,21 +145,6 @@ typedef struct s_astree
 	struct s_tnode	*root;
 	struct s_tnode	*entry;
 }					t_astree;
-
-typedef struct s_lextoken
-{
-	enum e_mstype	mstype;
-	enum e_type		type;
-	char			*content;
-}					t_lextoken;
-
-typedef struct s_lexsig
-{
-	t_mstype		mstype;
-	t_type			type;
-	char			*sign;
-	size_t			size;
-}					t_lexsig;
 
 typedef struct s_tnode
 {
@@ -160,6 +159,8 @@ typedef struct s_tnode
 	void			(*print)(void *data, int fd);
 }					t_tnode;
 
+void				start_minishell(t_shell *shell, char **envp);
+t_astree			*handle_input(t_shell *shell, char *input);
 char				**env_list_to_array(t_env *env_list);
 void				init_env(t_shell *shell, char **envp);
 int					builtin_cd(t_shell *shell, char **args);
@@ -171,36 +172,16 @@ int					builtin_pwd(void);
 int					builtin_unset(t_env **env_list, char **args);
 int					run_builtin(t_shell *shell, t_cmd *cmd);
 int					is_command_builtin(const char *cmd);
-void				init_signals(void);
-void				set_signals_exec(void);
-void				set_signals_child(void);
-void				set_signals_heredoc_child(void);
-void				heredoc_child_sigint(int sig);
-void				free_env_node(t_env *node);
 char				*get_env_value(t_env *env, char *key);
-int					is_valid_env_key(char *str);
-void				update_or_create_node(t_env **head, char *key, char *value);
-int					count_list_elements(t_env *list);
-void				free_shell(t_shell *shell);
-int					handling_builtin_error_args(char **args, char *builtin,
-						int option);
-void				free_full_matrix(char **arr);
-void				executor(t_shell *shell);
-void				execute_external(t_shell *shell, t_cmd *cmd);
-void				run_ast(t_shell *shell, t_tnode *node);
-int					apply_redirect(t_cmd *cmd);
-char				*find_command_path(t_shell *shell, char *cmd);
-t_bool				lex_isjump(char c);
-t_dlist				*get_names_crrdir(void);
-char				*build_prompt(t_prompt *prompt);
-char				*build_user_pmt(char **crr);
-char				*build_host_pmt(char **crr);
-char				*build_home_pmt(char **crr);
-char				*build_dir_pmt(char *home, char **crr);
-char				*build_type_pmt(char *user, char **crr);
-t_dlist				*lexer(char *in, t_lexsig **siglexer);
-t_lexsig			**init_lexer_config(void);
-void				free_lexer_config(t_lexsig **sigs);
+char				*build_prompt(void);
+char				*build_prompt_user(void);
+char				*build_prompt_host(void);
+char				*build_prompt_dir(void);
+char				*build_prompt_utype(void);
+t_dlist				*lexer(char *in, t_lexconfig **siglexer);
+t_lexconfig			**init_lexer_config(void);
+void				free_lexer_config(t_lexconfig **sigs);
+t_bool				lex_is_jump(char c);
 t_bool				syntax_analyze(t_dlist *tokens);
 t_bool				syntax_check_lside(t_dlist *tokens, t_type type);
 t_bool				syntax_check_adjacency(t_dlist *tokens, t_type type);
@@ -215,48 +196,65 @@ t_tnode				*parse_pipeline(t_astree *tree, t_bnode **cursor);
 t_tnode				*parse_command(t_astree *tree, t_bnode **cursor);
 t_tnode				*parse_redir(t_tnode *node, t_bnode **cursor);
 t_tnode				*parse_subshell(t_astree *tree, t_bnode **cursor);
-void				print_string(void *ptr, int fd);
-size_t				strlst_size(char **list);
-void				destroy_cmtx(char **list);
-t_astree			*new_astree(void);
-void				destroy_astree(void *ptr);
-void				print_astree(void *ptr, int fd);
-t_tnode				*get_entry_astree(t_astree *tree);
-t_tnode				*new_tnode(void *origin, void *data);
-void				destroy_tnode(void *ptr);
-t_bool				new_lextoken(t_lextoken **new, t_type type, char *content);
-void				destroy_lextoken(void *ptr);
-t_lextoken			*get_lextoken(void *ptr);
-t_lextoken			*to_lextoken(t_bnode *node);
-void				next_lextoken(t_bnode **cursor);
-t_redir				*new_redir(t_type type);
-void				destroy_redir(void *ptr);
-void				destroy_lst_redir(void *ptr);
-int					run_heredoc(char *delimiter);
-int					redirect_heredoc(t_redir *r);
-int					prepare_pipeline_heredocs(t_cmd *cmd_list);
-void				close_heredoc_fds_cmd(t_cmd *cmd);
-int					pms_err(char *msg, int err);
-t_cmd				*new_cmd(void);
-void				destroy_cmd(void *ptr);
-t_cmd				*get_cmd(void *ptr);
-t_cmd				*set_arg_cmd(t_cmd *cmd, char *src);
-void				print_cmd(void *ptr, int fd);
-t_prompt			*new_prompt(void);
-void				destroy_prompt(void *ptr);
 void				expand(t_shell *shell, t_astree *tree);
 void				expand_simple(t_shell *shell, t_cmd *cmd, size_t i);
 void				expand_dquotes(t_shell *shell, t_cmd *cmd, size_t i);
 void				minilexer_expand(t_dlist *tokens, char *src);
 void				sanitize_quotes(t_astree *tree);
-char				*find_env(char *src, size_t *idx);
-char				*expand_tilde(void);
+void				assignment(t_tnode *node);
 void				wildcard(t_astree *tree);
 t_dlist				*expand_args_at(t_dlist *dst, t_dlist *src, size_t itgt);
 char				**match_wildcard(t_dlist *names, char **args, size_t itgt);
+void				executor(t_shell *shell);
+void				execute_external(t_shell *shell, t_cmd *cmd);
+void				run_ast(t_shell *shell, t_tnode *node);
+void				init_signals(void);
+void				set_signals_exec(void);
+void				set_signals_child(void);
+void				set_signals_heredoc_child(void);
+void				heredoc_child_sigint(int sig);
+int					apply_redirect(t_cmd *cmd);
+int					run_heredoc(char *delimiter);
+int					redirect_heredoc(t_redir *r);
+int					prepare_pipeline_heredocs(t_cmd *cmd_list);
+void				close_heredoc_fds_cmd(t_cmd *cmd);
+void				free_shell(t_shell *shell);
+void				free_full_matrix(char **arr);
+t_dlist				*get_names_crrdir(void);
+int					handling_builtin_error_args(char **args, char *builtin,
+						int option);
+int					perr_ms(char *msg, int err);
+int					count_list_elements(t_env *list);
+size_t				strlst_size(char **list);
+void				free_env_node(t_env *node);
+int					is_valid_env_key(char *str);
+void				update_or_create_node(t_env **head, char *key, char *value);
+char				*find_command_path(t_shell *shell, char *cmd);
 t_bool				iseq_list_and_cmtx(t_dlist *list, char **mtx);
 char				**convert_lst_to_cmtx(t_dlist *list);
 t_dlist				*convert_cmtx_to_lst(char **cmtx);
-char				*replace_once(char *src, char *old, char *new);
+void				init_shell(t_shell *shell, char **envp);
+void				destroy_prompt(void *ptr);
+t_cmd				*new_cmd(void);
+void				destroy_cmd(void *ptr);
+t_cmd				*get_cmd(void *ptr);
+t_cmd				*set_arg_cmd(t_cmd *cmd, char *src);
+void				print_cmd(void *ptr, int fd);
+t_redir				*new_redir(t_type type);
+void				destroy_redir(void *ptr);
+void				destroy_lst_redir(void *ptr);
+t_bool				new_lextoken(t_lextoken **new, t_type type, char *content);
+void				destroy_lextoken(void *ptr);
+t_lextoken			*get_lextoken(void *ptr);
+t_lextoken			*to_lextoken(t_bnode *node);
+void				next_lextoken(t_bnode **cursor);
+void				destroy_astree(void *ptr);
+t_tnode				*get_entry_astree(t_astree *tree);
+t_astree			*new_astree(void);
+void				print_astree(void *ptr, int fd);
+t_tnode				*new_tnode(void *origin, void *data);
+void				destroy_tnode(void *ptr);
+void				destroy_cmtx(char **list);
+void				print_string(void *ptr, int fd);
 
 #endif

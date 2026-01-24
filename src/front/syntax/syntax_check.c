@@ -6,7 +6,7 @@
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/28 12:40:35 by mhidani           #+#    #+#             */
-/*   Updated: 2026/01/15 16:15:49 by mhidani          ###   ########.fr       */
+/*   Updated: 2026/01/23 18:07:40 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ t_bool	syntax_check_lside(t_dlist *tokens, t_type type)
 	return (TRUE);
 }
 
-// TODO: check simple command PIPE
 t_bool	syntax_check_adjacency(t_dlist *tokens, t_type type)
 {
 	t_bnode		*pivot;
@@ -78,10 +77,8 @@ t_bool	syntax_check_balance(t_dlist *tokens, t_type left, t_type right)
 {
 	t_bnode	*pivot;
 	t_type	type;
-	char	*err;
 	int		balance;
 
-	err = "syntax error near unexpected token";
 	balance = 0;
 	pivot = tokens->head;
 	while (pivot)
@@ -92,11 +89,11 @@ t_bool	syntax_check_balance(t_dlist *tokens, t_type left, t_type right)
 		else if (type == right)
 			balance--;
 		if (balance < 0)
-			return (syntax_err_msg(err, ")"));
+			return (perr_ms("syntax error near unexpected token ')'", FALSE));
 		pivot = pivot->right;
 	}
 	if (balance > 0)
-		return (syntax_err_msg(err, "("));
+		return (perr_ms("syntax error near unexpected token '('", FALSE));
 	return (TRUE);
 }
 

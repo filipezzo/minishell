@@ -1,31 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexel_utils.c                                      :+:      :+:    :+:   */
+/*   shell.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fsousa <fsousa@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/20 15:43:22 by fsousa            #+#    #+#             */
-/*   Updated: 2025/12/20 15:43:52 by fsousa           ###   ########.fr       */
+/*   Created: 2026/01/22 19:14:33 by mhidani           #+#    #+#             */
+/*   Updated: 2026/01/23 13:08:48 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_bool	lex_isjump(char c)
+void	init_shell(t_shell *shell, char **envp)
 {
-	char	*signs;
-	size_t	i;
-
-	if (ft_isspace(c))
-		return (TRUE);
-	if (c == '\'' || c == '\"')
-		return (TRUE);
-	signs = "|&;()<>";
-	i = 0;
-	while (signs[i] && c != signs[i])
-		i++;
-	if (c == signs[i])
-		return (TRUE);
-	return (FALSE);
+	ft_memset(shell, 0, sizeof(t_shell));
+	init_env(shell, envp);
+	init_signals();
+	shell->lexconfig = init_lexer_config();
 }

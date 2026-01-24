@@ -6,7 +6,7 @@
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 15:45:54 by fsousa            #+#    #+#             */
-/*   Updated: 2026/01/13 15:35:19 by mhidani          ###   ########.fr       */
+/*   Updated: 2026/01/23 18:05:58 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	handling_builtin_error_args(char **args, char *builtin, int option)
 	return (1);
 }
 
-int	pms_err(char *msg, int err)
+int	perr_ms(char *msg, int err)
 {
 	if (!msg || !*msg)
 		return (-1);

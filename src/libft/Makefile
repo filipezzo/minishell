@@ -41,7 +41,7 @@ $(SLIB): $(OBJS) | $(SLIB_DIR)
 
 $(OBJ_DIR)/%.o: %.c | $(OBJ_DIR)
 	@$(CC) $(CFLAGS) -I$(INC_DIR) -c $< -o $@
-	@echo "[$(GREEN)OK$(RESET)] Compiled: $<"
+	@echo "[$(GREEN)OK$(RESET)] Compiled: $< ✅"
 
 print:
 	@echo $(OBJS)

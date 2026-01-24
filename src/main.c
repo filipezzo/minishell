@@ -6,10 +6,9 @@
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/11 15:59:06 by fsousa            #+#    #+#             */
-/*   Updated: 2026/01/21 15:43:43 by mhidani          ###   ########.fr       */
+/*   Updated: 2026/01/23 17:32:26 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "minishell.h"
 
@@ -18,55 +17,10 @@ int	g_signal_status = 0;
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_shell		shell;
-	t_lexsig	**lexer_conf;
-	t_dlist		*tokens;
-	t_astree	*tree;
-	char		*input;
+	t_shell	shell;
 
 	(void)argc;
 	(void)argv;
-	ft_memset(&shell, 0, sizeof(t_shell));
-	init_env(&shell, envp);
-	init_signals();
-	lexer_conf = init_lexer_config();
-	while (1)
-	{
-		input = readline("minishell$ ");
-		if (g_signal_status != 0)
-		{
-			shell.exit_status = g_signal_status;
-			g_signal_status = 0;
-		}
-		if (!input)
-		{
-			printf("exit\n");
-			break ;
-		}
-		if (input[0] != '\0')
-		{
-			add_history(input);
-			tokens = lexer(input, lexer_conf);
-			if (syntax_analyze(tokens))
-			{
-				tree = parser(tokens);
-				expand(&shell, tree);
-				wildcard(tree);
-				sanitize_quotes(tree);
-				if (tree && tree->root)
-				{
-					run_ast(&shell, tree->root);
-					init_signals();
-				}
-				if (tree)
-					destroy_astree(tree);
-				ft_destroy_dlist(tokens);
-			}
-		}
-		free(input);
-	}
-	free_lexer_config(lexer_conf);
-	free_shell(&shell);
-	rl_clear_history();
+	start_minishell(&shell, envp);
 	return (shell.exit_status);
 }

@@ -6,7 +6,7 @@
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/26 11:20:58 by mhidani           #+#    #+#             */
-/*   Updated: 2026/01/05 20:23:10 by mhidani          ###   ########.fr       */
+/*   Updated: 2026/01/21 18:56:17 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,6 @@ void	destroy_prompt(void *ptr)
 	prompt = (t_prompt *)ptr;
 	free(prompt->user);
 	free(prompt->host);
-	free(prompt->home);
 	free(prompt->dir);
-	free(prompt->type);
-	free(prompt);
+	free(prompt->utype);
 }

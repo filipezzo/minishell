@@ -1,25 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   size_string_lst.c                                  :+:      :+:    :+:   */
+/*   handle_input.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/16 11:54:23 by mhidani           #+#    #+#             */
-/*   Updated: 2026/01/16 11:55:37 by mhidani          ###   ########.fr       */
+/*   Created: 2026/01/23 17:24:08 by mhidani           #+#    #+#             */
+/*   Updated: 2026/01/23 17:43:31 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-size_t	size_string_lst(char **list)
+t_astree	*handle_input(t_shell *shell, char *input)
 {
-	size_t	size;
+	t_dlist		*tokens;
+	t_astree	*astree;
 
-	if (!list)
-		return (0);
-	size = 0;
-	while (list[size])
-		size++;
-	return (size);
+	astree = NULL;
+	tokens = lexer(input, shell->lexconfig);
+	if (syntax_analyze(tokens))
+	{
+		astree = parser(tokens);
+		expand(shell, astree);
+		wildcard(astree);
+		sanitize_quotes(astree);
+		assignment(astree->root);
+	}
+	ft_destroy_dlist(tokens);
+	return (astree);
 }
