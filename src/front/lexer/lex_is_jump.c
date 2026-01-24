@@ -1,26 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   lex_is_jump.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/11 15:59:06 by fsousa            #+#    #+#             */
-/*   Updated: 2026/01/23 17:32:26 by mhidani          ###   ########.fr       */
+/*   Created: 2025/12/20 15:43:22 by fsousa            #+#    #+#             */
+/*   Updated: 2026/01/23 18:36:08 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/* Global variable used to track signal handling state */
-int	g_signal_status = 0;
-
-int	main(int argc, char **argv, char **envp)
+t_bool	lex_is_jump(char c)
 {
-	t_shell	shell;
+	char	*signs;
+	size_t	i;
 
-	(void)argc;
-	(void)argv;
-	start_minishell(&shell, envp);
-	return (shell.exit_status);
+	if (ft_isspace(c))
+		return (TRUE);
+	if (c == '\'' || c == '\"')
+		return (TRUE);
+	signs = "|&;()<>";
+	i = 0;
+	while (signs[i] && c != signs[i])
+		i++;
+	if (c == signs[i])
+		return (TRUE);
+	return (FALSE);
 }

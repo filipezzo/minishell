@@ -1,0 +1,49 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   clean.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/12/18 17:47:44 by fsousa            #+#    #+#             */
+/*   Updated: 2026/01/23 14:34:35 by mhidani          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "minishell.h"
+
+void	free_shell(t_shell *shell)
+{
+	t_env	*temp;
+	t_cmd	*tmp;
+
+	if (!shell)
+		return ;
+	while (shell->env_list)
+	{
+		temp = shell->env_list->next;
+		free_env_node(shell->env_list);
+		shell->env_list = temp;
+	}
+	while (shell->cmd_list)
+	{
+		tmp = shell->cmd_list->next;
+		free(shell->cmd_list);
+		shell->cmd_list = tmp;
+	}
+	free_lexer_config(shell->lexconfig);
+	rl_clear_history();
+}
+
+void	free_full_matrix(char **arr)
+{
+	int	i;
+
+	i = 0;
+	while (arr[i])
+	{
+		free(arr[i]);
+		i++;
+	}
+	free(arr);
+}

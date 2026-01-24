@@ -1,26 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/11 15:59:06 by fsousa            #+#    #+#             */
-/*   Updated: 2026/01/23 17:32:26 by mhidani          ###   ########.fr       */
+/*   Created: 2025/07/24 17:05:19 by mhidani           #+#    #+#             */
+/*   Updated: 2025/07/24 17:17:08 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-/* Global variable used to track signal handling state */
-int	g_signal_status = 0;
-
-int	main(int argc, char **argv, char **envp)
+char	*ft_strrchr(const char *s, int c)
 {
-	t_shell	shell;
+	char	*aux;
 
-	(void)argc;
-	(void)argv;
-	start_minishell(&shell, envp);
-	return (shell.exit_status);
+	if (!s)
+		return (NULL);
+	if (c == '\0')
+		return ((char *)(s + ft_strlen((char *)s)));
+	aux = NULL;
+	while (*s)
+	{
+		if (*s == (unsigned char)c)
+			aux = (char *)s;
+		s++;
+		if (aux && !*s)
+			return (aux);
+	}
+	return (NULL);
 }

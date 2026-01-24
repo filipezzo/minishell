@@ -1,26 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   new_redir.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
+/*   By: fsousa <fsousa@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/11 15:59:06 by fsousa            #+#    #+#             */
-/*   Updated: 2026/01/23 17:32:26 by mhidani          ###   ########.fr       */
+/*   Created: 2026/01/05 15:18:41 by mhidani           #+#    #+#             */
+/*   Updated: 2026/01/15 13:52:07 by fsousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/* Global variable used to track signal handling state */
-int	g_signal_status = 0;
-
-int	main(int argc, char **argv, char **envp)
+t_redir	*new_redir(t_type type)
 {
-	t_shell	shell;
+	t_redir	*redir;
 
-	(void)argc;
-	(void)argv;
-	start_minishell(&shell, envp);
-	return (shell.exit_status);
+	redir = ft_calloc(1, sizeof(t_redir));
+	if (!redir)
+		return (NULL);
+	redir->mstype = REDIRECTION_T;
+	redir->type = type;
+	redir->file = NULL;
+	redir->heredoc_fd = -1;
+	redir->next = NULL;
+	return (redir);
 }

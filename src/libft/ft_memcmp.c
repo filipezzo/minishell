@@ -1,26 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_memcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/11 15:59:06 by fsousa            #+#    #+#             */
-/*   Updated: 2026/01/23 17:32:26 by mhidani          ###   ########.fr       */
+/*   Created: 2025/07/15 15:22:32 by mhidani           #+#    #+#             */
+/*   Updated: 2025/07/21 10:08:45 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-/* Global variable used to track signal handling state */
-int	g_signal_status = 0;
-
-int	main(int argc, char **argv, char **envp)
+int	ft_memcmp(const void *s1, const void *s2, size_t n)
 {
-	t_shell	shell;
+	size_t			i;
+	unsigned char	*s1_c;
+	unsigned char	*s2_c;
 
-	(void)argc;
-	(void)argv;
-	start_minishell(&shell, envp);
-	return (shell.exit_status);
+	i = 0;
+	s1_c = (unsigned char *)s1;
+	s2_c = (unsigned char *)s2;
+	while (i < n)
+	{
+		if (s1_c[i] != s2_c[i])
+			return (s1_c[i] - s2_c[i]);
+		i++;
+	}
+	return (0);
 }

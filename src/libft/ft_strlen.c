@@ -1,26 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/11 15:59:06 by fsousa            #+#    #+#             */
-/*   Updated: 2026/01/23 17:32:26 by mhidani          ###   ########.fr       */
+/*   Created: 2025/07/24 09:28:02 by mhidani           #+#    #+#             */
+/*   Updated: 2025/07/25 11:16:45 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-/* Global variable used to track signal handling state */
-int	g_signal_status = 0;
-
-int	main(int argc, char **argv, char **envp)
+size_t	ft_strlen(const char *s)
 {
-	t_shell	shell;
+	size_t	length;
 
-	(void)argc;
-	(void)argv;
-	start_minishell(&shell, envp);
-	return (shell.exit_status);
+	length = 0;
+	while (s[length])
+		length++;
+	return (length);
 }

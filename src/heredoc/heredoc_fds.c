@@ -1,26 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   heredoc_fds.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
+/*   By: fsousa <fsousa@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/11 15:59:06 by fsousa            #+#    #+#             */
-/*   Updated: 2026/01/23 17:32:26 by mhidani          ###   ########.fr       */
+/*   Created: 2026/01/15 13:15:34 by fsousa            #+#    #+#             */
+/*   Updated: 2026/01/15 13:15:42 by fsousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/* Global variable used to track signal handling state */
-int	g_signal_status = 0;
-
-int	main(int argc, char **argv, char **envp)
+void	close_heredoc_fds_cmd(t_cmd *cmd)
 {
-	t_shell	shell;
+	t_redir	*r;
 
-	(void)argc;
-	(void)argv;
-	start_minishell(&shell, envp);
-	return (shell.exit_status);
+	if (!cmd)
+		return ;
+	r = cmd->redirections;
+	while (r)
+	{
+		if (r->type == REDIR_HEREDOC && r->heredoc_fd != -1)
+		{
+			close(r->heredoc_fd);
+			r->heredoc_fd = -1;
+		}
+		r = r->next;
+	}
 }

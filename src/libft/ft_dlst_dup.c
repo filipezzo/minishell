@@ -1,26 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_dlst_dup.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/11 15:59:06 by fsousa            #+#    #+#             */
-/*   Updated: 2026/01/23 17:32:26 by mhidani          ###   ########.fr       */
+/*   Created: 2026/01/19 11:08:57 by mhidani           #+#    #+#             */
+/*   Updated: 2026/01/19 11:18:09 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-/* Global variable used to track signal handling state */
-int	g_signal_status = 0;
-
-int	main(int argc, char **argv, char **envp)
+t_dlist	*ft_dlst_dup(t_dlist *src, void *(dup)(), void (*destroy)())
 {
-	t_shell	shell;
+	t_dlist	*new;
+	t_bnode	*node;
 
-	(void)argc;
-	(void)argv;
-	start_minishell(&shell, envp);
-	return (shell.exit_status);
+	if (!src)
+		return (NULL);
+	new = ft_new_dlist();
+	if (!new)
+		return (NULL);
+	if (src->size == 0)
+		return (new);
+	node = src->head;
+	while (node)
+	{
+		ft_add_nd_dlist(new, dup(node->data), destroy);
+		node = node->right;
+	}
+	return (new);
 }

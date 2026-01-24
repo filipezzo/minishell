@@ -1,26 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strmapi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/11 15:59:06 by fsousa            #+#    #+#             */
-/*   Updated: 2026/01/23 17:32:26 by mhidani          ###   ########.fr       */
+/*   Created: 2025/07/24 09:18:56 by mhidani           #+#    #+#             */
+/*   Updated: 2025/07/24 10:38:40 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-/* Global variable used to track signal handling state */
-int	g_signal_status = 0;
-
-int	main(int argc, char **argv, char **envp)
+char	*ft_strmapi(char const *src, char (*f)(unsigned int, char))
 {
-	t_shell	shell;
+	char	*newer;
+	size_t	i;
 
-	(void)argc;
-	(void)argv;
-	start_minishell(&shell, envp);
-	return (shell.exit_status);
+	if (!src)
+		return (NULL);
+	newer = ft_strdup(src);
+	if (!newer)
+		return (NULL);
+	i = 0;
+	while (newer[i])
+	{
+		newer[i] = (*f)(i, newer[i]);
+		i++;
+	}
+	return (newer);
 }

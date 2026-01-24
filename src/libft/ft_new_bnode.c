@@ -1,26 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_new_bnode.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/11 15:59:06 by fsousa            #+#    #+#             */
-/*   Updated: 2026/01/23 17:32:26 by mhidani          ###   ########.fr       */
+/*   Created: 2025/12/09 09:55:06 by mhidani           #+#    #+#             */
+/*   Updated: 2026/01/13 18:07:51 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-/* Global variable used to track signal handling state */
-int	g_signal_status = 0;
-
-int	main(int argc, char **argv, char **envp)
+t_bnode	*ft_new_bnode(void *data, void *structure, t_destroy dst)
 {
-	t_shell	shell;
+	t_bnode	*node;
 
-	(void)argc;
-	(void)argv;
-	start_minishell(&shell, envp);
-	return (shell.exit_status);
+	if (!data)
+		return (NULL);
+	node = ft_calloc(1, sizeof(t_bnode));
+	if (!node)
+		return (NULL);
+	node->data = data;
+	node->left = NULL;
+	node->right = NULL;
+	node->structure = structure;
+	node->destroy_data = dst;
+	return (node);
 }

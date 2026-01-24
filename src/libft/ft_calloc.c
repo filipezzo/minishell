@@ -1,26 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/11 15:59:06 by fsousa            #+#    #+#             */
-/*   Updated: 2026/01/23 17:32:26 by mhidani          ###   ########.fr       */
+/*   Created: 2025/07/24 09:30:58 by mhidani           #+#    #+#             */
+/*   Updated: 2025/12/08 17:23:06 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-/* Global variable used to track signal handling state */
-int	g_signal_status = 0;
-
-int	main(int argc, char **argv, char **envp)
+void	*ft_calloc(size_t nmemb, size_t size)
 {
-	t_shell	shell;
+	void	*allocated;
 
-	(void)argc;
-	(void)argv;
-	start_minishell(&shell, envp);
-	return (shell.exit_status);
+	if (nmemb == 0 || size == 0)
+		return (malloc(1));
+	if (nmemb != 0 && size > (size_t)-1 / nmemb)
+		return (NULL);
+	allocated = malloc(nmemb * size);
+	if (!allocated)
+		return (NULL);
+	ft_bzero(allocated, nmemb * size);
+	return (allocated);
 }

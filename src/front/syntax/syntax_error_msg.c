@@ -1,26 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   syntax_error_msg.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
+/*   By: fsousa <fsousa@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/11 15:59:06 by fsousa            #+#    #+#             */
-/*   Updated: 2026/01/23 17:32:26 by mhidani          ###   ########.fr       */
+/*   Created: 2025/12/27 18:19:15 by mhidani           #+#    #+#             */
+/*   Updated: 2026/01/15 11:42:46 by fsousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/* Global variable used to track signal handling state */
-int	g_signal_status = 0;
-
-int	main(int argc, char **argv, char **envp)
+t_bool	syntax_err_msg(char *msg, char *oper)
 {
-	t_shell	shell;
+	ft_fputstr_fd(STDERR_FILENO, "minishell: %s '%s'\n", msg, oper);
+	return (FALSE);
+}
 
-	(void)argc;
-	(void)argv;
-	start_minishell(&shell, envp);
-	return (shell.exit_status);
+t_bool	syntax_err_smsg(char *msg)
+{
+	ft_fputstr_fd(STDERR_FILENO, "minishell: %s\n", msg);
+	return (FALSE);
 }

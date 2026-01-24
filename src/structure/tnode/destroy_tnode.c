@@ -1,26 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   destroy_tnode.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/11 15:59:06 by fsousa            #+#    #+#             */
-/*   Updated: 2026/01/23 17:32:26 by mhidani          ###   ########.fr       */
+/*   Created: 2026/01/05 19:44:07 by mhidani           #+#    #+#             */
+/*   Updated: 2026/01/22 22:38:34 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/* Global variable used to track signal handling state */
-int	g_signal_status = 0;
-
-int	main(int argc, char **argv, char **envp)
+void	destroy_tnode(void *ptr)
 {
-	t_shell	shell;
+	t_tnode	*node;
+	void	*data;
 
-	(void)argc;
-	(void)argv;
-	start_minishell(&shell, envp);
-	return (shell.exit_status);
+	if (!ptr)
+		return ;
+	node = (t_tnode *)ptr;
+	if (node->mstype != TNODE_T)
+		return ;
+	data = node->data;
+	if (node->destroy)
+		node->destroy(data);
+	else
+		free(node->data);
+	node->destroy = NULL;
+	node->print = NULL;
+	free(node);
 }

@@ -1,26 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/11 15:59:06 by fsousa            #+#    #+#             */
-/*   Updated: 2026/01/23 17:32:26 by mhidani          ###   ########.fr       */
+/*   Created: 2025/07/24 10:26:06 by mhidani           #+#    #+#             */
+/*   Updated: 2025/07/24 10:39:23 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-/* Global variable used to track signal handling state */
-int	g_signal_status = 0;
-
-int	main(int argc, char **argv, char **envp)
+char	*ft_strdup(const char *src)
 {
-	t_shell	shell;
+	size_t	i;
+	size_t	src_size;
+	char	*duplicated;
 
-	(void)argc;
-	(void)argv;
-	start_minishell(&shell, envp);
-	return (shell.exit_status);
+	if (!src)
+		return (NULL);
+	i = 0;
+	src_size = ft_strlen((char *)src);
+	duplicated = (char *)malloc((src_size + 1) * sizeof(char));
+	while (src[i])
+	{
+		duplicated[i] = src[i];
+		i++;
+	}
+	duplicated[i] = '\0';
+	return (duplicated);
 }

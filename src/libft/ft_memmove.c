@@ -1,26 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/11 15:59:06 by fsousa            #+#    #+#             */
-/*   Updated: 2026/01/23 17:32:26 by mhidani          ###   ########.fr       */
+/*   Created: 2025/07/24 15:45:51 by mhidani           #+#    #+#             */
+/*   Updated: 2025/07/24 15:49:11 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-/* Global variable used to track signal handling state */
-int	g_signal_status = 0;
-
-int	main(int argc, char **argv, char **envp)
+void	*ft_memmove(void *dst, const void *src, size_t n)
 {
-	t_shell	shell;
+	size_t			i;
+	unsigned char	*d_bytes;
+	unsigned char	*s_bytes;
 
-	(void)argc;
-	(void)argv;
-	start_minishell(&shell, envp);
-	return (shell.exit_status);
+	d_bytes = (unsigned char *)dst;
+	s_bytes = (unsigned char *)src;
+	if (dst > src)
+	{
+		i = n;
+		while (i-- > 0)
+			d_bytes[i] = s_bytes[i];
+	}
+	else
+	{
+		i = 0;
+		while (i < n)
+		{
+			d_bytes[i] = s_bytes[i];
+			i++;
+		}
+	}
+	return (dst);
 }

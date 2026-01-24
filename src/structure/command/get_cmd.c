@@ -1,26 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   get_cmd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/11 15:59:06 by fsousa            #+#    #+#             */
-/*   Updated: 2026/01/23 17:32:26 by mhidani          ###   ########.fr       */
+/*   Created: 2026/01/05 15:15:44 by mhidani           #+#    #+#             */
+/*   Updated: 2026/01/05 15:17:39 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/* Global variable used to track signal handling state */
-int	g_signal_status = 0;
-
-int	main(int argc, char **argv, char **envp)
+t_cmd	*get_cmd(void *ptr)
 {
-	t_shell	shell;
+	t_tnode	*node;
+	t_cmd	*cmd;
 
-	(void)argc;
-	(void)argv;
-	start_minishell(&shell, envp);
-	return (shell.exit_status);
+	if (!ptr)
+		return (NULL);
+	node = (t_tnode *)ptr;
+	if (node->mstype != TNODE_T && !node->data)
+		return (NULL);
+	cmd = (t_cmd *)node->data;
+	if (cmd->mstype != COMMAND_T)
+		return (NULL);
+	return (cmd);
 }

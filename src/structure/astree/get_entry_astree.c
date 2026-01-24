@@ -1,26 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   get_entry_astree.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/11 15:59:06 by fsousa            #+#    #+#             */
-/*   Updated: 2026/01/23 17:32:26 by mhidani          ###   ########.fr       */
+/*   Created: 2026/01/05 14:49:38 by mhidani           #+#    #+#             */
+/*   Updated: 2026/01/05 19:20:35 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/* Global variable used to track signal handling state */
-int	g_signal_status = 0;
+static t_tnode	*find_entry_astree(t_tnode *cursor);
 
-int	main(int argc, char **argv, char **envp)
+t_tnode	*get_entry_astree(t_astree *tree)
 {
-	t_shell	shell;
+	return (find_entry_astree(tree->root));
+}
 
-	(void)argc;
-	(void)argv;
-	start_minishell(&shell, envp);
-	return (shell.exit_status);
+static t_tnode	*find_entry_astree(t_tnode *cursor)
+{
+	if (!cursor)
+		return (NULL);
+	else if (!cursor->left && cursor->type == COMMAND)
+		return (cursor);
+	else if (cursor->left)
+		return (find_entry_astree(cursor->left));
+	return (find_entry_astree(cursor->left));
 }

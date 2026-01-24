@@ -1,26 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/11 15:59:06 by fsousa            #+#    #+#             */
-/*   Updated: 2026/01/23 17:32:26 by mhidani          ###   ########.fr       */
+/*   Created: 2025/07/24 15:35:47 by mhidani           #+#    #+#             */
+/*   Updated: 2025/07/25 10:34:10 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-/* Global variable used to track signal handling state */
-int	g_signal_status = 0;
-
-int	main(int argc, char **argv, char **envp)
+void	*ft_memcpy(void *dst, const void *src, size_t n)
 {
-	t_shell	shell;
+	size_t			i;
+	unsigned char	*dst_b;
+	unsigned char	*src_b;
 
-	(void)argc;
-	(void)argv;
-	start_minishell(&shell, envp);
-	return (shell.exit_status);
+	if (!dst)
+		return (0);
+	if (!src || dst == src || n == 0)
+		return (dst);
+	i = 0;
+	dst_b = (unsigned char *)dst;
+	src_b = (unsigned char *)src;
+	while (i < n)
+	{
+		dst_b[i] = src_b[i];
+		i++;
+	}
+	return (dst);
 }
