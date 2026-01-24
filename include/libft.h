@@ -6,7 +6,7 @@
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 20:37:22 by mhidani           #+#    #+#             */
-/*   Updated: 2026/01/23 17:51:36 by mhidani          ###   ########.fr       */
+/*   Updated: 2026/01/24 11:30:04 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ t_bool		ft_toupper(int c);
 t_bool		ft_tolower(int c);
 t_bool		ft_isnumeric(char *str);
 t_bool		ft_is_ifs(char *src);
+t_bool		ft_ch_is_ifs(char c);
 
 // Manipulate Strings ----------------------------------------------------------
 size_t		ft_strlen(const char *s);

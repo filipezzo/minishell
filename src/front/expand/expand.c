@@ -6,7 +6,7 @@
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 17:41:37 by mhidani           #+#    #+#             */
-/*   Updated: 2026/01/20 17:41:38 by mhidani          ###   ########.fr       */
+/*   Updated: 2026/01/24 11:31:38 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,13 +65,16 @@ static t_bool	is_simple_expand(char *src)
 static t_bool	is_dquotes_expand(char *src)
 {
 	size_t	i;
+	char	*dollar;
 
 	if (!src || !*src)
 		return (FALSE);
 	i = ft_strlen(src) - 1;
 	if (*src == '\'' && *(src + i) == '\'')
 		return (FALSE);
-	if (*src == '\"' && *(src + i) == '\"' && ft_strchr(src, '$'))
+	dollar = ft_strchr(src, '$');
+	if (*src == '\"' && *(src + i) == '\"' && dollar
+		&& ft_isalnum(*(dollar + 1)) && !ft_ch_is_ifs(*(dollar + 1)))
 		return (TRUE);
 	return (FALSE);
 }
