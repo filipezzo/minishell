@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+         #
+#    By: fsousa <fsousa@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/01/21 16:23:40 by mhidani           #+#    #+#              #
-#    Updated: 2026/01/23 22:22:17 by mhidani          ###   ########.fr        #
+#    Updated: 2026/01/24 12:01:19 by fsousa           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -152,10 +152,5 @@ fclean: clean
 	@echo "[\033[0;31mOK\033[0m] Complete cleaning."
 
 re: fclean all
-
-valgrind: $(EXEC)
-	@echo "\033[1;36m[VALGRIND]\033[0m Running memory analysis...\n"
-	valgrind -s --suppressions=readline.supp --track-fds=yes \
-		--leak-check=full --show-leak-kinds=all ./$(EXEC)
 
 .PHONY: all clean fclean re valgrind
